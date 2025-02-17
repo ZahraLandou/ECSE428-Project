@@ -4,8 +4,16 @@
 package com.example.nomnomapp.model;
 import java.util.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
 // line 69 "model.ump"
 // line 116 "model.ump"
+
+@Entity
 public class RecipeList
 {
 
@@ -20,21 +28,27 @@ public class RecipeList
   //------------------------
 
   //RecipeList Attributes
-  private int recipeID;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int recipeListID;
   private String name;
+
+
   private ListCategory category;
 
   //RecipeList Associations
   private NomNomUser nomNomUser;
+
+  @ManyToMany(mappedBy = "recipeLists")
   private List<Recipe> recipes;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public RecipeList(int aRecipeID, String aName, ListCategory aCategory, NomNomUser aNomNomUser)
+  public RecipeList(int aRecipeListID, String aName, ListCategory aCategory, NomNomUser aNomNomUser)
   {
-    recipeID = aRecipeID;
+    recipeListID = aRecipeListID;
     name = aName;
     category = aCategory;
     boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
@@ -49,10 +63,10 @@ public class RecipeList
   // INTERFACE
   //------------------------
 
-  public boolean setRecipeID(int aRecipeID)
+  public boolean setRecipeListID(int aRecipeListID)
   {
     boolean wasSet = false;
-    recipeID = aRecipeID;
+    recipeListID = aRecipeListID;
     wasSet = true;
     return wasSet;
   }
@@ -73,9 +87,9 @@ public class RecipeList
     return wasSet;
   }
 
-  public int getRecipeID()
+  public int getRecipeListID()
   {
-    return recipeID;
+    return recipeListID;
   }
 
   public String getName()
@@ -244,7 +258,7 @@ public class RecipeList
   public String toString()
   {
     return super.toString() + "["+
-            "recipeID" + ":" + getRecipeID()+ "," +
+            "recipeID" + ":" + getRecipeListID()+ "," +
             "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "category" + "=" + (getCategory() != null ? !getCategory().equals(this)  ? getCategory().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "nomNomUser = "+(getNomNomUser()!=null?Integer.toHexString(System.identityHashCode(getNomNomUser())):"null");

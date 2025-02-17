@@ -414,9 +414,9 @@ public class NomNomUser
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public RecipeList addRecipeList(int aRecipeID, String aName, RecipeList.ListCategory aCategory)
+  public RecipeList addRecipeList(int aRecipeListID, String aName, RecipeList.ListCategory aCategory)
   {
-    return new RecipeList(aRecipeID, aName, aCategory, this);
+    return new RecipeList(aRecipeListID, aName, aCategory, this);
   }
 
   public boolean addRecipeList(RecipeList aRecipeList)

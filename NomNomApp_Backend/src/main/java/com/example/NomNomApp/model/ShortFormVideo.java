@@ -5,6 +5,10 @@
 package com.example.nomnomapp.model;
 // line 47 "model.ump"
 // line 93 "model.ump"
+
+import jakarta.persistence.*;
+
+@Entity
 public class ShortFormVideo
 {
 
@@ -13,7 +17,11 @@ public class ShortFormVideo
   //------------------------
 
   //ShortFormVideo Attributes
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int videoId;
+  
   private String videoTitle;
   private String videoDescription;
   private String video;
