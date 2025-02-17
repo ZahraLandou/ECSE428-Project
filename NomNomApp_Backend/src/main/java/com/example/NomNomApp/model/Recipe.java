@@ -1,12 +1,16 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
+/*Code partially generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package com.example.nomnomapp.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 15 "model.ump"
-// line 104 "model.ump"
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.*;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Recipe
 {
 
@@ -21,21 +25,47 @@ public class Recipe
   //------------------------
 
   //Recipe Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int recipeID;
+
+  @Column(nullable = false)
   private String title;
+
   private String description;
+
+  @Lob
   private String instructions;
+
+  @Column(name= "created_date", nullable = false, updatable = false)
+  @CreatedDate
   private Date creationDate;
+
   private RecipeCategory category;
   private int likes;
   private String picture;
   private double averageRating;
 
   //Recipe Associations
+  @OneToOne
+  @JoinColumn(name = "videoId")
   private ShortFormVideo shortFormVideo;
+
+  @OneToMany(mappedBy = "recipe")
   private List<RecipeIngredients> recipeIngredients;
+
+  @ManyToMany
+  @JoinTable(
+    name = "List_of_recipes",
+    joinColumns = @JoinColumn(name = "recipe_id"),
+    inverseJoinColumns = @JoinColumn(name = "recipe_list_id")
+  )
   private List<RecipeList> recipeLists;
+
+  
   private NomNomUser nomNomUser;
+
+  @OneToMany(mappedBy = "recipe")
   private List<Comment> comments;
 
   //------------------------
@@ -61,7 +91,7 @@ public class Recipe
       throw new RuntimeException("Unable to create recipe due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     comments = new ArrayList<Comment>();
-  }
+  } 
 
   //------------------------
   // INTERFACE
@@ -73,7 +103,8 @@ public class Recipe
     recipeID = aRecipeID;
     wasSet = true;
     return wasSet;
-  }
+  } 
+
 
   public boolean setTitle(String aTitle)
   {
