@@ -32,6 +32,7 @@ public class Recipe
   @Column(nullable = false)
   private String title;
 
+  @Column(nullable = false)
   private String description;
 
   @Lob
