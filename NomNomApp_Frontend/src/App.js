@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import CommentForm from './components/CommentForm';
 
 function App() {
   return (
@@ -18,8 +19,12 @@ function App() {
         hey group 1 click this for react help
         </a>
       </header>
+      <div>
+        <CommentForm />
+      </div>
     </div>
   );
 }
+
 
 export default App;
