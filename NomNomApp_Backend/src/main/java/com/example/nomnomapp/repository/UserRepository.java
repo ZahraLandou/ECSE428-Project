@@ -1,0 +1,19 @@
+package com.example.nomnomapp.repository;
+
+import com.example.nomnomapp.model.NomNomUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<NomNomUser, String> {
+
+    Optional<NomNomUser> findByUsername(String username);
+
+    Optional<NomNomUser> findByEmailAddress(String emailAddress);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmailAddress(String emailAddress);
+}

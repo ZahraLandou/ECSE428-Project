@@ -2,35 +2,55 @@
 /*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package com.example.nomnomapp.model;
+import jakarta.persistence.*;
+
 import java.util.*;
 import java.sql.Date;
 
 // line 2 "model.ump"
 // line 121 "model.ump"
+@Entity
+@Table(name = "users")
 public class NomNomUser
 {
-
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //NomNomUser Attributes
+  @Id
+  @Column(nullable = false, unique = true)
   private String username;
+  @Column(nullable = false, unique = true)
   private String emailAddress;
+  @Column(nullable = false)
   private String password;
   private String biography;
   private String profilePicture;
 
   //NomNomUser Associations
-  private List<Notification> notifications;
-  private List<Recipe> recipes;
-  private List<RecipeList> recipeLists;
-  private List<NomNomUser> roleName;
+  @OneToMany(mappedBy = "nomNomUser", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Notification> notifications = new ArrayList<>();
+  @OneToMany(mappedBy = "nomNomUser", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Recipe> recipes = new ArrayList<>();
+
+  @OneToMany(mappedBy = "nomNomUser", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<RecipeList> recipeLists = new ArrayList<>();
+
+  @ManyToMany
+  @JoinTable(
+          name = "user_roles",
+          joinColumns = @JoinColumn(name = "user_username"),
+          inverseJoinColumns = @JoinColumn(name = "role_username")
+  )
+  private List<NomNomUser> roleName = new ArrayList<>();
+  @ManyToMany
   private List<NomNomUser> nomNomUsers;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+
 
   public NomNomUser(String aUsername, String aEmailAddress, String aPassword)
   {
@@ -44,6 +64,10 @@ public class NomNomUser
     recipeLists = new ArrayList<RecipeList>();
     roleName = new ArrayList<NomNomUser>();
     nomNomUsers = new ArrayList<NomNomUser>();
+  }
+
+  public NomNomUser() {
+
   }
 
   //------------------------

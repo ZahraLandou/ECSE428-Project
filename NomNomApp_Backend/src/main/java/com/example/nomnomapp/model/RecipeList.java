@@ -16,6 +16,9 @@ import jakarta.persistence.ManyToMany;
 @Entity
 public class RecipeList
 {
+  public RecipeList() {
+
+  }
 
   //------------------------
   // ENUMERATIONS

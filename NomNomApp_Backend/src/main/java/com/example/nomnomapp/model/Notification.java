@@ -2,12 +2,19 @@
 /*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package com.example.nomnomapp.model;
+import jakarta.persistence.*;
+
 import java.sql.Date;
 
 // line 32 "model.ump"
 // line 82 "model.ump"
+@Entity
+@Table(name = "notifications")
 public class Notification
 {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
   //------------------------
   // MEMBER VARIABLES
@@ -18,6 +25,8 @@ public class Notification
   private Date date;
 
   //Notification Associations
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
   private NomNomUser nomNomUser;
 
   //------------------------
@@ -33,6 +42,10 @@ public class Notification
     {
       throw new RuntimeException("Unable to create notification due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+  }
+
+  public Notification() {
+
   }
 
   //------------------------
