@@ -1,20 +1,16 @@
 package com.example.nomnomapp.controller;
 
+import com.example.nomnomapp.dto.RecipeIngredientRequestDto;
+import com.example.nomnomapp.dto.RecipeIngredientResponseDto;
 import com.example.nomnomapp.model.RecipeIngredients;
 import com.example.nomnomapp.service.RecipeIngredientsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/recipeIngredients")
@@ -28,9 +24,13 @@ public class RecipeIngredientsController {
      * Example: POST /api/recipeIngredients
      */
     @PostMapping
-    public ResponseEntity<RecipeIngredients> createRecipeIngredient(@RequestBody RecipeIngredients recipeIngredient) {
-        RecipeIngredients created = recipeIngredientsService.createRecipeIngredient(recipeIngredient);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    public ResponseEntity<RecipeIngredientResponseDto> createRecipeIngredient(
+            @RequestBody RecipeIngredientRequestDto requestDto) {
+        // Convert DTO to entity and create record
+        RecipeIngredients recipeIngredient = recipeIngredientsService.createRecipeIngredientFromDto(requestDto);
+        // Convert entity to response DTO
+        RecipeIngredientResponseDto responseDto = convertToResponseDto(recipeIngredient);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     /**
@@ -38,9 +38,10 @@ public class RecipeIngredientsController {
      * Example: GET /api/recipeIngredients/{id}
      */
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeIngredients> getRecipeIngredientById(@PathVariable int id) {
-        RecipeIngredients ingredient = recipeIngredientsService.getRecipeIngredientById(id);
-        return ResponseEntity.ok(ingredient);
+    public ResponseEntity<RecipeIngredientResponseDto> getRecipeIngredientById(@PathVariable int id) {
+        RecipeIngredients recipeIngredient = recipeIngredientsService.getRecipeIngredientById(id);
+        RecipeIngredientResponseDto responseDto = convertToResponseDto(recipeIngredient);
+        return ResponseEntity.ok(responseDto);
     }
 
     /**
@@ -48,9 +49,12 @@ public class RecipeIngredientsController {
      * Example: GET /api/recipeIngredients
      */
     @GetMapping
-    public ResponseEntity<List<RecipeIngredients>> getAllRecipeIngredients() {
+    public ResponseEntity<List<RecipeIngredientResponseDto>> getAllRecipeIngredients() {
         List<RecipeIngredients> ingredients = (List<RecipeIngredients>) recipeIngredientsService.getAllRecipeIngredients();
-        return ResponseEntity.ok(ingredients);
+        List<RecipeIngredientResponseDto> responseDtos = ingredients.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDtos);
     }
 
     /**
@@ -58,9 +62,12 @@ public class RecipeIngredientsController {
      * Example: GET /api/recipeIngredients/recipe/{recipeId}
      */
     @GetMapping("/recipe/{recipeId}")
-    public ResponseEntity<List<RecipeIngredients>> getRecipeIngredientsByRecipeId(@PathVariable int recipeId) {
+    public ResponseEntity<List<RecipeIngredientResponseDto>> getRecipeIngredientsByRecipeId(@PathVariable int recipeId) {
         List<RecipeIngredients> ingredients = recipeIngredientsService.getRecipeIngredientsByRecipeId(recipeId);
-        return ResponseEntity.ok(ingredients);
+        List<RecipeIngredientResponseDto> responseDtos = ingredients.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDtos);
     }
 
     /**
@@ -68,12 +75,11 @@ public class RecipeIngredientsController {
      * Example: PUT /api/recipeIngredients/{id}
      */
     @PutMapping("/{id}")
-    public ResponseEntity<RecipeIngredients> updateRecipeIngredient(@PathVariable int id,
-                                                                    @RequestBody RecipeIngredients recipeIngredient) {
-        // Ensure the provided RecipeIngredient has the correct ID.
-        recipeIngredient.setRecipeIngredientID(id);
-        RecipeIngredients updated = recipeIngredientsService.updateRecipeIngredient(recipeIngredient);
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<RecipeIngredientResponseDto> updateRecipeIngredient(@PathVariable int id,
+                                                                              @RequestBody RecipeIngredientRequestDto requestDto) {
+        RecipeIngredients updatedEntity = recipeIngredientsService.updateRecipeIngredientFromDto(id, requestDto);
+        RecipeIngredientResponseDto responseDto = convertToResponseDto(updatedEntity);
+        return ResponseEntity.ok(responseDto);
     }
 
     /**
@@ -84,5 +90,18 @@ public class RecipeIngredientsController {
     public ResponseEntity<Void> deleteRecipeIngredient(@PathVariable int id) {
         recipeIngredientsService.deleteRecipeIngredient(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Helper method to convert a RecipeIngredients entity into a RecipeIngredientResponseDto.
+     */
+    private RecipeIngredientResponseDto convertToResponseDto(RecipeIngredients entity) {
+        RecipeIngredientResponseDto dto = new RecipeIngredientResponseDto();
+        dto.setRecipeIngredientId(entity.getRecipeIngredientID());
+        dto.setQuantity(entity.getQuantity());
+        dto.setUnit(entity.getUnit());
+        dto.setRecipeId(entity.getRecipe().getRecipeID());
+        dto.setIngredientName(entity.getIngredient().getName());
+        return dto;
     }
 }
