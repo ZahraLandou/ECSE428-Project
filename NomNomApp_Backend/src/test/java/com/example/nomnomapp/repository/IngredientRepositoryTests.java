@@ -1,7 +1,8 @@
 package com.example.nomnomapp.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -22,27 +23,27 @@ public class IngredientRepositoryTests {
     IngredientRepository ingredientRepository;
 
     @AfterEach
-    public void clearDatabase(){
+    public void clearDatabase() {
         ingredientRepository.deleteAll();
     }
 
     @Test
-    public void testPersistAndLoadIngredient(){
+    public void testPersistAndLoadIngredient() {
 
         Ingredient shrimp = new Ingredient("shrimp", "seafood");
         Ingredient garlic = new Ingredient("garlic", "spice");
 
-        shrimp=ingredientRepository.save(shrimp);
+        shrimp = ingredientRepository.save(shrimp);
         garlic = ingredientRepository.save(garlic);
 
-        Ingredient savedShrimp = ingredientRepository.findIngredientByName("shrimp");
-        Ingredient savedGarlic = ingredientRepository.findIngredientByName("garlic");
-        assertNotNull(savedShrimp);
-        assertNotNull(savedGarlic);
-        assertEquals(shrimp.getType(), savedShrimp.getType());
-        assertEquals(garlic.getType(), savedGarlic.getType());
+        Optional<Ingredient> savedShrimp = ingredientRepository.findIngredientByName("shrimp");
+        Optional<Ingredient> savedGarlic = ingredientRepository.findIngredientByName("garlic");
+
+        assertTrue(savedShrimp.isPresent(), "Shrimp should exist in database");
+        assertTrue(savedGarlic.isPresent(), "Garlic should exist in database");
+
+        assertEquals(shrimp.getType(), savedShrimp.get().getType());
+        assertEquals(garlic.getType(), savedGarlic.get().getType());
     }
 
-
-    
 }
