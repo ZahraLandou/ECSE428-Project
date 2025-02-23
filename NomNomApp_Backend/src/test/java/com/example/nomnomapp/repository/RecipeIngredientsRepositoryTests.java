@@ -72,3 +72,4 @@ public class RecipeIngredientsRepositoryTests {
         assertEquals(1, byIngredient.size());
     }
 }
+

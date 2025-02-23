@@ -1,5 +1,4 @@
 package com.example.nomnomapp.service;
-
 import com.example.nomnomapp.model.Ingredient;
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.RecipeIngredients;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 public class RecipeIngredientsServiceTest {
-
     @Autowired
     private RecipeIngredientsService recipeIngredientsService;
 
