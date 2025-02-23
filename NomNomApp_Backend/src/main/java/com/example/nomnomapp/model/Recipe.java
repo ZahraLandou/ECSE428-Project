@@ -32,6 +32,7 @@ public class Recipe
   @Column(nullable = false)
   private String title;
 
+  @Column(nullable = false)
   private String description;
 
   @Lob
@@ -51,7 +52,7 @@ public class Recipe
   @JoinColumn(name = "videoId")
   private ShortFormVideo shortFormVideo;
 
-  @OneToMany(mappedBy = "recipe")
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RecipeIngredients> recipeIngredients;
 
   @ManyToMany
@@ -72,6 +73,9 @@ public class Recipe
   // CONSTRUCTOR
   //------------------------
 
+  public Recipe(){
+    
+  }
   public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
     recipeID = aRecipeID;
