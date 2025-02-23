@@ -6,23 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipeIngredients")
-public class RecipeIngredientsController {
 
+public class RecipeIngredientController {
     @Autowired
     private RecipeIngredientsService recipeIngredientsService;
-
     /**
      * Create a new RecipeIngredient.
      * Example: POST /api/recipeIngredients
@@ -32,7 +23,6 @@ public class RecipeIngredientsController {
         RecipeIngredients created = recipeIngredientsService.createRecipeIngredient(recipeIngredient);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
-
     /**
      * Retrieve a RecipeIngredient by its ID.
      * Example: GET /api/recipeIngredients/{id}
@@ -42,7 +32,6 @@ public class RecipeIngredientsController {
         RecipeIngredients ingredient = recipeIngredientsService.getRecipeIngredientById(id);
         return ResponseEntity.ok(ingredient);
     }
-
     /**
      * Retrieve all RecipeIngredients.
      * Example: GET /api/recipeIngredients
@@ -52,7 +41,6 @@ public class RecipeIngredientsController {
         List<RecipeIngredients> ingredients = (List<RecipeIngredients>) recipeIngredientsService.getAllRecipeIngredients();
         return ResponseEntity.ok(ingredients);
     }
-
     /**
      * Retrieve all RecipeIngredients for a specific Recipe.
      * Example: GET /api/recipeIngredients/recipe/{recipeId}
@@ -62,7 +50,6 @@ public class RecipeIngredientsController {
         List<RecipeIngredients> ingredients = recipeIngredientsService.getRecipeIngredientsByRecipeId(recipeId);
         return ResponseEntity.ok(ingredients);
     }
-
     /**
      * Update an existing RecipeIngredient.
      * Example: PUT /api/recipeIngredients/{id}
@@ -75,7 +62,6 @@ public class RecipeIngredientsController {
         RecipeIngredients updated = recipeIngredientsService.updateRecipeIngredient(recipeIngredient);
         return ResponseEntity.ok(updated);
     }
-
     /**
      * Delete a RecipeIngredient by its ID.
      * Example: DELETE /api/recipeIngredients/{id}
@@ -85,4 +71,8 @@ public class RecipeIngredientsController {
         recipeIngredientsService.deleteRecipeIngredient(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
 }
