@@ -73,9 +73,11 @@ public class Recipe
   // CONSTRUCTOR
   //------------------------
 
-  public Recipe(){
-    
+  public Recipe() {
+    // initialize the list to avoid null pointer issues
+    this.recipeIngredients = new ArrayList<>();
   }
+
   public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
     recipeID = aRecipeID;
