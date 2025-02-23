@@ -5,7 +5,10 @@ package com.example.nomnomapp.model;
 import java.util.*;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
@@ -20,7 +23,11 @@ public class Ingredient
 
   //Ingredient Attributes
   @Id
-  private String name; //primary key
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int ingredientID;
+
+  @Column(unique = true, nullable = false)
+  private String name;
   private String type;
 
   //Ingredient Associations
