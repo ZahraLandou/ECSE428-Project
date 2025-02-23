@@ -49,5 +49,35 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.getRecipesByCategory(category));
     }
 
+    /**
+     * Increment the like count for a recipe.
+     * Example: POST /recipes/{recipeID}/like
+     */
+    @PostMapping("/{recipeID}/like")
+    public ResponseEntity<Recipe> likeRecipe(@PathVariable int recipeID) {
+        Recipe recipe = recipeService.likeRecipe(recipeID);
+        return ResponseEntity.ok(recipe);
+    }
+
+
+    /**
+     * Decrement the like count for a recipe.
+     * Example: DELETE /recipes/{recipeID}/like
+     */
+    @DeleteMapping("/{recipeID}/like")
+    public ResponseEntity<Recipe> unlikeRecipe(@PathVariable int recipeID) {
+        Recipe recipe = recipeService.unlikeRecipe(recipeID);
+        return ResponseEntity.ok(recipe);
+    }
+
+    /**
+     * Get the current like count for a recipe.
+     * Example: GET /recipes/{recipeID}/likes
+     */
+    @GetMapping("/{recipeID}/likes")
+    public ResponseEntity<Integer> getLikes(@PathVariable int recipeID) {
+        int likes = recipeService.getLikes(recipeID);
+        return ResponseEntity.ok(likes);
+    }
 
 }
