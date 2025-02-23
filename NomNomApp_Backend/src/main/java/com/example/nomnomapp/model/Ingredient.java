@@ -4,8 +4,13 @@
 package com.example.nomnomapp.model;
 import java.util.*;
 
-// line 55 "model.ump"
-// line 98 "model.ump"
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+
+@Entity
 public class Ingredient
 {
 
@@ -14,10 +19,12 @@ public class Ingredient
   //------------------------
 
   //Ingredient Attributes
-  private String name;
+  @Id
+  private String name; //primary key
   private String type;
 
   //Ingredient Associations
+  @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RecipeIngredients> recipeIngredients;
 
   //------------------------
