@@ -54,5 +54,33 @@ public class RecipeService {
         return recipeRepository.findRecipeByCategory(recipeCategory);
     }
 
+    public Recipe likeRecipe(int recipeID) {
+        Recipe recipe = recipeRepository.findRecipeById(recipeID);
+        if (recipe == null) {
+            throw new RuntimeException("Recipe not found");
+        }
+        recipe.setLikes(recipe.getLikes() + 1);
+        return recipeRepository.save(recipe);
+    }
+
+    public Recipe unlikeRecipe(int recipeID) {
+        Recipe recipe = recipeRepository.findRecipeById(recipeID);
+        if (recipe == null) {
+            throw new RuntimeException("Recipe not found");
+        }
+        // Ensure that likes don’t go negative
+        if (recipe.getLikes() > 0) {
+            recipe.setLikes(recipe.getLikes() - 1);
+        }
+        return recipeRepository.save(recipe);
+    }
+
+    public int getLikes(int recipeID) {
+        Recipe recipe = recipeRepository.findRecipeById(recipeID);
+        if (recipe == null) {
+            throw new RuntimeException("Recipe not found");
+        }
+        return recipe.getLikes();
+    }
     
 }
