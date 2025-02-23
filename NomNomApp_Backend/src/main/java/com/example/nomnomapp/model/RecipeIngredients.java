@@ -5,6 +5,15 @@
 package com.example.nomnomapp.model;
 // line 62 "model.ump"
 // line 111 "model.ump"
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class RecipeIngredients
 {
 
@@ -13,12 +22,23 @@ public class RecipeIngredients
   //------------------------
 
   //RecipeIngredients Attributes
+  @Id
+  @GeneratedValue(strategy =  GenerationType.IDENTITY)
   private int recipeIngredientID;
+
   private double quantity;
   private String unit;
 
   //RecipeIngredients Associations
+  
+  // Many-to-One relationship with Recipe
+  @ManyToOne
+  @JoinColumn(name = "recipeID", nullable = false) // foreign key in RecipeIngredients table
   private Recipe recipe;
+
+  // Many-to-One relationship with Ingredient
+  @ManyToOne
+  @JoinColumn(name = "ingredientName", nullable = false) // foreign key in RecipeIngredients table
   private Ingredient ingredient;
 
   //------------------------
@@ -28,6 +48,23 @@ public class RecipeIngredients
   public RecipeIngredients(int aRecipeIngredientID, double aQuantity, String aUnit, Recipe aRecipe, Ingredient aIngredient)
   {
     recipeIngredientID = aRecipeIngredientID;
+    quantity = aQuantity;
+    unit = aUnit;
+    boolean didAddRecipe = setRecipe(aRecipe);
+    if (!didAddRecipe)
+    {
+      throw new RuntimeException("Unable to create recipeIngredient due to recipe. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    boolean didAddIngredient = setIngredient(aIngredient);
+    if (!didAddIngredient)
+    {
+      throw new RuntimeException("Unable to create recipeIngredient due to ingredient. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
+
+
+  public RecipeIngredients(double aQuantity, String aUnit, Recipe aRecipe, Ingredient aIngredient)
+  {
     quantity = aQuantity;
     unit = aUnit;
     boolean didAddRecipe = setRecipe(aRecipe);
