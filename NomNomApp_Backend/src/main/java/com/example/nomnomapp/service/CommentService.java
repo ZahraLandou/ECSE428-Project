@@ -1,0 +1,100 @@
+package com.example.nomnomapp.service;
+
+import com.example.nomnomapp.exception.NomNomException;
+import com.example.nomnomapp.model.Comment;
+import com.example.nomnomapp.model.NomNomUser;
+import com.example.nomnomapp.model.Recipe;
+import com.example.nomnomapp.repository.CommentRepository;
+import com.example.nomnomapp.repository.RecipeRepository;
+import com.example.nomnomapp.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Optional;
+
+@Service
+public class CommentService {
+    @Autowired
+    private CommentRepository repo;
+    @Autowired
+    private RecipeRepository recipeRepo;
+
+    /**
+     * creates comment
+     * @throws IllegalArgumentException if the fields are not valid.
+     */
+    @Transactional
+    public Comment createComment(int aCommentId, String aCommentContent, double rating, NomNomUser aUser,Recipe aRecipe) {
+
+        if (aCommentId<0) {
+           throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment ID is not valid.");
+        }
+        if (aCommentContent.isEmpty()){
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment cannot be empty.");
+        }
+        if(rating<0 ||rating>5){
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
+        }
+        if(recipeRepo.findRecipeById(aRecipe.getRecipeID())==null){
+            throw new NomNomException(HttpStatus.NOT_FOUND, "Recipe does not exist.");
+        }
+        Date today=Date.valueOf(LocalDate.now());
+        Comment c = new Comment(aCommentId,aCommentContent,today,rating,aUser, aRecipe);
+        return repo.save(c);
+    }
+    @Transactional
+    public Comment updateComment(int aCommentId, String aCommentContent, double rating) {
+
+        if (aCommentId<0) {
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment ID is not valid.");
+        }
+        if (aCommentContent.isEmpty()){
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment cannot be empty.");
+        }
+        if(rating<0 ||rating>5){
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
+        }
+
+        Date today=Date.valueOf(LocalDate.now());
+        Comment c = repo.findCommentById(aCommentId);
+        c.setCommentContent(aCommentContent);
+        c.setRating(rating);
+        c.setCreationDate(today);
+        return repo.save(c);
+    }
+
+    public Comment getCommentById(int aCommentId) {
+
+        if (aCommentId<0) {
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment ID is not valid.");
+        }
+        Comment c= repo.findCommentById(aCommentId);
+        if(c==null){
+            throw new NomNomException(HttpStatus.NOT_FOUND,"Comment does not exist");
+        }
+        return c;
+    }
+
+    @Transactional
+    public void deleteComment(int aCommentId) {
+
+        if (aCommentId<0) {
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment ID is not valid.");
+        }
+        Comment c= repo.findCommentById(aCommentId);
+        if(c==null){
+            throw new NomNomException(HttpStatus.NOT_FOUND,"Comment does not exist");
+        }
+        c.delete();
+        repo.deleteById(aCommentId);
+    }
+    public Iterable<Comment> getAllComments() {
+        return repo.findAll();
+    }
+    
+
+}

@@ -3,35 +3,54 @@
 
 package com.example.nomnomapp.model;
 import java.sql.Date;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.*;
+
 
 // line 38 "model.ump"
 // line 88 "model.ump"
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Comment
 {
 
   //------------------------
+
   // MEMBER VARIABLES
   //------------------------
 
   //Comment Attributes
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int commentId;
+
   private String commentContent;
   private Date creationDate;
-  private double averageRating;
-
+  private double rating;
+  @ManyToOne
+  private NomNomUser nomNomUser;
   //Comment Associations
+  @ManyToOne
   private Recipe recipe;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
+  public Comment(){}
 
-  public Comment(int aCommentId, String aCommentContent, Date aCreationDate, double aAverageRating, Recipe aRecipe)
+  public Comment(int aCommentId, String aCommentContent, Date aCreationDate, double aRating, NomNomUser aNomNomUser, Recipe aRecipe)
   {
     commentId = aCommentId;
     commentContent = aCommentContent;
     creationDate = aCreationDate;
-    averageRating = aAverageRating;
+    rating = aRating;
+    boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
+    if (!didAddNomNomUser)
+    {
+      throw new RuntimeException("Unable to create comment due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
     boolean didAddRecipe = setRecipe(aRecipe);
     if (!didAddRecipe)
     {
@@ -67,10 +86,10 @@ public class Comment
     return wasSet;
   }
 
-  public boolean setAverageRating(double aAverageRating)
+  public boolean setRating(double aRating)
   {
     boolean wasSet = false;
-    averageRating = aAverageRating;
+    rating = aRating;
     wasSet = true;
     return wasSet;
   }
@@ -90,14 +109,38 @@ public class Comment
     return creationDate;
   }
 
-  public double getAverageRating()
+  public double getRating()
   {
-    return averageRating;
+    return rating;
+  }
+  /* Code from template association_GetOne */
+  public NomNomUser getNomNomUser()
+  {
+    return nomNomUser;
   }
   /* Code from template association_GetOne */
   public Recipe getRecipe()
   {
     return recipe;
+  }
+  /* Code from template association_SetOneToMany */
+  public boolean setNomNomUser(NomNomUser aNomNomUser)
+  {
+    boolean wasSet = false;
+    if (aNomNomUser == null)
+    {
+      return wasSet;
+    }
+
+    NomNomUser existingNomNomUser = nomNomUser;
+    nomNomUser = aNomNomUser;
+    if (existingNomNomUser != null && !existingNomNomUser.equals(aNomNomUser))
+    {
+      existingNomNomUser.removeComment(this);
+    }
+    nomNomUser.addComment(this);
+    wasSet = true;
+    return wasSet;
   }
   /* Code from template association_SetOneToMany */
   public boolean setRecipe(Recipe aRecipe)
@@ -121,6 +164,12 @@ public class Comment
 
   public void delete()
   {
+    NomNomUser placeholderNomNomUser = nomNomUser;
+    this.nomNomUser = null;
+    if(placeholderNomNomUser != null)
+    {
+      placeholderNomNomUser.removeComment(this);
+    }
     Recipe placeholderRecipe = recipe;
     this.recipe = null;
     if(placeholderRecipe != null)
@@ -135,8 +184,9 @@ public class Comment
     return super.toString() + "["+
             "commentId" + ":" + getCommentId()+ "," +
             "commentContent" + ":" + getCommentContent()+ "," +
-            "averageRating" + ":" + getAverageRating()+ "]" + System.getProperties().getProperty("line.separator") +
+            "rating" + ":" + getRating()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "creationDate" + "=" + (getCreationDate() != null ? !getCreationDate().equals(this)  ? getCreationDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "nomNomUser = "+(getNomNomUser()!=null?Integer.toHexString(System.identityHashCode(getNomNomUser())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "recipe = "+(getRecipe()!=null?Integer.toHexString(System.identityHashCode(getRecipe())):"null");
   }
 }
