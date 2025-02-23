@@ -22,6 +22,12 @@ public class RecipeIngredientsService {
      * @return the saved RecipeIngredients entity
      */
     public RecipeIngredients createRecipeIngredient(RecipeIngredients recipeIngredient) {
+        if (recipeIngredient.getQuantity() <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        if (recipeIngredient.getUnit() == null || recipeIngredient.getUnit().trim().isEmpty()) {
+            throw new IllegalArgumentException("Unit cannot be null or empty");
+        }
         return recipeIngredientsRepository.save(recipeIngredient);
     }
 
@@ -59,12 +65,18 @@ public class RecipeIngredientsService {
     /**
      * Update an existing RecipeIngredients record.
      *
-     * @param recipeIngredient the RecipeIngredients entity with updated data
+     * @param updateRi the RecipeIngredients entity with updated data
      * @return the updated RecipeIngredients entity
      */
-    public RecipeIngredients updateRecipeIngredient(RecipeIngredients recipeIngredient) {
+    public RecipeIngredients updateRecipeIngredient(RecipeIngredients updateRi) {
         // This will update the record if the entity exists
-        return recipeIngredientsRepository.save(recipeIngredient);
+        int id = updateRi.getRecipeIngredientID();
+        RecipeIngredients existing = recipeIngredientsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("RecipeIngredient not found with id: " + id));
+        existing.setQuantity(updateRi.getQuantity());
+        existing.setUnit(updateRi.getUnit());
+
+        return recipeIngredientsRepository.save(existing);
     }
 
     /**

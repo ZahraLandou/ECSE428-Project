@@ -66,6 +66,31 @@ public class RecipeIngredientsServiceTest {
         assertEquals("cups", saved.getUnit());
         verify(recipeIngredientsRepo, times(1)).save(testRecipeIngredient);
     }
+
+    @Test
+    void testCreateRecipeIngredient_InvalidQuantity() {
+        // Create a RecipeIngredient with a negative quantity.
+        RecipeIngredients invalidRi = new RecipeIngredients(-1.0, "cups", testRecipe, testIngredient);
+
+        // Expect an IllegalArgumentException with a descriptive message.
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            recipeIngredientsServ.createRecipeIngredient(invalidRi);
+        });
+        assertEquals("Quantity must be positive", exception.getMessage());
+    }
+
+    @Test
+    void testCreateRecipeIngredient_NullUnit() {
+        // Create a RecipeIngredient with a null unit.
+        RecipeIngredients invalidRi = new RecipeIngredients(2.0, null, testRecipe, testIngredient);
+
+        // Expect an exception if your business rules require a non-null, non-empty unit.
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            recipeIngredientsServ.createRecipeIngredient(invalidRi);
+        });
+        assertEquals("Unit cannot be null or empty", exception.getMessage());
+    }
+
     // Test retrieval of a RecipeIngredient by a valid ID
     @Test
     void testGetRecipeIngredientById_Success() {
@@ -88,15 +113,37 @@ public class RecipeIngredientsServiceTest {
     }
     @Test
     void testUpdateRecipeIngredient_Success() {
+        // Stub the findById call so the service finds the existing entity.
+        when(recipeIngredientsRepo.findById(testRecipeIngredient.getRecipeIngredientID()))
+                .thenReturn(Optional.of(testRecipeIngredient));
 
-
+        // Update fields in the test instance
         testRecipeIngredient.setQuantity(3.5);
         testRecipeIngredient.setUnit("liters");
+
         when(recipeIngredientsRepo.save(testRecipeIngredient)).thenReturn(testRecipeIngredient);
+
         RecipeIngredients updated = recipeIngredientsServ.updateRecipeIngredient(testRecipeIngredient);
         assertNotNull(updated);
         assertEquals(3.5, updated.getQuantity());
         assertEquals("liters", updated.getUnit());
+    }
+
+    @Test
+    void testUpdateRecipeIngredient_NotFound() {
+        // Set up an update for a RecipeIngredient with an ID that doesn't exist.
+        int nonExistentId = 999;
+        RecipeIngredients updateRi = new RecipeIngredients(2.0, "cups", testRecipe, testIngredient);
+        updateRi.setRecipeIngredientID(nonExistentId);
+
+        // Stub findById to return empty so the service cannot find the entity.
+        when(recipeIngredientsRepo.findById(nonExistentId)).thenReturn(Optional.empty());
+
+        // Expect an exception with the correct message.
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            recipeIngredientsServ.updateRecipeIngredient(updateRi);
+        });
+        assertEquals("RecipeIngredient not found with id: 999", exception.getMessage());
     }
     // Test deletion of an existing RecipeIngredient
     @Test
