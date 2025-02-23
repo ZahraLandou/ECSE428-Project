@@ -37,6 +37,9 @@ public class Ingredient
     type = aType;
     recipeIngredients = new ArrayList<RecipeIngredients>();
   }
+  public Ingredient() {
+    // Required by JPA
+  }
 
   //------------------------
   // INTERFACE

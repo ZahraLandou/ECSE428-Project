@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 public class RecipeIngredients
 {
 
+
   //------------------------
   // MEMBER VARIABLES
   //------------------------
@@ -61,7 +62,9 @@ public class RecipeIngredients
       throw new RuntimeException("Unable to create recipeIngredient due to ingredient. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
+  public RecipeIngredients(){
 
+  }
 
   public RecipeIngredients(double aQuantity, String aUnit, Recipe aRecipe, Ingredient aIngredient)
   {
