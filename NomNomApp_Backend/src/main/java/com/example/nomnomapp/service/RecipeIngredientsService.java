@@ -32,9 +32,10 @@ public class RecipeIngredientsService {
      * @return the found RecipeIngredients entity
      */
     public RecipeIngredients getRecipeIngredientById(int id) {
-        Optional<RecipeIngredients> result = recipeIngredientsRepository.findById(id);
-        return result.orElseThrow(() -> new RuntimeException("RecipeIngredient not found with id: " + id));
+        return recipeIngredientsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("RecipeIngredient not found with id: " + id));
     }
+
 
     /**
      * Retrieve all RecipeIngredients records.
@@ -72,6 +73,8 @@ public class RecipeIngredientsService {
      * @param id the RecipeIngredients ID to delete
      */
     public void deleteRecipeIngredient(int id) {
+        RecipeIngredients ri = recipeIngredientsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("RecipeIngredient not found with id: " + id));
         recipeIngredientsRepository.deleteById(id);
     }
 }
