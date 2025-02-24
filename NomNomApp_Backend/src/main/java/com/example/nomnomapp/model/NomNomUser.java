@@ -40,6 +40,9 @@ public class NomNomUser
   @OneToMany(mappedBy = "nomNomUser", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RecipeList> recipeLists = new ArrayList<>();
 
+  @OneToMany(mappedBy = "nomNomUser", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comment> comments;
+
   @ManyToMany
   @JoinTable(
           name = "user_roles",
@@ -53,8 +56,9 @@ public class NomNomUser
   //------------------------
   // CONSTRUCTOR
   //------------------------
+  public NomNomUser() {
 
-
+  }
   public NomNomUser(String aUsername, String aEmailAddress, String aPassword)
   {
     username = aUsername;
@@ -67,10 +71,7 @@ public class NomNomUser
     recipeLists = new ArrayList<RecipeList>();
     roleName = new ArrayList<NomNomUser>();
     nomNomUsers = new ArrayList<NomNomUser>();
-  }
-
-  public NomNomUser() {
-
+    comments = new ArrayList<Comment>();
   }
 
   //------------------------
@@ -291,6 +292,36 @@ public class NomNomUser
     int index = nomNomUsers.indexOf(aNomNomUser);
     return index;
   }
+  /* Code from template association_GetMany */
+  public Comment getComment(int index)
+  {
+    Comment aComment = comments.get(index);
+    return aComment;
+  }
+
+  public List<Comment> getComments()
+  {
+    List<Comment> newComments = Collections.unmodifiableList(comments);
+    return newComments;
+  }
+
+  public int numberOfComments()
+  {
+    int number = comments.size();
+    return number;
+  }
+
+  public boolean hasComments()
+  {
+    boolean has = comments.size() > 0;
+    return has;
+  }
+
+  public int indexOfComment(Comment aComment)
+  {
+    int index = comments.indexOf(aComment);
+    return index;
+  }
   /* Code from template association_MinimumNumberOfMethod */
   public static int minimumNumberOfNotifications()
   {
@@ -333,7 +364,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addNotificationAt(Notification aNotification, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addNotification(aNotification))
     {
@@ -356,8 +387,8 @@ public class NomNomUser
       notifications.remove(aNotification);
       notifications.add(index, aNotification);
       wasAdded = true;
-    } 
-    else 
+    }
+    else
     {
       wasAdded = addNotificationAt(aNotification, index);
     }
@@ -405,7 +436,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addRecipeAt(Recipe aRecipe, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addRecipe(aRecipe))
     {
@@ -428,8 +459,8 @@ public class NomNomUser
       recipes.remove(aRecipe);
       recipes.add(index, aRecipe);
       wasAdded = true;
-    } 
-    else 
+    }
+    else
     {
       wasAdded = addRecipeAt(aRecipe, index);
     }
@@ -441,9 +472,9 @@ public class NomNomUser
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public RecipeList addRecipeList(int aRecipeListID, String aName, RecipeList.ListCategory aCategory)
+  public RecipeList addRecipeList(int aRecipeID, String aName, RecipeList.ListCategory aCategory)
   {
-    return new RecipeList(aRecipeListID, aName, aCategory, this);
+    return new RecipeList(aRecipeID, aName, aCategory, this);
   }
 
   public boolean addRecipeList(RecipeList aRecipeList)
@@ -477,7 +508,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addRecipeListAt(RecipeList aRecipeList, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addRecipeList(aRecipeList))
     {
@@ -500,8 +531,8 @@ public class NomNomUser
       recipeLists.remove(aRecipeList);
       recipeLists.add(index, aRecipeList);
       wasAdded = true;
-    } 
-    else 
+    }
+    else
     {
       wasAdded = addRecipeListAt(aRecipeList, index);
     }
@@ -559,7 +590,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addRoleNameAt(NomNomUser aRoleName, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addRoleName(aRoleName))
     {
@@ -582,8 +613,8 @@ public class NomNomUser
       roleName.remove(aRoleName);
       roleName.add(index, aRoleName);
       wasAdded = true;
-    } 
-    else 
+    }
+    else
     {
       wasAdded = addRoleNameAt(aRoleName, index);
     }
@@ -641,7 +672,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addNomNomUserAt(NomNomUser aNomNomUser, int index)
-  {  
+  {
     boolean wasAdded = false;
     if(addNomNomUser(aNomNomUser))
     {
@@ -664,10 +695,82 @@ public class NomNomUser
       nomNomUsers.remove(aNomNomUser);
       nomNomUsers.add(index, aNomNomUser);
       wasAdded = true;
-    } 
-    else 
+    }
+    else
     {
       wasAdded = addNomNomUserAt(aNomNomUser, index);
+    }
+    return wasAdded;
+  }
+  /* Code from template association_MinimumNumberOfMethod */
+  public static int minimumNumberOfComments()
+  {
+    return 0;
+  }
+  /* Code from template association_AddManyToOne */
+  public Comment addComment(int aCommentId, String aCommentContent, Date aCreationDate, double aRating, Recipe aRecipe)
+  {
+    return new Comment(aCommentId, aCommentContent, aCreationDate, aRating, this, aRecipe);
+  }
+
+  public boolean addComment(Comment aComment)
+  {
+    boolean wasAdded = false;
+    if (comments.contains(aComment)) { return false; }
+    NomNomUser existingNomNomUser = aComment.getNomNomUser();
+    boolean isNewNomNomUser = existingNomNomUser != null && !this.equals(existingNomNomUser);
+    if (isNewNomNomUser)
+    {
+      aComment.setNomNomUser(this);
+    }
+    else
+    {
+      comments.add(aComment);
+    }
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeComment(Comment aComment)
+  {
+    boolean wasRemoved = false;
+    //Unable to remove aComment, as it must always have a nomNomUser
+    if (!this.equals(aComment.getNomNomUser()))
+    {
+      comments.remove(aComment);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+  /* Code from template association_AddIndexControlFunctions */
+  public boolean addCommentAt(Comment aComment, int index)
+  {
+    boolean wasAdded = false;
+    if(addComment(aComment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfComments()) { index = numberOfComments() - 1; }
+      comments.remove(aComment);
+      comments.add(index, aComment);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveCommentAt(Comment aComment, int index)
+  {
+    boolean wasAdded = false;
+    if(comments.contains(aComment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfComments()) { index = numberOfComments() - 1; }
+      comments.remove(aComment);
+      comments.add(index, aComment);
+      wasAdded = true;
+    }
+    else
+    {
+      wasAdded = addCommentAt(aComment, index);
     }
     return wasAdded;
   }
@@ -680,7 +783,7 @@ public class NomNomUser
       aNotification.delete();
       notifications.remove(aNotification);
     }
-    
+
     for(int i=recipes.size(); i > 0; i--)
     {
       Recipe aRecipe = recipes.get(i - 1);
@@ -702,6 +805,11 @@ public class NomNomUser
     for(NomNomUser aNomNomUser : copyOfNomNomUsers)
     {
       aNomNomUser.removeRoleName(this);
+    }
+    for(int i=comments.size(); i > 0; i--)
+    {
+      Comment aComment = comments.get(i - 1);
+      aComment.delete();
     }
   }
 

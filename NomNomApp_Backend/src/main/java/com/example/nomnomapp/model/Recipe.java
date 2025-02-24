@@ -532,9 +532,9 @@ public class Recipe
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Comment addComment(int aCommentId, String aCommentContent, Date aCreationDate, double aAverageRating)
+  public Comment addComment(int aCommentId, String aCommentContent, Date aCreationDate, double aRating, NomNomUser aNomNomUser)
   {
-    return new Comment(aCommentId, aCommentContent, aCreationDate, aAverageRating, this);
+    return new Comment(aCommentId, aCommentContent, aCreationDate, aRating, aNomNomUser, this);
   }
 
   public boolean addComment(Comment aComment)
