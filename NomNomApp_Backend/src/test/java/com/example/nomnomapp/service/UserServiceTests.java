@@ -1,6 +1,7 @@
 package com.example.nomnomapp.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 import com.example.nomnomapp.model.NomNomUser;
@@ -28,47 +29,75 @@ public class UserServiceTests {
     @BeforeEach
     void setUp() {
         testUser = new NomNomUser("testUser", "test@example.com", "password123");
+        testUser.setUserId(1);
     }
 
-    /** Successfully deletes an existing user */
+    /** Successfully deletes an existing user by userId */
     @Test
-    void testDeleteUserByUsername_Success() {
-        when(userRepository.findByUsername("testUser")).thenReturn(Optional.of(testUser));
+    void testDeleteUserById_Success() {
+        when(userRepository.findById(1)).thenReturn(Optional.of(testUser));
 
-        assertDoesNotThrow(() -> userService.deleteUserByUsername("testUser"));
+        assertDoesNotThrow(() -> userService.deleteUserById(1));
 
-        verify(userRepository, times(1)).delete(testUser);
+        verify(userRepository).deleteById(1);
     }
 
-    /** Error Case: Attempting to delete a non-existent user should throw an exception */
+    /** Deleting a non-existent user should throw an exception */
     @Test
-    void testDeleteUserByUsername_UserNotFound() {
-        when(userRepository.findByUsername("nonexistentUser")).thenReturn(Optional.empty());
+    void testDeleteUserById_UserNotFound() {
+        when(userRepository.findById(99)).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> userService.deleteUserByUsername("nonexistentUser"));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUserById(99);
+        });
 
-        assertEquals("User with username 'nonexistentUser' not found.", exception.getMessage());
-        verify(userRepository, never()).delete(any());
+        assertEquals("User with ID '99' not found.", exception.getMessage());
     }
 
-    /** Edge Case: Attempting to delete with an empty username should throw an exception */
+    /** Edge Case: Deleting with a negative userId */
     @Test
-    void testDeleteUserByUsername_EmptyUsername() {
-        Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> userService.deleteUserByUsername(""));
+    void testDeleteUserById_NegativeId() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUserById(-5);
+        });
 
-        assertEquals("User with username '' not found.", exception.getMessage());
-        verify(userRepository, never()).delete(any());
+        assertEquals("Invalid user ID: -5", exception.getMessage());
     }
 
-    /** Edge Case: Attempting to delete with a null username should throw an exception */
+    /** Edge Case: Deleting with userId = 0 */
     @Test
-    void testDeleteUserByUsername_NullUsername() {
-        Exception exception = assertThrows(IllegalArgumentException.class,
-                () -> userService.deleteUserByUsername(null));
+    void testDeleteUserById_ZeroId() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUserById(0);
+        });
 
-        assertEquals("User with username 'null' not found.", exception.getMessage());
-        verify(userRepository, never()).delete(any());
+        assertEquals("Invalid user ID: 0", exception.getMessage());
+    }
+
+    /** Edge Case: Deleting with an extremely large userId */
+    @Test
+    void testDeleteUserById_LargeId() {
+        int largeId = Integer.MAX_VALUE;
+        when(userRepository.findById(largeId)).thenReturn(Optional.empty());
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUserById(largeId);
+        });
+
+        assertEquals("User with ID '" + largeId + "' not found.", exception.getMessage());
+    }
+
+    /** Ensures deleteUserById does not throw if called multiple times */
+    @Test
+    void testDeleteUserById_MultipleDeletions() {
+        when(userRepository.findById(1)).thenReturn(Optional.of(testUser)).thenReturn(Optional.empty());
+
+        assertDoesNotThrow(() -> userService.deleteUserById(1));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUserById(1);
+        });
+
+        assertEquals("User with ID '1' not found.", exception.getMessage());
     }
 }

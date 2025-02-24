@@ -13,16 +13,16 @@ public class UserController {
     private UserService userService;
 
     /**
-     * Deletes a user profile by username.
+     * Deletes a user profile by userId.
      *
-     * @param username The username of the user to delete.
+     * @param userId The ID of the user to delete.
      * @return HTTP 200 OK if deleted, or HTTP 404 if the user is not found.
      */
-    @DeleteMapping("/{username}")
-    public ResponseEntity<String> deleteUser(@PathVariable String username) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") int userId) {
         try {
-            userService.deleteUserByUsername(username);
-            return ResponseEntity.ok("User '" + username + "' deleted successfully.");
+            userService.deleteUserById(userId);
+            return ResponseEntity.ok("User with ID " + userId + " deleted successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }

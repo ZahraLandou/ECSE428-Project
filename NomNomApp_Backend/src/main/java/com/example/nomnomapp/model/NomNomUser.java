@@ -705,7 +705,12 @@ public class NomNomUser
     }
   }
 
-
+  public int getUserId() {
+    return userId;
+  }
+  public void setUserId(int userId) {
+    this.userId = userId;
+  }
   public String toString()
   {
     return super.toString() + "["+

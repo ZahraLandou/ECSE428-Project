@@ -42,4 +42,19 @@ public class UserService {
             throw new IllegalArgumentException("User with email '" + emailAddress + "' not found.");
         }
     }
+
+    /**
+     * Deletes a user account by user ID.
+     *
+     * @param userId The ID of the user to delete.
+     * @throws IllegalArgumentException if the user does not exist.
+     */
+    public void deleteUserById(int userId) {
+        Optional<NomNomUser> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            userRepository.delete(user.get());
+        } else {
+            throw new IllegalArgumentException("User with ID '" + userId + "' not found.");
+        }
+    }
 }
