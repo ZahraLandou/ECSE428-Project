@@ -39,6 +39,23 @@ public class Comment
   // CONSTRUCTOR
   //------------------------
   public Comment(){}
+  public Comment( String aCommentContent, Date aCreationDate, double aRating, NomNomUser aNomNomUser, Recipe aRecipe)
+  {
+    
+    commentContent = aCommentContent;
+    creationDate = aCreationDate;
+    rating = aRating;
+    boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
+    if (!didAddNomNomUser)
+    {
+      throw new RuntimeException("Unable to create comment due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    boolean didAddRecipe = setRecipe(aRecipe);
+    if (!didAddRecipe)
+    {
+      throw new RuntimeException("Unable to create comment due to recipe. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+  }
 
   public Comment(int aCommentId, String aCommentContent, Date aCreationDate, double aRating, NomNomUser aNomNomUser, Recipe aRecipe)
   {

@@ -77,6 +77,27 @@ public class Recipe
     // initialize the list to avoid null pointer issues
     this.recipeIngredients = new ArrayList<>();
   }
+  public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
+  {
+    
+    title = aTitle;
+    description = aDescription;
+    instructions = aInstructions;
+    creationDate = aCreationDate;
+    category = aCategory;
+    likes = aLikes;
+    picture = aPicture;
+    averageRating = aAverageRating;
+    recipeIngredients = new ArrayList<RecipeIngredients>();
+    recipeLists = new ArrayList<RecipeList>();
+    boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
+    if (!didAddNomNomUser)
+    {
+      throw new RuntimeException("Unable to create recipe due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    comments = new ArrayList<Comment>();
+  } 
+
 
   public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
@@ -110,7 +131,15 @@ public class Recipe
     wasSet = true;
     return wasSet;
   } 
-
+  public double calculateAverageRating(){
+    double average =0.0;
+    if(!comments.isEmpty()){
+    for(Comment c: comments){
+      average += c.getRating();
+    }
+  }
+    return average/comments.size();
+  }
 
   public boolean setTitle(String aTitle)
   {
