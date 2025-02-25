@@ -63,11 +63,6 @@ public class UserService {
         if (aUsername == null || aUsername.trim().length() == 0) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
-        // check if user with username exists
-        if (userRepository.existsByUsername(aUsername)) {
-            return null;
-        }
-
         return userRepository.findByUsername(aUsername);
     }
 
@@ -82,11 +77,6 @@ public class UserService {
         if (aEmailAddress == null || aEmailAddress.trim().length() == 0) {
             throw new IllegalArgumentException("Email address cannot be empty");
         }
-        // check if user with email exists
-        if (userRepository.existsByEmailAddress(aEmailAddress)) {
-            return null;
-        }
-
         return userRepository.findByEmailAddress(aEmailAddress);
     }
 
@@ -98,7 +88,11 @@ public class UserService {
      */
     public String getUserProfilePicture(String aUsername) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         return user.getProfilePicture();
     }
@@ -111,7 +105,11 @@ public class UserService {
      */
     public String getUserBiography(String aUsername) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         return user.getBiography();
     }
@@ -124,7 +122,11 @@ public class UserService {
      */
     public String getUserPassword(String aUsername) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         return user.getPassword();
     }
@@ -137,7 +139,11 @@ public class UserService {
      */
     public String getUserEmail(String aUsername) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         return user.getEmailAddress();
     }
@@ -150,7 +156,11 @@ public class UserService {
      */
     public String getUserUsername(String aEmailAddress) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByEmail(aEmailAddress);
+        Optional<NomNomUser> userOptional = userRepository.findByEmailAddress(aEmailAddress);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with email '" + aEmailAddress + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         return user.getUsername();
     }
@@ -164,14 +174,19 @@ public class UserService {
      */
     public boolean setUserProfilePicture(String aUsername, String aProfilePicture) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         // check if profile pic is empty
         if (aProfilePicture == null || aProfilePicture.trim().length() == 0) {
             throw new IllegalArgumentException("Profile picture cannot be empty");
         }
-
-        return user.setProfilePicture(aProfilePicture);
+        user.setProfilePicture(aProfilePicture);
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -183,14 +198,19 @@ public class UserService {
      */
     public boolean setUserBiography(String aUsername, String aBiography) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         // check if biography is empty
         if (aBiography == null || aBiography.trim().length() == 0) {
             throw new IllegalArgumentException("Biography cannot be empty");
         }
-
-        return user.setBiography(aBiography);
+        user.setBiography(aBiography);
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -202,14 +222,19 @@ public class UserService {
      */
     public boolean setUserPassword(String aUsername, String aPassword) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         // check if password is empty
         if (aPassword == null || aPassword.trim().length() == 0) {
             throw new IllegalArgumentException("Password cannot be empty");
         }
-
-        return user.setPassword(aPassword);
+        user.setPassword(aPassword);
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -221,18 +246,19 @@ public class UserService {
      */
     public boolean setUserEmail(String aUsername, String aEmailAddress) {
         // get the NomNomUser object with the given username
-        NomNomUser user = getUserByUsername(aUsername);
+        Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         // check if email is empty
         if (aEmailAddress == null || aEmailAddress.trim().length() == 0) {
             throw new IllegalArgumentException("Email address cannot be empty");
         }
-        // check if a user with the same email already exists
-        if (userRepository.findByEmailAddress(aEmailAddress).isPresent()) {
-            throw new IllegalArgumentException("User with email '" + aEmailAddress + "' already exists");
-        }
-
-        return user.setEmailAddress(aEmailAddress);
+        user.setEmailAddress(aEmailAddress);
+        userRepository.save(user);
+        return true;
     }
 
     /**
@@ -244,18 +270,19 @@ public class UserService {
      */
     public boolean setUserUsername(String aEmailAddress, String aNewUsername) {
         // get the NomNomUser object with the given email address
-        NomNomUser user = getUserByEmail(aEmailAddress);
+        Optional<NomNomUser> userOptional = userRepository.findByEmailAddress(aEmailAddress);
+        if (!userOptional.isPresent()) {
+            throw new IllegalArgumentException("User with email '" + aEmailAddress + "' not found.");
+        }
+        NomNomUser user = userOptional.get();
 
         // check if username is empty
         if (aNewUsername == null || aNewUsername.trim().length() == 0) {
             throw new IllegalArgumentException("Username cannot be empty");
         }
-        // check if a user with the same username already exists
-        if (userRepository.findByUsername(aUsername).isPresent()) {
-            throw new IllegalArgumentException("User with username '" + aUsername + "' already exists");
-        }
-
-        return user.setUsername(aNewUsername);
+        user.setUsername(aNewUsername);
+        userRepository.save(user);
+        return true;
     }
 
     /**
