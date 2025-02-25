@@ -1,15 +1,14 @@
 package com.example.nomnomapp.runners;
 
-// import org.junit.platform.suite.api.ConfigurationParameter;
-// import org.junit.platform.suite.api.IncludeEngines;
-// import org.junit.platform.suite.api.SelectClasspathResource;
-// import org.junit.platform.suite.api.Suite;
-import org.junit.platform.suite.api.*;
-import io.cucumber.junit.platform.engine.Constants;
+import org.junit.runner.RunWith;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 
-@Suite
-@IncludeEngines("cucumber")
-@SelectClasspathResource("features")
-@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "com.example.nomnomapp.stepdefinitions")
+@RunWith(Cucumber.class)
+@CucumberOptions(
+        plugin = "pretty",
+        features = "src/test/resources",
+        glue = "com.example.nomnomapp.stepdefinitions")
 public class CucumberTestRunner {
+
 }
