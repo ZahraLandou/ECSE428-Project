@@ -77,6 +77,13 @@ public class Ingredient
   {
     return type;
   }
+
+  public int getIngredientId()
+  {
+    return ingredientID;
+  }
+  
+
   /* Code from template association_GetMany */
   public RecipeIngredients getRecipeIngredient(int index)
   {
