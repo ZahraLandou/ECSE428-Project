@@ -227,6 +227,10 @@ public class UserService {
         if (aEmailAddress == null || aEmailAddress.trim().length() == 0) {
             throw new IllegalArgumentException("Email address cannot be empty");
         }
+        // check if a user with the same email already exists
+        if (userRepository.findByEmailAddress(aEmailAddress).isPresent()) {
+            throw new IllegalArgumentException("User with email '" + aEmailAddress + "' already exists");
+        }
 
         return user.setEmailAddress(aEmailAddress);
     }
@@ -245,6 +249,10 @@ public class UserService {
         // check if username is empty
         if (aNewUsername == null || aNewUsername.trim().length() == 0) {
             throw new IllegalArgumentException("Username cannot be empty");
+        }
+        // check if a user with the same username already exists
+        if (userRepository.findByUsername(aUsername).isPresent()) {
+            throw new IllegalArgumentException("User with username '" + aUsername + "' already exists");
         }
 
         return user.setUsername(aNewUsername);
