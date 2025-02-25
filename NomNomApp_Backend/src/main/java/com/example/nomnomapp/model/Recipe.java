@@ -63,8 +63,12 @@ public class Recipe
   )
   private List<RecipeList> recipeLists;
 
-  
+  @ManyToOne
+  @JoinColumn(name = "user_id") // adjust column name as needed
   private NomNomUser nomNomUser;
+
+
+
 
   @OneToMany(mappedBy = "recipe")
   private List<Comment> comments;
