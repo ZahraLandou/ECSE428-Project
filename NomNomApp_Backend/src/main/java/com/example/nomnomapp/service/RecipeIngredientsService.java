@@ -59,7 +59,7 @@ public class RecipeIngredientsService {
      * @return a list of RecipeIngredients for the given recipe
      */
     public List<RecipeIngredients> getRecipeIngredientsByRecipeId(int recipeID) {
-        return recipeIngredientsRepository.findByRecipeRecipeID(recipeID);
+        return recipeIngredientsRepository.findIngredientsByRecipeRecipeId(recipeID);
     }
 
     /**
