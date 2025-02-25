@@ -14,6 +14,8 @@ import com.example.nomnomapp.repository.UserRepository;
 import com.example.nomnomapp.service.CommentService;
 import com.example.nomnomapp.service.UserService;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 import jakarta.transaction.Transactional;
 
@@ -28,26 +30,46 @@ public class CommentServiceStepDefinitions {
    
     @Autowired
     private CommentService commentService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private UserRepository userRepo;
+
     @Autowired
     private CommentRepository commentRepo;
+
     @Autowired
     private RecipeRepository recipeRepo;
     private Comment createdComment;
     private String error;
 
-    public CommentServiceStepDefinitions() {
-        MockitoAnnotations.openMocks(this);
+
+        @Before
+    public void setUp() {
+        userRepo.deleteAll(); 
+        commentRepo.deleteAll();
+        recipeRepo.deleteAll();
+
     }
+
+    @After
+    public void tearDown() {
+        userRepo.deleteAll(); 
+        commentRepo.deleteAll();
+        recipeRepo.deleteAll();
+    }
+
+   
     @Given("the following Users exist in the system")
     public void the_following_users_exist(io.cucumber.datatable.DataTable dataTable) {
+        System.out.println("testing");
         List<Map<String, String>> rows = dataTable.asMaps();
         for (Map<String, String> row : rows) {
             userService.createUser(row.get("username"), row.get("emailAddress"), row.get("password"));
         }
+       
     }
 
     @Given("the following Recipe exists in the system ")
@@ -64,29 +86,29 @@ public class CommentServiceStepDefinitions {
     @When("user with userId {string} attempts to add a new comment with {string}, date {string} and content {string} to an existing recipe {string}")
     public void user_adds_comment(String commentId, String commentContent, String rating, String userId, String recipeId ) {
         try {
-            createdComment = commentService.createComment(Integer.parseInt(commentId), commentContent, Double.parseDouble(rating), userRepo.findByUserId(Integer.parseInt(userId)),recipeRepo.findRecipeById(Integer.parseInt(recipeId)));
+            createdComment = commentService.createComment(Integer.parseInt(commentId), commentContent, Double.parseDouble(rating), userRepo.findByUserId(Integer.parseInt(userId)),recipeRepo.findByRecipeId(Integer.parseInt(recipeId)));
         } catch (Exception e) {
             error = e.getMessage();
         }
     }
 
-    @Then("the rating of the recipe {tring} should be {string}")
+    @Then("the rating of the recipe {string} should be {string}")
     public void the_rating_should_be_updated(String recipeId, String expectedRating) {
-        Recipe recipe = recipeRepo.findRecipeById(Integer.parseInt(recipeId));
+        Recipe recipe = recipeRepo.findByRecipeId(Integer.parseInt(recipeId));
         assertNotNull(recipe);
         assertEquals(Double.parseDouble(expectedRating),recipe.getAverageRating());
     }
 
     @Then("the number of comments for recipe {string} in the system shall be {string}")
     public void the_number_of_comments_should_be(String recipeId, String expectedNumber) {
-        Recipe recipe = recipeRepo.findRecipeById(Integer.parseInt(recipeId));
+        Recipe recipe = recipeRepo.findByRecipeId(Integer.parseInt(recipeId));
         assertNotNull(recipe);
         assertEquals(Integer.parseInt(expectedNumber), recipe.getComments().size());
     }
 
     @Then("the comment {string} created by user {string} for recipe {string}, date {string}, content {string}, and rating {string} shall exist in the system ")
     public void comment_should_exist(String commentId, String username, String recipeId, String creationDate, String commentContent, String rating) {
-        Comment comment = commentRepo.findCommentById(Integer.parseInt(commentId));
+        Comment comment = commentRepo.findCommentByCommentId(Integer.parseInt(commentId));
         assertNotNull(comment);
         assertEquals(username, comment.getNomNomUser().getUsername());
         assertEquals(Integer.parseInt(recipeId), comment.getRecipe().getRecipeID());

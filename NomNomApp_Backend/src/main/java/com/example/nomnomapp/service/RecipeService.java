@@ -46,7 +46,7 @@ public class RecipeService {
     }
 
     public Recipe getRecipeByID(int recipeID) {
-        return recipeRepository.findRecipeById(recipeID);
+        return recipeRepository.findByRecipeId(recipeID);
     }
     
 
@@ -64,7 +64,7 @@ public class RecipeService {
     }
 
     public Recipe likeRecipe(int recipeID) {
-        Recipe recipe = recipeRepository.findRecipeById(recipeID);
+        Recipe recipe = recipeRepository.findByRecipeId(recipeID);
         if (recipe == null) {
             throw new RuntimeException("Recipe not found");
         }
@@ -73,7 +73,7 @@ public class RecipeService {
     }
 
     public Recipe unlikeRecipe(int recipeID) {
-        Recipe recipe = recipeRepository.findRecipeById(recipeID);
+        Recipe recipe = recipeRepository.findByRecipeId(recipeID);
         if (recipe == null) {
             throw new RuntimeException("Recipe not found");
         }
@@ -85,7 +85,7 @@ public class RecipeService {
     }
 
     public int getLikes(int recipeID) {
-        Recipe recipe = recipeRepository.findRecipeById(recipeID);
+        Recipe recipe = recipeRepository.findByRecipeId(recipeID);
         if (recipe == null) {
             throw new RuntimeException("Recipe not found");
         }
@@ -97,7 +97,7 @@ public class RecipeService {
         if (aRecipeID<0) {
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Recipe ID is not valid.");
         }
-        Recipe recipe = recipeRepository.findRecipeById(aRecipeID);
+        Recipe recipe = recipeRepository.findByRecipeId(aRecipeID);
         List<Comment> comments = recipe.getComments();
         OptionalDouble averageRating = comments.stream().mapToDouble(Comment::getRating).average();
         if(averageRating.isPresent()){

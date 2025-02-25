@@ -24,7 +24,7 @@ public class Ingredient
   //Ingredient Attributes
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int ingredientID;
+  private int ingredientId;
 
   @Column(unique = true, nullable = false)
   private String name;

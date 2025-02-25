@@ -8,7 +8,7 @@ Feature: Add/Update Comment
       | 2      | Tim      | tim@gmail.com    | pass2    |
       | 3      | Jim     | jim@gmail.com   | pass3    |
 
-    Given the following Recipe exists in the system (f10)
+    Given the following Recipe exists in the system 
       | recipeId | title | description                          | instructions  | creationDate | category | likes | picture  | averageRating | recipeNomNomUser |
       | 1        | Steak | The best steak you will ever make  | Cook the steak | 2025-02-23   | Lunch    | 0     | picture  | 0             | 1              |
 

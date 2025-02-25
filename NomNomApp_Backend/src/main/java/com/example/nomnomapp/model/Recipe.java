@@ -27,7 +27,7 @@ public class Recipe
   //Recipe Attributes
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int recipeID;
+  private int recipeId;
 
   @Column(nullable = false)
   private String title;
@@ -80,7 +80,7 @@ public class Recipe
 
   public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
-    recipeID = aRecipeID;
+    recipeId = aRecipeID;
     title = aTitle;
     description = aDescription;
     instructions = aInstructions;
@@ -106,7 +106,7 @@ public class Recipe
   public boolean setRecipeID(int aRecipeID)
   {
     boolean wasSet = false;
-    recipeID = aRecipeID;
+    recipeId = aRecipeID;
     wasSet = true;
     return wasSet;
   } 
@@ -178,7 +178,7 @@ public class Recipe
 
   public int getRecipeID()
   {
-    return recipeID;
+    return recipeId;
   }
 
   public String getTitle()

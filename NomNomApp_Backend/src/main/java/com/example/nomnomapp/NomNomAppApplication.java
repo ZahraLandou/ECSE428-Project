@@ -3,11 +3,12 @@ package com.example.nomnomapp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+@EnableJpaRepositories(basePackages = "com.example.nomnomapp.repository")
 @SpringBootApplication
 @EntityScan(basePackages = "com.example.nomnomapp.model")
 public class NomNomAppApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(NomNomAppApplication.class, args);
 	}

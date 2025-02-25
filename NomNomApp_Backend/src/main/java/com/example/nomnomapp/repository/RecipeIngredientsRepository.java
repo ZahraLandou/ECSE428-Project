@@ -9,6 +9,6 @@ import com.example.nomnomapp.model.RecipeIngredients;
 public interface RecipeIngredientsRepository extends CrudRepository<RecipeIngredients, Integer> {
 
     
-    List<RecipeIngredients> findByRecipeRecipeID(int recipeID);
+    List<RecipeIngredients> findIngredientsByRecipeRecipeId(int recipeId);
     List<RecipeIngredients> findByIngredientName(String ingredientName);
 }
