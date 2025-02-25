@@ -57,4 +57,8 @@ public class UserService {
             throw new IllegalArgumentException("User with ID '" + userId + "' not found.");
         }
     }
+    public NomNomUser createUser(String aUsername, String aEmailAddress, String aPassword){
+        return userRepository.save(new NomNomUser(aUsername,  aEmailAddress,  aPassword));
+        
+    }
 }

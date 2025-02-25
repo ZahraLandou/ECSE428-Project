@@ -12,7 +12,6 @@ import jakarta.persistence.*;
 // line 38 "model.ump"
 // line 88 "model.ump"
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Comment
 {
 
@@ -33,6 +32,7 @@ public class Comment
   private NomNomUser nomNomUser;
   //Comment Associations
   @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false) 
   private Recipe recipe;
 
   //------------------------

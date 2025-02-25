@@ -62,8 +62,8 @@ public class Recipe
     inverseJoinColumns = @JoinColumn(name = "recipe_list_id")
   )
   private List<RecipeList> recipeLists;
-
-  
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false) 
   private NomNomUser nomNomUser;
 
   @OneToMany(mappedBy = "recipe")

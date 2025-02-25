@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 
 // line 69 "model.ump"
@@ -39,7 +40,7 @@ public class RecipeList
 
   private ListCategory category;
 
-  //RecipeList Associations
+  @JoinColumn(name = "user_id", nullable = false)
   private NomNomUser nomNomUser;
 
   @ManyToMany(mappedBy = "recipeLists")

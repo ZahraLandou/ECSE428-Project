@@ -25,8 +25,8 @@ public class ShortFormVideo
   private String videoTitle;
   private String videoDescription;
   private String video;
-
-  //ShortFormVideo Associations
+@OneToOne
+  @JoinColumn(name = "recipe_id", nullable = false)
   private Recipe recipe;
 
   //------------------------
