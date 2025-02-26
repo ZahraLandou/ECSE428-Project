@@ -62,7 +62,7 @@ public class RecipeIngredientsRepositoryTests {
         assertEquals(tomato.getName(), saved.getIngredient().getName());
 
         // Retrieve RecipeIngredients by Recipe ID using the custom finder method
-        List<RecipeIngredients> byRecipe = recipeIngredientsRepository.findByRecipeRecipeID(recipe.getRecipeID());
+        List<RecipeIngredients> byRecipe = recipeIngredientsRepository.findIngredientsByRecipeRecipeId(recipe.getRecipeID());
         assertNotNull(byRecipe);
         assertEquals(1, byRecipe.size());
 

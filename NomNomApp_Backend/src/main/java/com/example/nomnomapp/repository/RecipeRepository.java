@@ -14,9 +14,7 @@ import com.example.nomnomapp.model.Recipe.RecipeCategory;
  * @author Zahra
  */
 public interface RecipeRepository extends CrudRepository<Recipe,Integer> {
-
-    Recipe findRecipeById(Integer id);
+    Recipe findByRecipeId(Integer recipeId);
     List<Recipe> findRecipeByTitle(String title);
     List<Recipe> findRecipeByCategory(RecipeCategory recipeCategory);
-
 }
