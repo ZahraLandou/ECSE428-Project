@@ -5,13 +5,17 @@ package com.example.nomnomapp.model;
 import jakarta.persistence.*;
 
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 // line 2 "model.ump"
 // line 121 "model.ump"
 @Entity
 @Table(name = "users")
-public class NomNomUser
+public class NomNomUser implements Serializable
 {
   //------------------------
   // MEMBER VARIABLES
@@ -45,32 +49,25 @@ public class NomNomUser
 
   @ManyToMany
   @JoinTable(
-          name = "user_roles",
-          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
-          inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "userId")
+      name = "user_followers",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "follower_id")
   )
-  private List<NomNomUser> roleName = new ArrayList<>();
+  @JsonIgnore
+private List<NomNomUser> followers;
 
-  @ManyToMany
-  @JoinTable(
-          name = "user_connections",
-          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
-          inverseJoinColumns = @JoinColumn(name = "connection_id", referencedColumnName = "userId")
-  )
-  private List<NomNomUser> nomNomUsers = new ArrayList<>();
-
-
-
-
+@ManyToMany(mappedBy = "followers")
+@JsonIgnore
+private List<NomNomUser> following;
   //------------------------
   // CONSTRUCTOR
   //------------------------
   public NomNomUser() {
 
   }
-  public NomNomUser(String aUsername, String aEmailAddress, String aPassword)
+  public NomNomUser(String aUsername,String aEmailAddress, String aPassword)
   {
-    username = aUsername;
+    username=aUsername;
     emailAddress = aEmailAddress;
     password = aPassword;
     biography = null;
@@ -78,22 +75,14 @@ public class NomNomUser
     notifications = new ArrayList<Notification>();
     recipes = new ArrayList<Recipe>();
     recipeLists = new ArrayList<RecipeList>();
-    roleName = new ArrayList<NomNomUser>();
-    nomNomUsers = new ArrayList<NomNomUser>();
+    following = new ArrayList<NomNomUser>();
+    followers = new ArrayList<NomNomUser>();
     comments = new ArrayList<Comment>();
   }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setUsername(String aUsername)
-  {
-    boolean wasSet = false;
-    username = aUsername;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setEmailAddress(String aEmailAddress)
   {
@@ -127,11 +116,6 @@ public class NomNomUser
     return wasSet;
   }
 
-  public String getUsername()
-  {
-    return username;
-  }
-
   public String getEmailAddress()
   {
     return emailAddress;
@@ -140,6 +124,10 @@ public class NomNomUser
   public String getPassword()
   {
     return password;
+  }
+  public String getUsername()
+  {
+    return username;
   }
 
   public String getBiography()
@@ -187,7 +175,9 @@ public class NomNomUser
     Recipe aRecipe = recipes.get(index);
     return aRecipe;
   }
-
+ public void setUserId(int id){
+  this.userId=id;
+ }
   public List<Recipe> getRecipes()
   {
     List<Recipe> newRecipes = Collections.unmodifiableList(recipes);
@@ -199,7 +189,9 @@ public class NomNomUser
     int number = recipes.size();
     return number;
   }
-
+  public void setUsername(String aUsername){
+    this.username=aUsername;
+  }
   public boolean hasRecipes()
   {
     boolean has = recipes.size() > 0;
@@ -242,63 +234,63 @@ public class NomNomUser
     return index;
   }
   /* Code from template association_GetMany */
-  public NomNomUser getRoleName(int index)
+  public NomNomUser getFollowing(int index)
   {
-    NomNomUser aRoleName = roleName.get(index);
-    return aRoleName;
+    NomNomUser aFollowing = following.get(index);
+    return aFollowing;
   }
 
-  public List<NomNomUser> getRoleName()
+  public List<NomNomUser> getFollowing()
   {
-    List<NomNomUser> newRoleName = Collections.unmodifiableList(roleName);
-    return newRoleName;
+    List<NomNomUser> newFollowing = Collections.unmodifiableList(following);
+    return newFollowing;
   }
 
-  public int numberOfRoleName()
+  public int numberOfFollowing()
   {
-    int number = roleName.size();
+    int number = following.size();
     return number;
   }
 
-  public boolean hasRoleName()
+  public boolean hasFollowing()
   {
-    boolean has = roleName.size() > 0;
+    boolean has = following.size() > 0;
     return has;
   }
 
-  public int indexOfRoleName(NomNomUser aRoleName)
+  public int indexOfFollowing(NomNomUser aFollowing)
   {
-    int index = roleName.indexOf(aRoleName);
+    int index = following.indexOf(aFollowing);
     return index;
   }
   /* Code from template association_GetMany */
-  public NomNomUser getNomNomUser(int index)
+  public NomNomUser getFollower(int index)
   {
-    NomNomUser aNomNomUser = nomNomUsers.get(index);
-    return aNomNomUser;
+    NomNomUser aFollower = followers.get(index);
+    return aFollower;
   }
 
-  public List<NomNomUser> getNomNomUsers()
+  public List<NomNomUser> getFollowers()
   {
-    List<NomNomUser> newNomNomUsers = Collections.unmodifiableList(nomNomUsers);
-    return newNomNomUsers;
+    List<NomNomUser> newFollowers = Collections.unmodifiableList(followers);
+    return newFollowers;
   }
 
-  public int numberOfNomNomUsers()
+  public int numberOfFollowers()
   {
-    int number = nomNomUsers.size();
+    int number = followers.size();
     return number;
   }
 
-  public boolean hasNomNomUsers()
+  public boolean hasFollowers()
   {
-    boolean has = nomNomUsers.size() > 0;
+    boolean has = followers.size() > 0;
     return has;
   }
 
-  public int indexOfNomNomUser(NomNomUser aNomNomUser)
+  public int indexOfFollower(NomNomUser aFollower)
   {
-    int index = nomNomUsers.indexOf(aNomNomUser);
+    int index = followers.indexOf(aFollower);
     return index;
   }
   /* Code from template association_GetMany */
@@ -373,7 +365,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addNotificationAt(Notification aNotification, int index)
-  {
+  {  
     boolean wasAdded = false;
     if(addNotification(aNotification))
     {
@@ -396,8 +388,8 @@ public class NomNomUser
       notifications.remove(aNotification);
       notifications.add(index, aNotification);
       wasAdded = true;
-    }
-    else
+    } 
+    else 
     {
       wasAdded = addNotificationAt(aNotification, index);
     }
@@ -445,7 +437,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addRecipeAt(Recipe aRecipe, int index)
-  {
+  {  
     boolean wasAdded = false;
     if(addRecipe(aRecipe))
     {
@@ -468,8 +460,8 @@ public class NomNomUser
       recipes.remove(aRecipe);
       recipes.add(index, aRecipe);
       wasAdded = true;
-    }
-    else
+    } 
+    else 
     {
       wasAdded = addRecipeAt(aRecipe, index);
     }
@@ -517,7 +509,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addRecipeListAt(RecipeList aRecipeList, int index)
-  {
+  {  
     boolean wasAdded = false;
     if(addRecipeList(aRecipeList))
     {
@@ -540,174 +532,174 @@ public class NomNomUser
       recipeLists.remove(aRecipeList);
       recipeLists.add(index, aRecipeList);
       wasAdded = true;
-    }
-    else
+    } 
+    else 
     {
       wasAdded = addRecipeListAt(aRecipeList, index);
     }
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfRoleName()
+  public static int minimumNumberOfFollowing()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addRoleName(NomNomUser aRoleName)
+  public boolean addFollowing(NomNomUser aFollowing)
   {
     boolean wasAdded = false;
-    if (roleName.contains(aRoleName)) { return false; }
-    roleName.add(aRoleName);
-    if (aRoleName.indexOfNomNomUser(this) != -1)
+    if (following.contains(aFollowing)) { return false; }
+    following.add(aFollowing);
+    if (aFollowing.indexOfFollower(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aRoleName.addNomNomUser(this);
+      wasAdded = aFollowing.addFollower(this);
       if (!wasAdded)
       {
-        roleName.remove(aRoleName);
+        following.remove(aFollowing);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeRoleName(NomNomUser aRoleName)
+  public boolean removeFollowing(NomNomUser aFollowing)
   {
     boolean wasRemoved = false;
-    if (!roleName.contains(aRoleName))
+    if (!following.contains(aFollowing))
     {
       return wasRemoved;
     }
 
-    int oldIndex = roleName.indexOf(aRoleName);
-    roleName.remove(oldIndex);
-    if (aRoleName.indexOfNomNomUser(this) == -1)
+    int oldIndex = following.indexOf(aFollowing);
+    following.remove(oldIndex);
+    if (aFollowing.indexOfFollower(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aRoleName.removeNomNomUser(this);
+      wasRemoved = aFollowing.removeFollower(this);
       if (!wasRemoved)
       {
-        roleName.add(oldIndex,aRoleName);
+        following.add(oldIndex,aFollowing);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addRoleNameAt(NomNomUser aRoleName, int index)
-  {
+  public boolean addFollowingAt(NomNomUser aFollowing, int index)
+  {  
     boolean wasAdded = false;
-    if(addRoleName(aRoleName))
+    if(addFollowing(aFollowing))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRoleName()) { index = numberOfRoleName() - 1; }
-      roleName.remove(aRoleName);
-      roleName.add(index, aRoleName);
+      if(index > numberOfFollowing()) { index = numberOfFollowing() - 1; }
+      following.remove(aFollowing);
+      following.add(index, aFollowing);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveRoleNameAt(NomNomUser aRoleName, int index)
+  public boolean addOrMoveFollowingAt(NomNomUser aFollowing, int index)
   {
     boolean wasAdded = false;
-    if(roleName.contains(aRoleName))
+    if(following.contains(aFollowing))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfRoleName()) { index = numberOfRoleName() - 1; }
-      roleName.remove(aRoleName);
-      roleName.add(index, aRoleName);
+      if(index > numberOfFollowing()) { index = numberOfFollowing() - 1; }
+      following.remove(aFollowing);
+      following.add(index, aFollowing);
       wasAdded = true;
-    }
-    else
+    } 
+    else 
     {
-      wasAdded = addRoleNameAt(aRoleName, index);
+      wasAdded = addFollowingAt(aFollowing, index);
     }
     return wasAdded;
   }
   /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfNomNomUsers()
+  public static int minimumNumberOfFollowers()
   {
     return 0;
   }
   /* Code from template association_AddManyToManyMethod */
-  public boolean addNomNomUser(NomNomUser aNomNomUser)
+  public boolean addFollower(NomNomUser aFollower)
   {
     boolean wasAdded = false;
-    if (nomNomUsers.contains(aNomNomUser)) { return false; }
-    nomNomUsers.add(aNomNomUser);
-    if (aNomNomUser.indexOfRoleName(this) != -1)
+    if (followers.contains(aFollower)) { return false; }
+    followers.add(aFollower);
+    if (aFollower.indexOfFollowing(this) != -1)
     {
       wasAdded = true;
     }
     else
     {
-      wasAdded = aNomNomUser.addRoleName(this);
+      wasAdded = aFollower.addFollowing(this);
       if (!wasAdded)
       {
-        nomNomUsers.remove(aNomNomUser);
+        followers.remove(aFollower);
       }
     }
     return wasAdded;
   }
   /* Code from template association_RemoveMany */
-  public boolean removeNomNomUser(NomNomUser aNomNomUser)
+  public boolean removeFollower(NomNomUser aFollower)
   {
     boolean wasRemoved = false;
-    if (!nomNomUsers.contains(aNomNomUser))
+    if (!followers.contains(aFollower))
     {
       return wasRemoved;
     }
 
-    int oldIndex = nomNomUsers.indexOf(aNomNomUser);
-    nomNomUsers.remove(oldIndex);
-    if (aNomNomUser.indexOfRoleName(this) == -1)
+    int oldIndex = followers.indexOf(aFollower);
+    followers.remove(oldIndex);
+    if (aFollower.indexOfFollowing(this) == -1)
     {
       wasRemoved = true;
     }
     else
     {
-      wasRemoved = aNomNomUser.removeRoleName(this);
+      wasRemoved = aFollower.removeFollowing(this);
       if (!wasRemoved)
       {
-        nomNomUsers.add(oldIndex,aNomNomUser);
+        followers.add(oldIndex,aFollower);
       }
     }
     return wasRemoved;
   }
   /* Code from template association_AddIndexControlFunctions */
-  public boolean addNomNomUserAt(NomNomUser aNomNomUser, int index)
-  {
+  public boolean addFollowerAt(NomNomUser aFollower, int index)
+  {  
     boolean wasAdded = false;
-    if(addNomNomUser(aNomNomUser))
+    if(addFollower(aFollower))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfNomNomUsers()) { index = numberOfNomNomUsers() - 1; }
-      nomNomUsers.remove(aNomNomUser);
-      nomNomUsers.add(index, aNomNomUser);
+      if(index > numberOfFollowers()) { index = numberOfFollowers() - 1; }
+      followers.remove(aFollower);
+      followers.add(index, aFollower);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveNomNomUserAt(NomNomUser aNomNomUser, int index)
+  public boolean addOrMoveFollowerAt(NomNomUser aFollower, int index)
   {
     boolean wasAdded = false;
-    if(nomNomUsers.contains(aNomNomUser))
+    if(followers.contains(aFollower))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfNomNomUsers()) { index = numberOfNomNomUsers() - 1; }
-      nomNomUsers.remove(aNomNomUser);
-      nomNomUsers.add(index, aNomNomUser);
+      if(index > numberOfFollowers()) { index = numberOfFollowers() - 1; }
+      followers.remove(aFollower);
+      followers.add(index, aFollower);
       wasAdded = true;
-    }
-    else
+    } 
+    else 
     {
-      wasAdded = addNomNomUserAt(aNomNomUser, index);
+      wasAdded = addFollowerAt(aFollower, index);
     }
     return wasAdded;
   }
@@ -753,7 +745,7 @@ public class NomNomUser
   }
   /* Code from template association_AddIndexControlFunctions */
   public boolean addCommentAt(Comment aComment, int index)
-  {
+  {  
     boolean wasAdded = false;
     if(addComment(aComment))
     {
@@ -776,8 +768,8 @@ public class NomNomUser
       comments.remove(aComment);
       comments.add(index, aComment);
       wasAdded = true;
-    }
-    else
+    } 
+    else 
     {
       wasAdded = addCommentAt(aComment, index);
     }
@@ -792,7 +784,7 @@ public class NomNomUser
       aNotification.delete();
       notifications.remove(aNotification);
     }
-
+    
     for(int i=recipes.size(); i > 0; i--)
     {
       Recipe aRecipe = recipes.get(i - 1);
@@ -803,17 +795,17 @@ public class NomNomUser
       RecipeList aRecipeList = recipeLists.get(i - 1);
       aRecipeList.delete();
     }
-    ArrayList<NomNomUser> copyOfRoleName = new ArrayList<NomNomUser>(roleName);
-    roleName.clear();
-    for(NomNomUser aRoleName : copyOfRoleName)
+    ArrayList<NomNomUser> copyOfFollowing = new ArrayList<NomNomUser>(following);
+    following.clear();
+    for(NomNomUser aFollowing : copyOfFollowing)
     {
-      aRoleName.removeNomNomUser(this);
+      aFollowing.removeFollower(this);
     }
-    ArrayList<NomNomUser> copyOfNomNomUsers = new ArrayList<NomNomUser>(nomNomUsers);
-    nomNomUsers.clear();
-    for(NomNomUser aNomNomUser : copyOfNomNomUsers)
+    ArrayList<NomNomUser> copyOfFollowers = new ArrayList<NomNomUser>(followers);
+    followers.clear();
+    for(NomNomUser aFollower : copyOfFollowers)
     {
-      aNomNomUser.removeRoleName(this);
+      aFollower.removeFollowing(this);
     }
     for(int i=comments.size(); i > 0; i--)
     {
@@ -822,19 +814,21 @@ public class NomNomUser
     }
   }
 
-  public int getUserId() {
-    return userId;
-  }
-  public void setUserId(int userId) {
-    this.userId = userId;
-  }
+
   public String toString()
   {
     return super.toString() + "["+
-            "username" + ":" + getUsername()+ "," +
             "emailAddress" + ":" + getEmailAddress()+ "," +
             "password" + ":" + getPassword()+ "," +
             "biography" + ":" + getBiography()+ "," +
             "profilePicture" + ":" + getProfilePicture()+ "]";
-  }
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 4 "model.ump"
+  
+
+  
 }

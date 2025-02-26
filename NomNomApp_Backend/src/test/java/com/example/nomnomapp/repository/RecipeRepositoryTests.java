@@ -98,7 +98,7 @@ public class RecipeRepositoryTests {
         recipe = recipeRepository.save(recipe);
 
         // retrieve recipe by ID
-        Recipe savedRecipe = recipeRepository.findRecipeById(recipe.getRecipeID());
+        Recipe savedRecipe = recipeRepository.findByRecipeId(recipe.getRecipeID());
 
         // assert that object has correct attributes
         assertNotNull(savedRecipe);
