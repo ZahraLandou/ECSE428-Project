@@ -160,7 +160,7 @@ public class IngredientServiceTests {
         when(ingredientRepository.findIngredientByName("prawn")).thenReturn(Optional.empty()); 
         when(ingredientRepository.save(any(Ingredient.class))).thenReturn(shrimp);
 
-        Ingredient updatedIngredient = ingredientService.updateIngredient(1, "prawn", null);
+        Ingredient updatedIngredient = ingredientService.updateIngredientById(1, "prawn", null);
 
         assertNotNull(updatedIngredient);
         assertEquals("prawn", updatedIngredient.getName());
@@ -175,7 +175,7 @@ public class IngredientServiceTests {
         when(ingredientRepository.findIngredientByIngredientId(1)).thenReturn(shrimp);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            ingredientService.updateIngredient(1, "", null);
+            ingredientService.updateIngredientById(1, "", null);
         });
 
         assertEquals("All ingredient fields are empty", exception.getMessage());
@@ -190,7 +190,7 @@ public class IngredientServiceTests {
         when(ingredientRepository.findIngredientByName("garlic")).thenReturn(Optional.of(garlic)); // name conflict
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            ingredientService.updateIngredient(1, "garlic", null);
+            ingredientService.updateIngredientById(1, "garlic", null);
         });
 
         assertEquals("Ingredient with name 'garlic' already exists", exception.getMessage());
@@ -204,7 +204,7 @@ public class IngredientServiceTests {
         when(ingredientRepository.findIngredientByIngredientId(1)).thenReturn(shrimp);
         when(ingredientRepository.save(any(Ingredient.class))).thenReturn(shrimp);
 
-        Ingredient updatedIngredient = ingredientService.updateIngredient(1, null, "protein");
+        Ingredient updatedIngredient = ingredientService.updateIngredientById(1, null, "protein");
 
         assertNotNull(updatedIngredient);
         assertEquals("shrimp", updatedIngredient.getName()); // name remains unchanged
@@ -219,7 +219,7 @@ public class IngredientServiceTests {
         when(ingredientRepository.findIngredientByIngredientId(1)).thenReturn(shrimp);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            ingredientService.updateIngredient(1, null, "");
+            ingredientService.updateIngredientById(1, null, "");
         });
 
         assertEquals("All ingredient fields are empty", exception.getMessage());

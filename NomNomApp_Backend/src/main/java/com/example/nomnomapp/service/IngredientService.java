@@ -54,6 +54,11 @@ public class IngredientService {
         return (List<Ingredient>) ingredientRepository.findAll();
     }
 
+    @Transactional
+    public void deleteAllIngredients() {
+        ingredientRepository.deleteAll();
+    }
+
     public Ingredient getIngredientByName(String name) {
 
         if (name == null || name.trim().length() == 0) {
@@ -61,11 +66,11 @@ public class IngredientService {
         }
 
         return ingredientRepository.findIngredientByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Ingredient with name " + name + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Ingredient with name '" + name + "' not found"));
     }
 
     @Transactional
-    public Ingredient updateIngredient(int ingredientId, String name, String type) {
+    public Ingredient updateIngredientById(int ingredientId, String name, String type) {
         Ingredient ingredient = ingredientRepository.findIngredientByIngredientId(ingredientId);
         if (ingredient == null) {
             throw new IllegalArgumentException("Ingredient does not exist");
@@ -89,6 +94,30 @@ public class IngredientService {
             type = type.toLowerCase();
             ingredient.setType(type);
         }
+        return ingredientRepository.save(ingredient);
+    }
+
+    @Transactional
+    public Ingredient updateIngredientByName(String name, String newName, String newType) {
+        Ingredient ingredient = ingredientRepository.findIngredientByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Ingredient does not exist"));
+
+        if ((newName == null || newName.trim().isEmpty()) && (newType == null || newType.trim().isEmpty())) {
+            throw new IllegalArgumentException("All ingredient fields are empty");
+        }
+
+        if (newName != null && !newName.trim().isEmpty()) {
+            newName = newName.toLowerCase();
+            if (ingredientRepository.findIngredientByName(newName).isPresent()) {
+                throw new IllegalArgumentException("Ingredient with name '" + newName + "' already exists");
+            }
+            ingredient.setName(newName);
+        }
+
+        if (newType != null && !newType.trim().isEmpty()) {
+            ingredient.setType(newType.toLowerCase());
+        }
+
         return ingredientRepository.save(ingredient);
     }
 
