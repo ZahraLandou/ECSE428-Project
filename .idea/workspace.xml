@@ -74,12 +74,12 @@
     &quot;assignee&quot;: &quot;mdupuy2002&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ZahraLandou/ECSE428-Project.git",
-    "accountId": "e53ee127-8018-40af-98ec-9613811f926f"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ZahraLandou/ECSE428-Project.git&quot;,
+    &quot;accountId&quot;: &quot;e53ee127-8018-40af-98ec-9613811f926f&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -92,50 +92,50 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Cucumber Java.Feature: AddIngredient.executor": "Run",
-    "Cucumber Java.Feature: AddRecipe.executor": "Run",
-    "Cucumber Java.Feature: AddRecipeIngredient.executor": "Run",
-    "Cucumber Java.Feature: DeleteNotifications.executor": "Run",
-    "Cucumber Java.Feature: DeleteRecipe.executor": "Run",
-    "Cucumber Java.Feature: DeleteRecipeIngredients.executor": "Run",
-    "Cucumber Java.Feature: Deleteuser.executor": "Run",
-    "Cucumber Java.Feature: ManageRecipeIngredients.executor": "Run",
-    "Cucumber Java.Feature: SearchIngredient.executor": "Run",
-    "Cucumber Java.Feature: UpdateIngredient.executor": "Run",
-    "Cucumber Java.Feature: ViewNotifications.executor": "Run",
-    "Cucumber Java.Scenario: Successfully add a recipe ingredient.executor": "Run",
-    "Gradle.Build NomNomApp_Backend.executor": "Run",
-    "Gradle.CucumberTestRunner (1).executor": "Run",
-    "Gradle.CucumberTestRunner.executor": "Run",
-    "Gradle.NomNomAppApplicationTests.executor": "Run",
-    "Gradle.NomNomApp_Backend [:io.cucumber.core.cli.Main.main()].executor": "Run",
-    "Gradle.NomNomApp_Backend [dependencies].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.NomNomAppApplication.executor": "Run",
-    "com.google.cloudcode.ide_session_index": "20250225_0000",
-    "git-widget-placeholder": "Ang__feb__22",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "editor.preferences.jsOptions",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Cucumber Java.Feature: AddIngredient.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: AddRecipe.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: AddRecipeIngredient.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: DeleteNotifications.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: DeleteRecipe.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: DeleteRecipeIngredients.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: Deleteuser.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: ManageRecipeIngredients.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: SearchIngredient.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: UpdateIngredient.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Feature: ViewNotifications.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Successfully add a recipe ingredient.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build NomNomApp_Backend.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CucumberTestRunner (1).executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CucumberTestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.NomNomAppApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.NomNomApp_Backend [:io.cucumber.core.cli.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.NomNomApp_Backend [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.NomNomAppApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20250225_0000&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Ang__feb__22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.jsOptions&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Cucumber Java.Feature: AddRecipeIngredient">
     <configuration name="Feature: AddIngredient" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
