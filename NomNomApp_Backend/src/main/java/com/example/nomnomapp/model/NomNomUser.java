@@ -189,7 +189,9 @@ private List<NomNomUser> following;
     int number = recipes.size();
     return number;
   }
-
+  public void setUsername(String aUsername){
+    this.username=aUsername;
+  }
   public boolean hasRecipes()
   {
     boolean has = recipes.size() > 0;
