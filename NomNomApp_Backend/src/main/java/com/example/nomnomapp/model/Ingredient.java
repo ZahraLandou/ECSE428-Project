@@ -80,7 +80,7 @@ public class Ingredient
 
   public int getIngredientId()
   {
-    return ingredientID;
+    return ingredientId;
   }
   
 
@@ -205,7 +205,5 @@ public class Ingredient
             "name" + ":" + getName()+ "," +
             "type" + ":" + getType()+ "]";
   }
-public int getIngredientId() {
-  return ingredientId;
-}
+
 }

@@ -1,9 +1,10 @@
 package com.example.nomnomapp.stepdefinitions;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.springframework.stereotype.Component;
 import io.cucumber.java.en.Then;
 
+//@Component
 public class CommonStepDefinitions {
 
     private Exception exception;
@@ -17,7 +18,11 @@ public class CommonStepDefinitions {
         assertEquals(expectedMessage, exception.getMessage());
     }
 
+
     public void setException(Exception e) {
         this.exception = e;
     }
+
+
+
 }

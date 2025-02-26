@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.RecipeIngredients;
 import com.example.nomnomapp.repository.RecipeIngredientsRepository;
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class RecipeIngredientsService {
@@ -21,15 +23,31 @@ public class RecipeIngredientsService {
      * @param recipeIngredient the RecipeIngredients entity to create
      * @return the saved RecipeIngredients entity
      */
+    /**
+     * Create a new RecipeIngredients record.
+     *
+     * @param recipeIngredient the RecipeIngredients entity to create
+     * @return the saved RecipeIngredients entity
+     */
     public RecipeIngredients createRecipeIngredient(RecipeIngredients recipeIngredient) {
         if (recipeIngredient.getQuantity() <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
+            throw new IllegalArgumentException("Recipe ingredient quantity cannot be empty");
         }
         if (recipeIngredient.getUnit() == null || recipeIngredient.getUnit().trim().isEmpty()) {
-            throw new IllegalArgumentException("Unit cannot be null or empty");
+            throw new IllegalArgumentException("Recipe ingredient unit cannot be empty");
         }
+        // Validate the associated Ingredient's name.
+        if (recipeIngredient.getIngredient() == null ||
+                recipeIngredient.getIngredient().getName() == null ||
+                recipeIngredient.getIngredient().getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Ingredient name cannot be empty");
+        }
+
         return recipeIngredientsRepository.save(recipeIngredient);
     }
+
+
+
 
     /**
      * Retrieve a RecipeIngredients record by its ID.
@@ -88,5 +106,11 @@ public class RecipeIngredientsService {
         RecipeIngredients ri = recipeIngredientsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("RecipeIngredient not found with id: " + id));
         recipeIngredientsRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteAllRecipeIngredients() {
+
+        recipeIngredientsRepository.deleteAll();
     }
 }
