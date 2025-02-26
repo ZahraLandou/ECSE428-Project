@@ -29,7 +29,7 @@ Feature: Search for an ingredient
   # error flow
   Scenario Outline: Attempt to search for a non-existing ingredient
     Given the ingredient "<name>" does not exist
-    When I search for "<name>"
+    When I try to search for "<name>"
     Then I should see an error message "<message>"
     Examples:
       | name    |   message                            |

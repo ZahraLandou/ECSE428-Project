@@ -20,6 +20,8 @@ public class UserStepDefinitions {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommonStepDefinitions commonSteps;
 
     private final Map<Integer, NomNomUser> userDatabase = new HashMap<>(); // Simulated user storage
 
@@ -71,7 +73,7 @@ public class UserStepDefinitions {
             userService.deleteUserById(userId);
             userDatabase.remove(userId);
         } catch (Exception e) {
-            this.exception = e;
+            commonSteps.setException(e);  // Store the exception in CommonStepDefinitions
         }
     }
 
@@ -81,10 +83,5 @@ public class UserStepDefinitions {
         assertNull(exception, "Exception was thrown when deletion should have succeeded.");
     }
 
-    // Then: Attempting to delete a non-existent user should return an error
-    @Then("I should see an error message {string}")
-    public void i_should_see_an_error_message(String expectedMessage) {
-        assertNotNull(exception, "Expected an error but none occurred.");
-        assertEquals(expectedMessage, exception.getMessage());
-    }
+
 }

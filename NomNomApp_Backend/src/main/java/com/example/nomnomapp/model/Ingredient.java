@@ -205,4 +205,7 @@ public class Ingredient
             "name" + ":" + getName()+ "," +
             "type" + ":" + getType()+ "]";
   }
+public int getIngredientId() {
+  return ingredientId;
+}
 }

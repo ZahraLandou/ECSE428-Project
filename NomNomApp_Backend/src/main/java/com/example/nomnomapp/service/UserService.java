@@ -175,7 +175,7 @@ public class UserService {
     public boolean setUserProfilePicture(String aUsername, String aProfilePicture) {
         // get the NomNomUser object with the given username
         Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
         }
         NomNomUser user = userOptional.get();
@@ -199,7 +199,7 @@ public class UserService {
     public boolean setUserBiography(String aUsername, String aBiography) {
         // get the NomNomUser object with the given username
         Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
         }
         NomNomUser user = userOptional.get();
@@ -223,7 +223,7 @@ public class UserService {
     public boolean setUserPassword(String aUsername, String aPassword) {
         // get the NomNomUser object with the given username
         Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
         }
         NomNomUser user = userOptional.get();
@@ -247,7 +247,7 @@ public class UserService {
     public boolean setUserEmail(String aUsername, String aEmailAddress) {
         // get the NomNomUser object with the given username
         Optional<NomNomUser> userOptional = userRepository.findByUsername(aUsername);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new IllegalArgumentException("User with username '" + aUsername + "' not found.");
         }
         NomNomUser user = userOptional.get();
@@ -271,7 +271,7 @@ public class UserService {
     public boolean setUserUsername(String aEmailAddress, String aNewUsername) {
         // get the NomNomUser object with the given email address
         Optional<NomNomUser> userOptional = userRepository.findByEmailAddress(aEmailAddress);
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new IllegalArgumentException("User with email '" + aEmailAddress + "' not found.");
         }
         NomNomUser user = userOptional.get();

@@ -19,10 +19,11 @@ public class IngredientStepDefinitions {
     @Autowired
     private IngredientService ingredientService;
 
+    @Autowired
+    private CommonStepDefinitions commonSteps;
+
     private final Map<String, Ingredient> ingredientDatabase = new HashMap<>(); // In-memory map to simulate ingredient
                                                                                 // storage by name
-    private final Map<Integer, Ingredient> ingredientIdTable = new HashMap<>(); // In-memory map to simulate ingredient
-                                                                                // storage by ID
 
     private Exception exception;
     private Ingredient resultIngredient;
@@ -31,16 +32,14 @@ public class IngredientStepDefinitions {
     @Before
     public void setUp() {
         ingredientDatabase.clear();
-        ingredientIdTable.clear();
-        exception = null;
         resultIngredient = null;
+        ingredientService.deleteAllIngredients();
     }
 
     // method to clean up after each scenario
     @After
     public void cleanup() {
         ingredientDatabase.clear();
-        ingredientIdTable.clear();
     }
 
     // Given step to ensure ingredients exist in the system
@@ -49,8 +48,6 @@ public class IngredientStepDefinitions {
         List<Map<String, String>> ingredients = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> row : ingredients) {
             Ingredient ingredient = ingredientService.createIngredient(row.get("name"), row.get("type"));
-            int id = ingredient.getIngredientId();
-            ingredientIdTable.put(id, ingredient);
             ingredientDatabase.put(row.get("name").toLowerCase(), ingredient);
         }
     }
@@ -99,15 +96,8 @@ public class IngredientStepDefinitions {
         try {
             ingredientService.createIngredient(name, type);
         } catch (Exception e) {
-            this.exception = e;
+            commonSteps.setException(e);
         }
-    }
-
-    // Then step to check if the error message matches the expected one
-    @Then("I should see an error message {string}")
-    public void i_should_see_an_error_message(String expectedMessage) {
-        assertNotNull(exception, "Expected an error but none occurred");
-        assertEquals(expectedMessage, exception.getMessage());
     }
 
     // When step to request the list of all ingredients
@@ -152,23 +142,13 @@ public class IngredientStepDefinitions {
         assertEquals(type, resultIngredient.getType(), "Ingredient type does not match");
     }
 
-    // Given step to ensure an ingredient with a specific ID exists
-    @Given("an ingredient with ID {int} exists")
-    public void an_ingredient_with_id_exists(int id) {
-        assertTrue(ingredientIdTable.containsKey(id), "Ingredient with ID " + id + " does not exist");
-    }
-
-    // Given step to ensure no ingredient with a specific ID exists
-    @Given("no ingredient with ID {int} exists")
-    public void no_ingredient_with_id_exists(int id) {
-        assertFalse(ingredientIdTable.containsKey(id), "Ingredient with ID " + id + " exists");
-    }
-
     // When step to update an ingredient's name and type by ID
-    @When("I update the ingredient with ID {int} to have name {string} and type {string}")
-    public void i_update_the_ingredient_with_id_to_have_name_and_type(int id, String newName, String newType) {
+    @When("I update the ingredient with name {string} to have name {string} and type {string}")
+    public void i_update_the_ingredient_with_name_to_have_name_and_type(String oldName, String newName,
+            String newType) {
         try {
-            Ingredient updatedIngredient = ingredientService.updateIngredient(id, newName, newType);
+
+            Ingredient updatedIngredient = ingredientService.updateIngredientByName(oldName, newName, newType);
             resultIngredient = updatedIngredient; // store the updated ingredient
         } catch (Exception e) {
             this.exception = e;
@@ -189,13 +169,23 @@ public class IngredientStepDefinitions {
     }
 
     // When step to try updating an ingredient(error flow)
-    @When("I try to update the ingredient with ID {int} to have name {string} and type {string}")
-    public void i_try_to_update_the_ingredient_with_id_to_have_name_and_type(int id, String newName, String newType) {
+    @When("I try to update the ingredient with name {string} to have name {string} and type {string}")
+    public void i_try_to_update_the_ingredient_with_name_to_have_name_and_type(String oldName, String newName,
+            String newType) {
         try {
-            ingredientService.updateIngredient(id, newName, newType);
+            ingredientService.updateIngredientByName(oldName, newName, newType);
         } catch (Exception e) {
-            this.exception = e;
+            commonSteps.setException(e);
         }
     }
 
+    // When step to try searching for an ingredient(error flow)
+    @When("I try to search for {string}")
+    public void i_try_to_search_for_name(String name) {
+        try {
+            resultIngredient = ingredientService.getIngredientByName(name);
+        } catch (Exception e) {
+            commonSteps.setException(e);
+        }
+    }
 }
