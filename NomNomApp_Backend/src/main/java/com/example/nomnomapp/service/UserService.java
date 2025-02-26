@@ -322,11 +322,11 @@ public class UserService {
      * @throws IllegalArgumentException if the user does not exist.
      */
     public void deleteUserById(int userId) {
-        Optional<NomNomUser> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            userRepository.delete(user.get());
-        } else {
-            throw new IllegalArgumentException("User with ID '" + userId + "' not found.");
-        }
+        NomNomUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID '" + userId + "' not found."));
+
+        userRepository.delete(user);
     }
+
+
 }
