@@ -57,6 +57,7 @@ public class RecipeIngredientsStepDefinitions {
         ingredientDatabase.clear();
         resultIngredient = null;
         recipeIngredientsService.deleteAllRecipeIngredients();
+        recipeRepository.deleteAll();
     }
 
 
@@ -64,6 +65,7 @@ public class RecipeIngredientsStepDefinitions {
     @After
     public void cleanup() {
         ingredientDatabase.clear();
+        recipeRepository.deleteAll();
     }
 
 

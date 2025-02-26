@@ -85,9 +85,8 @@ public class Recipe
     this.recipeIngredients = new ArrayList<>();
   }
 
-  public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
+  public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
-    recipeId = aRecipeID;
     title = aTitle;
     description = aDescription;
     instructions = aInstructions;

@@ -35,8 +35,7 @@ public class RecipeServiceTests {
     @BeforeEach
     void setUp() {
         testUser = new NomNomUser("testUser", "test@example.com", "password123");
-        testRecipe = new Recipe(0,
-                                "French Cheese cake",
+        testRecipe = new Recipe("French Cheese cake",
                                 "hi my name is Thierry and I want to share this family recipe from my father Pierre",
                                 "1-Put cheese, 2-Put cake, 3-Bake for 10 minutes",
                                 new Date(System.currentTimeMillis()),
