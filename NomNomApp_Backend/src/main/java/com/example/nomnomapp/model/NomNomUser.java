@@ -46,12 +46,21 @@ public class NomNomUser
   @ManyToMany
   @JoinTable(
           name = "user_roles",
-          joinColumns = @JoinColumn(name = "user_username"),
-          inverseJoinColumns = @JoinColumn(name = "role_username")
+          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
+          inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "userId")
   )
   private List<NomNomUser> roleName = new ArrayList<>();
+
   @ManyToMany
-  private List<NomNomUser> nomNomUsers;
+  @JoinTable(
+          name = "user_connections",
+          joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
+          inverseJoinColumns = @JoinColumn(name = "connection_id", referencedColumnName = "userId")
+  )
+  private List<NomNomUser> nomNomUsers = new ArrayList<>();
+
+
+
 
   //------------------------
   // CONSTRUCTOR

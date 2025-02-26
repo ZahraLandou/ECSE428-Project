@@ -43,6 +43,7 @@ public class RecipeIngredients
   private Ingredient ingredient;
 
   @ManyToOne
+  @JoinColumn(name = "creator_id") // specify the foreign key column name
   private NomNomUser creator;
 
   //------------------------
