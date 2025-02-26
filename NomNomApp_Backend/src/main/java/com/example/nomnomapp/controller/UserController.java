@@ -5,6 +5,7 @@ import com.example.nomnomapp.service.UserService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +30,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Invalid user parameters");
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
