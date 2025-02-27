@@ -18,7 +18,6 @@ public class CommonStepDefinitions {
         assertEquals(expectedMessage, this.exception.getMessage());
     }
 
-
     public void setException(Exception e) {
         this.exception = e;
     }
@@ -26,7 +25,5 @@ public class CommonStepDefinitions {
     public Exception getException() {
         return this.exception;
     }
-
-
 
 }

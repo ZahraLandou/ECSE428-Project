@@ -1,4 +1,4 @@
-Feature: Search for a recipe ingredient
+Feature: US012 Search for a recipe ingredient
   As a NomNom user,
   I want to search for a specific recipe ingredient,
   So that I can quickly locate it for my cooking.

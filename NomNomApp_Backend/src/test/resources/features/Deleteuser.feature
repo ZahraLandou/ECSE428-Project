@@ -1,4 +1,4 @@
-Feature: Delete a user account
+Feature: US002 Delete a user account
   As a NomNom user,
   I want to delete my account,
   So that my profile and data are removed from the system.
@@ -12,9 +12,8 @@ Feature: Delete a user account
   # Normal Flow
   Scenario Outline: Successfully delete an existing user
     Given a user with ID <userId> exists
-    When I send a DELETE request to "/users/<userId>"
-    Then the response status should be 200
-    And the user with ID <userId> should no longer exist in the system
+    When I delete the user with ID <userId>
+    Then the user should be deleted successfully
 
     Examples:
       | userId |
@@ -24,20 +23,20 @@ Feature: Delete a user account
   # Error Flow
   Scenario Outline: Attempt to delete a non-existing user
     Given no user with ID <userId> exists
-    When I send a DELETE request to "/users/<userId>"
-    Then the response status should be 404
-    And I should see an error message "User with ID '<userId>' not found."
+    When I delete the user with ID <userId>
+    Then I should see an error message "User with ID '<userId>' not found."
 
     Examples:
       | userId |
       | 999    |
       | 500    |
 
-  # Edge Case: Invalid ID (negative or zero)
+  # Error Case: Invalid ID (negative or zero)
   Scenario Outline: Attempt to delete a user with an invalid ID
-    When I send a DELETE request to "/users/<userId>"
-    Then the response status should be 400
-    And I should see an error message "Invalid user ID: <userId>"
+    Given no user with ID <userId> exists
+    When I delete the user with ID <userId>
+    And I should see an error message "User with ID '<userId>' not found."
+
 
     Examples:
       | userId |

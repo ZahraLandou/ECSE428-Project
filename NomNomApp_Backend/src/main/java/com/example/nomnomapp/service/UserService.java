@@ -22,7 +22,6 @@ public class UserService {
      * @return the created NomNomUser object
      */
     public NomNomUser createUser(String aUsername, String aEmailAddress, String aPassword) {
-
         // check if username is empty
         if (aUsername == null || aUsername.trim().length() == 0) {
             throw new IllegalArgumentException("Username cannot be empty");
@@ -44,6 +43,9 @@ public class UserService {
         if (userRepository.findByEmailAddress(aEmailAddress).isPresent()) {
             throw new IllegalArgumentException("User with email '" + aEmailAddress + "' already exists");
         }
+
+        validateUsername(aUsername);
+        validateEmail(aEmailAddress);
 
         // create new NomNomUser entity
         NomNomUser user = new NomNomUser(aUsername, aEmailAddress, aPassword);
@@ -180,7 +182,7 @@ public class UserService {
      * 
      * @param aUsername       the username of the user whose profile pic to set
      * @param aProfilePicture the new profile pic
-     * @return whether or not the profile pic was set successfully
+     * @return whether the profile pic was set successfully
      */
     public boolean setUserProfilePicture(String aUsername, String aProfilePicture) {
         // get the NomNomUser object with the given username
@@ -204,7 +206,7 @@ public class UserService {
      * 
      * @param aUsername  the username of the user whose biography to set
      * @param aBiography the new biography
-     * @return whether or not the biography was set successfully
+     * @return whether the biography was set successfully
      */
     public boolean setUserBiography(String aUsername, String aBiography) {
         // get the NomNomUser object with the given username
@@ -228,7 +230,7 @@ public class UserService {
      * 
      * @param aUsername the username of the user whose password to set
      * @param aPassword the new password
-     * @return whether or not the password was set successfully
+     * @return whether the password was set successfully
      */
     public boolean setUserPassword(String aUsername, String aPassword) {
         // get the NomNomUser object with the given username
@@ -252,7 +254,7 @@ public class UserService {
      * 
      * @param aUsername     the username of the user whose email to set
      * @param aEmailAddress the new email address
-     * @return whether or not the email was set successfully
+     * @return whether the email was set successfully
      */
     public boolean setUserEmail(String aUsername, String aEmailAddress) {
         // get the NomNomUser object with the given username
@@ -276,7 +278,7 @@ public class UserService {
      * 
      * @param aEmailAddress the email address of the user whose username to set
      * @param aNewUsername  the new username
-     * @return whether or not the username was set successfully
+     * @return whether the username was set successfully
      */
     public boolean setUserUsername(String aEmailAddress, String aNewUsername) {
         // get the NomNomUser object with the given email address
@@ -343,4 +345,16 @@ public class UserService {
     public void deleteAllUsers(){
         userRepository.deleteAll();
     }
+    public void validateUsername(String username) {
+        if (!username.matches("^[a-zA-Z0-9_]*$")) {
+            throw new IllegalArgumentException("Invalid username format.");
+        }
+    }
+
+    public void validateEmail(String email) {
+        if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+            throw new IllegalArgumentException("Invalid email format.");
+        }
+    }
+
 }

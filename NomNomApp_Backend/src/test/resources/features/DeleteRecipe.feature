@@ -1,4 +1,4 @@
-Feature: Remove recipe
+Feature: US005 Remove recipe
   As a NomNom user, I want to remove a recipe I created,
   so I can keep my collection of recipes clean and relevant.
 
