@@ -351,3 +351,4 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/react,macos,windows,gradle,intellij,intellij+iml,intellij+all,visualstudiocode
+/NomNomApp_Backend/target
