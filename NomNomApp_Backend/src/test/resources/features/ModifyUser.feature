@@ -19,7 +19,7 @@ Examples:
 Scenario Outline: Successfully modify a user's email address
 Given User with username "<userName>" exists
 And User with username "<userName>" has email address "<currentEmail>"
-When I modify the email address of "<userName>" to "<newEmail>"
+When I modify the email address of user "<userName>" to "<newEmail>"
 Then User with username "<userName>" should not have email address "<currentEmail>"
 And User with username "<userName>" should have email address "<newEmail>"
 Examples:
@@ -29,11 +29,11 @@ Examples:
   | Bob      | Bob@outlook.ca  | BobTheBuilder@outlook.ca |
 
 # Error Flow
-Scenario: User tries to mofify their username to an existing username
+Scenario: Attempt to modify their username to an existing username
 Given User with username "<userName1>" exists
 And User with username "<userName2>" exists
-When I modify username of "<userName2>" to username "<userName1>"
-Then I should see an error message "Username already exists."
+When I modify username of user "<userName2>" to username "<userName1>"
+Then I should see an error message "Username already exists." (user modif)
 Examples:
   | userName1 | userName2 | message                    |
   | Jim       | Bob       | Username already exists.   |
