@@ -59,9 +59,8 @@ public class RecipeListStepDefinitions {
 
     @Given("a user has a recipe list named {string} containing {string}")
     public void aUserHasARecipeListNamedContaining(String listName, String recipeName) {
-        aUserHasARecipeListNamed(listName);
-        aRecipeExists(recipeName);
-        theUserAddsTheRecipeTo(recipeName, listName);
+        RecipeList list = recipeLists.get(listName);
+        assertTrue(list.getRecipes().contains(recipes.get(recipeName)));
     }
 
     @When("the user removes {string} from recipe list {string}")
