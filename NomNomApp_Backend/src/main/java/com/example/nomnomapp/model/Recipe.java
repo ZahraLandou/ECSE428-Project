@@ -55,6 +55,10 @@ public class Recipe
   @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RecipeIngredients> recipeIngredients;
 
+  /*@OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  private List<RecipeIngredients> recipeIngredients = new ArrayList<>(); */
+
+
   @ManyToMany
   @JoinTable(
     name = "List_of_recipes",
@@ -69,6 +73,9 @@ public class Recipe
   @OneToMany(mappedBy = "recipe")
   private List<Comment> comments;
 
+  @ManyToOne
+  private NomNomUser creator;
+
   //------------------------
   // CONSTRUCTOR
   //------------------------
@@ -78,9 +85,8 @@ public class Recipe
     this.recipeIngredients = new ArrayList<>();
   }
 
-  public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
+  public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
-    recipeId = aRecipeID;
     title = aTitle;
     description = aDescription;
     instructions = aInstructions;

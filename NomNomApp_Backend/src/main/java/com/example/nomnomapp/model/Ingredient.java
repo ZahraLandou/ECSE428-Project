@@ -32,7 +32,7 @@ public class Ingredient
 
   //Ingredient Associations
   @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<RecipeIngredients> recipeIngredients;
+  private List<RecipeIngredients> recipeIngredients = new ArrayList<>();
 
   //------------------------
   // CONSTRUCTOR
@@ -42,7 +42,7 @@ public class Ingredient
   {
     name = aName;
     type = aType;
-    recipeIngredients = new ArrayList<RecipeIngredients>();
+    this.recipeIngredients = new ArrayList<>();
   }
   public Ingredient() {
     // Required by JPA
@@ -77,6 +77,13 @@ public class Ingredient
   {
     return type;
   }
+
+  public int getIngredientId()
+  {
+    return ingredientId;
+  }
+  
+
   /* Code from template association_GetMany */
   public RecipeIngredients getRecipeIngredient(int index)
   {
@@ -118,7 +125,7 @@ public class Ingredient
     return new RecipeIngredients(aRecipeIngredientID, aQuantity, aUnit, aRecipe, this);
   }
 
-  public boolean addRecipeIngredient(RecipeIngredients aRecipeIngredient)
+  /*public boolean addRecipeIngredient(RecipeIngredients aRecipeIngredient)
   {
     boolean wasAdded = false;
     if (recipeIngredients.contains(aRecipeIngredient)) { return false; }
@@ -134,7 +141,23 @@ public class Ingredient
     }
     wasAdded = true;
     return wasAdded;
+  }*/
+  public boolean addRecipeIngredient(RecipeIngredients aRecipeIngredient) {
+    if (this.recipeIngredients.contains(aRecipeIngredient)) {
+      return false;
+    }
+    Ingredient existingIngredient = aRecipeIngredient.getIngredient();
+    boolean isNewIngredient = existingIngredient != null && !this.equals(existingIngredient);
+
+    if (isNewIngredient) {
+      aRecipeIngredient.setIngredient(this);
+    } else {
+      this.recipeIngredients.add(aRecipeIngredient);
+    }
+    return true;
   }
+
+
 
   public boolean removeRecipeIngredient(RecipeIngredients aRecipeIngredient)
   {
@@ -198,7 +221,5 @@ public class Ingredient
             "name" + ":" + getName()+ "," +
             "type" + ":" + getType()+ "]";
   }
-public int getIngredientId() {
-  return ingredientId;
-}
+
 }
