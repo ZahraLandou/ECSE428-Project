@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.*;
 
 @SpringBootTest
-public class RecipeListSteps {
+public class RecipeListStepDefinitions {
     private RecipeList recipeList;
     private final Map<String, RecipeList> recipeLists = new HashMap<>();
     private final Map<String, Recipe> recipes = new HashMap<>();
