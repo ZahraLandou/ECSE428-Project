@@ -68,6 +68,16 @@ public class UserService {
         return userRepository.findByUsername(aUsername);
     }
 
+    public NomNomUser getNomNomUserByName(String name) {
+
+            
+    return userRepository.findByUsername(name)
+    .orElseThrow(() -> new IllegalArgumentException("User with name "+ name+ " not found"));
+    }
+
+
+
+
     /**
      * Gets a user by email
      * 
@@ -332,6 +342,9 @@ public class UserService {
         }
     }
 
+    public void deleteAllUsers(){
+        userRepository.deleteAll();
+    }
     public void validateUsername(String username) {
         if (!username.matches("^[a-zA-Z0-9_]*$")) {
             throw new IllegalArgumentException("Invalid username format.");
