@@ -66,6 +66,16 @@ public class UserService {
         return userRepository.findByUsername(aUsername);
     }
 
+    public NomNomUser getNomNomUserByName(String name) {
+
+            
+    return userRepository.findByUsername(name)
+    .orElseThrow(() -> new IllegalArgumentException("User with name "+ name+ " not found"));
+    }
+
+
+
+
     /**
      * Gets a user by email
      * 
@@ -328,5 +338,9 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("User with ID '" + userId + "' not found.");
         }
+    }
+
+    public void deleteAllUsers(){
+        userRepository.deleteAll();
     }
 }

@@ -4,7 +4,7 @@ Feature: Delete a user account
   So that my profile and data are removed from the system.
 
   Background:
-    Given the following userId exist:
+    Given the following users exist:
       | userId | username   | email               |
       | 1      | johnDoe    | john@example.com    |
       | 2      | janeSmith  | jane@example.com    |

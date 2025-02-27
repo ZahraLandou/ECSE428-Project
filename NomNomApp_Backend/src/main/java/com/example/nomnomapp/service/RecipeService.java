@@ -114,5 +114,9 @@ public class RecipeService {
         }
         return recipe;
     }
+    public void deleteAllRecipes() {
+        recipeRepository.deleteAll();
+    }
+    
     
 }
