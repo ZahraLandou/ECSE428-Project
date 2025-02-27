@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,26 +29,34 @@ public class CommentService {
      * @throws IllegalArgumentException if the fields are not valid.
      */
     @Transactional
-    public Comment createComment(int aCommentId, String aCommentContent, double rating, NomNomUser aUser,Recipe aRecipe) {
+    public Comment createComment(NomNomUser aUser,String aCommentContent, double aRating, Recipe aRecipe) {
 
-        if (aCommentId<0) {
-           throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment ID is not valid.");
-        }
+
         if (aCommentContent.isEmpty()){
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment cannot be empty.");
         }
-        if(rating<0 ||rating>5){
+        if(aRating<0 ||aRating>5){
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
         }
         if(recipeRepo.findByRecipeId(aRecipe.getRecipeID())==null){
             throw new NomNomException(HttpStatus.NOT_FOUND, "Recipe does not exist.");
         }
         Date today=Date.valueOf(LocalDate.now());
-        Comment c = new Comment(aCommentId,aCommentContent,today,rating,aUser, aRecipe);
+        Comment c = new Comment();
+        // TODO: Check that commentId gets generated automatically?
+        // List<Comment> allComments = repo.findAll();
+        // int lastCommentId = allComments.isEmpty()? 1 : allComments.getLast().getCommentId();
+        // c.setCommentId(lastCommentId);
+        c.setCommentContent(aCommentContent);
+        c.setRating(aRating);
+        c.setNomNomUser(aUser);
+        c.setCreationDate(today);
+        c.setRecipe(aRecipe);
         return repo.save(c);
     }
     @Transactional
     public Comment updateComment(int aCommentId, String aCommentContent, double rating) {
+        //TODO: require NomNomUser to be the same
 
         if (aCommentId<0) {
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment ID is not valid.");
