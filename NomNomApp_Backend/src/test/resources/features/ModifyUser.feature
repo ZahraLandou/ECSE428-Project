@@ -1,4 +1,4 @@
-Feature: Update profile
+Feature: US003 Update profile
   As a NomNom user,
   I want to modify my profile information
   to keep it up to date
@@ -29,7 +29,7 @@ Examples:
   | Bob      | Bob@outlook.ca  | BobTheBuilder@outlook.ca |
 
 # Error Flow
-Scenario: Attempt to modify their username to an existing username
+Scenario Outline: Attempt to modify their username to an existing username
 Given User with username "<userName1>" exists
 And User with username "<userName2>" exists
 When I modify username of user "<userName2>" to username "<userName1>"

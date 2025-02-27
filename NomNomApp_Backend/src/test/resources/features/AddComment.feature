@@ -1,5 +1,5 @@
 
-   Feature: Add Comment
+   Feature: US007 Add Comment
   As a NomNom user, I want to comment on a recipe, so that I can give feedback to the poster
 
   Background:

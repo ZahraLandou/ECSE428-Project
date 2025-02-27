@@ -1,5 +1,5 @@
 
-Feature: Update Comment
+Feature: US007 Update Comment
   As a NomNom user, I want to update a comment on a recipe, so that I can give feedback to the poster
 
   Background:
