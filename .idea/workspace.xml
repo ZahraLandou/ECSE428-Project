@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d0e1355-cc9a-4b2d-aa03-7ccdcd972252" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CreateUserStepDefinitions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/CreateUser.feature" afterDir="false" />
+    <list default="true" id="7d0e1355-cc9a-4b2d-aa03-7ccdcd972252" name="Changes" comment="Numbered feature files by user stories, debugged DeleteUser, 55 tests passing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CreateUserStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CreateUserStepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/CreateUser.feature" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/CreateUser.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteNotifications.feature" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteNotifications.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ViewNotifications.feature" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ViewNotifications.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/target/cucumber.json" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/target/cucumber.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,12 +72,12 @@
     &quot;assignee&quot;: &quot;mdupuy2002&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ZahraLandou/ECSE428-Project.git",
-    "accountId": "fc7ecdaa-e7a6-45f8-8b19-f3299d99b122"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ZahraLandou/ECSE428-Project.git&quot;,
+    &quot;accountId&quot;: &quot;fc7ecdaa-e7a6-45f8-8b19-f3299d99b122&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -121,7 +124,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.NomNomAppApplication.executor": "Run",
-    "com.google.cloudcode.ide_session_index": "20250225_0000",
+    "com.google.cloudcode.ide_session_index": "20250227_0001",
     "git-widget-placeholder": "Marine2",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -273,7 +276,8 @@
       <workItem from="1740555270850" duration="10188000" />
       <workItem from="1740586991306" duration="4328000" />
       <workItem from="1740594055750" duration="3166000" />
-      <workItem from="1740627230915" duration="343000" />
+      <workItem from="1740627230915" duration="879000" />
+      <workItem from="1740666395686" duration="6094000" />
     </task>
     <servers />
   </component>
