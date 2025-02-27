@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Cucumber 
+# Build directories
+target/cucumber.json
+
