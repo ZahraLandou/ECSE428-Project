@@ -1,4 +1,4 @@
-Feature: Add new recipe
+Feature: US004 Add new recipe
   As a NomNom User, I want to post a recipe to my profile,
   so that all users can view and interact with it.
 

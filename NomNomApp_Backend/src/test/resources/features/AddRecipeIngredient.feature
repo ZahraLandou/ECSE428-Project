@@ -1,4 +1,4 @@
-Feature: Add a recipe ingredient
+Feature: US006 Add a recipe ingredient
   As a NomNom user,
   I want to add an ingredient to a recipe,
   So that my recipe is complete

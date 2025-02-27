@@ -1,4 +1,4 @@
-Feature: Modify recipe information
+Feature: US006 Modify recipe information
   As a NomNom user, I want to modify a recipe I created,
   so I can update or correct my recipe as needed.
 
