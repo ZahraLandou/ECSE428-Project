@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 // line 69 "model.ump"
 // line 116 "model.ump"
@@ -40,6 +41,7 @@ public class RecipeList
 
   private ListCategory category;
 
+  @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private NomNomUser nomNomUser;
 

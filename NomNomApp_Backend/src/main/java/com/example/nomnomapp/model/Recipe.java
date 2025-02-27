@@ -48,8 +48,8 @@ public class Recipe
   private double averageRating;
 
   //Recipe Associations
-  @OneToOne
-  @JoinColumn(name = "videoId")
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "video_id")
   private ShortFormVideo shortFormVideo;
 
   @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -332,30 +332,40 @@ public class Recipe
     int index = comments.indexOf(aComment);
     return index;
   }
-  /* Code from template association_SetOptionalOneToOne */
+  /* Code for the updated setShortFormVideo method as the owner side */
   public boolean setShortFormVideo(ShortFormVideo aNewShortFormVideo)
   {
     boolean wasSet = false;
-    if (shortFormVideo != null && !shortFormVideo.equals(aNewShortFormVideo) && equals(shortFormVideo.getRecipe()))
-    {
-      //Unable to setShortFormVideo, as existing shortFormVideo would become an orphan
+    
+    // Handle removal of existing association
+    if (aNewShortFormVideo == null) {
+      // Remove bidirectional association with current shortFormVideo if it exists
+      ShortFormVideo oldShortFormVideo = shortFormVideo;
+      if (oldShortFormVideo != null) {
+        shortFormVideo = null;
+        oldShortFormVideo.setRecipe(null);
+      }
+      wasSet = true;
       return wasSet;
     }
 
-    shortFormVideo = aNewShortFormVideo;
-    Recipe anOldRecipe = aNewShortFormVideo != null ? aNewShortFormVideo.getRecipe() : null;
-
-    if (!this.equals(anOldRecipe))
-    {
-      if (anOldRecipe != null)
-      {
-        anOldRecipe.shortFormVideo = null;
-      }
-      if (shortFormVideo != null)
-      {
-        shortFormVideo.setRecipe(this);
-      }
+    // Handle existing relationship on the new ShortFormVideo
+    Recipe existingRecipe = aNewShortFormVideo.getRecipe();
+    if (existingRecipe != null && !existingRecipe.equals(this)) {
+      // Detach the new ShortFormVideo from its current Recipe
+      existingRecipe.shortFormVideo = null;
     }
+    
+    // Set up the bidirectional relationship
+    ShortFormVideo oldShortFormVideo = shortFormVideo;
+    shortFormVideo = aNewShortFormVideo;
+    aNewShortFormVideo.setRecipe(this);
+    
+    // Clean up the old relationship if necessary
+    if (oldShortFormVideo != null && !oldShortFormVideo.equals(aNewShortFormVideo)) {
+      oldShortFormVideo.setRecipe(null);
+    }
+    
     wasSet = true;
     return wasSet;
   }

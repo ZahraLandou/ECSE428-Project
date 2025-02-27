@@ -25,8 +25,8 @@ public class ShortFormVideo
   private String videoTitle;
   private String videoDescription;
   private String video;
-@OneToOne
-  @JoinColumn(name = "recipe_id", nullable = false)
+
+  @OneToOne(mappedBy = "shortFormVideo")
   private Recipe recipe;
 
   //------------------------
@@ -106,31 +106,37 @@ public class ShortFormVideo
   {
     return recipe;
   }
-  /* Code from template association_SetOneToOptionalOne */
-  public boolean setRecipe(Recipe aNewRecipe)
+  /* Code for the updated setRecipe method as the non-owner side */
+  public boolean setRecipe(Recipe aRecipe)
   {
     boolean wasSet = false;
-    if (aNewRecipe == null)
-    {
-      //Unable to setRecipe to null, as shortFormVideo must always be associated to a recipe
+    
+    // As the non-owner side, we only update our reference
+    // and don't directly manipulate the other side's reference
+    
+    // If we're removing the association
+    if (aRecipe == null) {
+      // If we have a current recipe, have the recipe remove this shortFormVideo
+      Recipe existingRecipe = recipe;
+      if (existingRecipe != null && existingRecipe.getShortFormVideo() == this) {
+        existingRecipe.setShortFormVideo(null);
+      }
+      recipe = null;
+      wasSet = true;
       return wasSet;
     }
     
-    ShortFormVideo existingShortFormVideo = aNewRecipe.getShortFormVideo();
-    if (existingShortFormVideo != null && !equals(existingShortFormVideo))
-    {
-      //Unable to setRecipe, the current recipe already has a shortFormVideo, which would be orphaned if it were re-assigned
-      return wasSet;
+    // Setting to a new recipe
+    recipe = aRecipe;
+    
+    // If the new recipe doesn't have this shortFormVideo as its shortFormVideo,
+    // and we're not already being set by the recipe (to avoid infinite recursion)
+    if (aRecipe.getShortFormVideo() != this) {
+      aRecipe.setShortFormVideo(this);
     }
     
-    Recipe anOldRecipe = recipe;
-    recipe = aNewRecipe;
-    recipe.setShortFormVideo(this);
-
-    if (anOldRecipe != null)
-    {
-      anOldRecipe.setShortFormVideo(null);
-    }
+    // Clean up old recipe if needed (will happen through Recipe's setShortFormVideo)
+    
     wasSet = true;
     return wasSet;
   }
