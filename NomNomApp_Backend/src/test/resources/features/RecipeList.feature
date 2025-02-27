@@ -4,7 +4,7 @@ Feature: Recipe List Management
   So that I can organize my favorite recipes
 
   Scenario: Create a new recipe list
-    Given I
+    Given a user exists
     When the user creates a recipe list with name "My Favorites" and category "Likes"
     Then the recipe list should be created successfully
 

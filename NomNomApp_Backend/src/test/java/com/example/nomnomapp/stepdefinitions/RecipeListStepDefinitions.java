@@ -22,7 +22,7 @@ public class RecipeListStepDefinitions {
 
     @When("the user creates a recipe list with name {string} and category {string}")
     public void theUserCreatesARecipeListWithNameAndCategory(String name, String category) {
-        recipeList = new RecipeList(1, name, RecipeList.ListCategory.valueOf(category), null);
+        recipeList = new RecipeList(1, name, RecipeList.ListCategory.valueOf(category), new NomNomUser());
         recipeLists.put(name, recipeList);
     }
 
