@@ -28,28 +28,29 @@ public class CommentService {
      * creates comment
      * @throws IllegalArgumentException if the fields are not valid.
      */
-    @Transactional
-    public Comment createComment( String commentContent, double rating, NomNomUser user,Recipe aRecipe) {
-
-        
-        if (commentContent.isEmpty()){
-            //throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment cannot be empty.");
-            throw new IllegalArgumentException("Comment cannot be empty.");
+    //@Transactional
+    public Comment createComment(String commentContent, double rating, NomNomUser user, Recipe aRecipe) {
+        if (commentContent.isEmpty()) {
+            throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment cannot be empty.");
         }
-        if(rating<0 ||rating>5){
+        if (rating < 0 || rating > 5) {
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
         }
-        if(recipeRepo.findByRecipeId(aRecipe.getRecipeID())==null){
+        if (recipeRepo.findByRecipeId(aRecipe.getRecipeID()) == null) {
             throw new NomNomException(HttpStatus.NOT_FOUND, "Recipe does not exist.");
         }
-       // NomNomUser user = aUser.get();
-        Date today=Date.valueOf(LocalDate.now());
-        Comment c = new Comment(commentContent,today,rating,user, aRecipe);
+
+        Date today = Date.valueOf(LocalDate.now());
+        Comment c = new Comment(commentContent, today, rating, user, aRecipe);
+       // aRecipe.getComments().add(c);
+
         recipeService.updateAverageRating(aRecipe.getRecipeID());
+        recipeRepo.save(aRecipe);
 
         return repo.save(c);
     }
-    @Transactional
+
+    //@Transactional
     public Comment updateComment(int aCommentId, String aCommentContent, double rating) {
 
         if (aCommentId<0) {
@@ -62,11 +63,11 @@ public class CommentService {
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
         }
 
-        Date today=Date.valueOf(LocalDate.now());
         Comment c = repo.findCommentByCommentId(aCommentId);
         c.setCommentContent(aCommentContent);
         c.setRating(rating);
-        c.setCreationDate(today);
+        recipeService.updateAverageRating(c.getRecipe().getRecipeID());
+
         return repo.save(c);
     }
 

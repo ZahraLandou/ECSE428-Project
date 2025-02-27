@@ -71,7 +71,7 @@ public class Recipe
   private NomNomUser nomNomUser;
 
   @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Comment> comments;
+  private List<Comment> comments = new ArrayList<>();
 
   
 /*   @ManyToOne

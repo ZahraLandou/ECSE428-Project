@@ -20,8 +20,6 @@ import com.example.nomnomapp.service.RecipeService;
 import com.example.nomnomapp.service.UserService;
 import io.cucumber.datatable.DataTable;
 
-
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.*;
 
@@ -47,7 +45,6 @@ public class CommentStepDefinitions {
 
     private Comment createdComment;
     private String error;
-    private final Map<String, Ingredient> commentDatabase = new HashMap<>();
 
 
     @Before
@@ -55,14 +52,6 @@ public class CommentStepDefinitions {
         commentService.deleteAllComments();
         recipeService.deleteAllRecipes();
         userService.deleteAllUsers();
- /* */
-        commentDatabase.clear();
-    }
-
-    @After
-    public void tearDown() {
-        commentDatabase.clear();
-
     }
 
     @Given("the following users exist in the system")
@@ -131,34 +120,78 @@ public class CommentStepDefinitions {
         assertEquals(Double.parseDouble(expectedRating), recipe.getAverageRating(), 0.01);
     }
 
-    @Then("the number of comments for recipe {string} in the system shall be {string}")
-    public void the_number_of_comments_should_be(String recipeTitle, String expectedNumber) {
+
+    @Given("a user with username {string} has a comment on recipe {string}")
+    public void a_user_has_a_comment_on_recipe(String username, String recipeTitle) {
+        NomNomUser user = userService.getNomNomUserByName(username);
         Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
-        assertNotNull(recipe);
-        assertEquals(Integer.parseInt(expectedNumber), recipe.getComments().size());
+
+        createdComment = commentService.createComment("Great recipe!", 4.0, user, recipe);
+        assertNotNull(createdComment, "Comment creation failed");
     }
 
-
-    @When("user with username {string} attempts to add a new comment with rating {string} and content {string} to an existing recipe {string}")
-    //@Transactional(noRollbackFor = NomNomException.class)
-    public void user_attempts_to_add_comment(String username, String ratingStr, String commentContent, String recipeTitle) {
+    @When("the user {string} updates the comment of {string} with new content {string} and rating {string}")
+    public void user_updates_comment(String username, String recipeTitle, String newCommentContent, String newRatingStr) {
+        double newRating = Double.parseDouble(newRatingStr);
         try {
-            double rating = Double.parseDouble(ratingStr);
             NomNomUser user = userService.getNomNomUserByName(username);
             Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
-
-            createdComment = commentService.createComment(commentContent, rating, user, recipe);
+            createdComment = commentService.updateComment(createdComment.getCommentId(), newCommentContent, newRating);
         } catch (Exception e) {
             error = e.getMessage();
         }
     }
 
+    @Then("the comment should be updated successfully")
+    public void the_comment_should_be_updated_successfully() {
+        Comment updatedComment = commentRepo.findCommentByCommentId(createdComment.getCommentId());
+        assertNotNull(updatedComment, "The updated comment does not exist in the system");
+        assertEquals("Even better!", updatedComment.getCommentContent(), "The comment content is incorrect");
+        assertEquals(5.0, updatedComment.getRating(), 0.01, "The comment rating is incorrect");
+    }
 
+    @Then("the recipe's average rating should be updated to {string}")
+    public void the_recipe_average_rating_should_be_updated(String newRating) {
+        Recipe recipe = recipeRepo.findRecipeByTitle("Steak").get(0);
+        double expectedRating = Double.parseDouble(newRating);
+        assertEquals(expectedRating, recipe.getAverageRating(), 0.01, "The recipe's average rating is incorrect");
+    }
+
+    @Given("no comment from user {string} exists for {string}")
+    public void no_comment_from_user_exists(String username, String recipeName) {
+        NomNomUser user = userService.getNomNomUserByName(username);
+        Recipe recipe = recipeService.getRecipesByTitle(recipeName).get(0);
+        assertTrue(user.getComments().stream().noneMatch(comment -> comment.getRecipe().equals(recipe)), "User's comment exists for this recipe");
+    }
+
+    @When("the user tries to update their comment with new content {string} and rating {string}")
+    public void user_tries_to_update_their_comment(String newCommentContent, String newRatingStr) {
+        try {
+            double newRating = Double.parseDouble(newRatingStr);
+            // Try to update a non-existing comment (should fail)
+            createdComment = commentService.updateComment(999, newCommentContent, newRating);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+    }
+
+    @When("user with username {string} attempts to add a new comment with rating {string} and content {string} to an existing recipe {string}")
+      public void user_attempts_to_add_comment(String username, String ratingStr, String commentContent, String recipeTitle) {
+          try {
+              double rating = Double.parseDouble(ratingStr);
+              NomNomUser user = userService.getNomNomUserByName(username);
+              Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
+
+              createdComment = commentService.createComment(commentContent, rating, user, recipe);
+          } catch (Exception e) {
+              error = e.getMessage();
+          }
+      }
 
 
     @Then("the comment created by user {string} for recipe {string},  content {string}, and rating {string} shall exist in the system ")
     public void comment_should_exist(String username, String recipeTitle, String commentContent, String rating) {
-        NomNomUser user = userRepo.findByUsername(username).get();
+        NomNomUser user = userService.getNomNomUserByName(username);
         for (Comment c : user.getComments()) {
             if (c.getRecipe().getTitle().equals(recipeTitle)) {
                 assertNotNull(c);
@@ -189,81 +222,5 @@ public class CommentStepDefinitions {
     }
 
 
-/*  
-    @Then("the rating of the recipe {string} should be {string}")
-    public void the_rating_of_the_recipe_should_be(String recipeTitle, String expectedRatingStr) {
-        Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
-        double expectedRating = Double.parseDouble(expectedRatingStr);
-        assertEquals(expectedRating, recipe.getAverageRating(), 0.01, "The recipe's average rating is incorrect");
-    }
-
-    @Then("the number of comments for recipe {string} in the system shall be {string}")
-    public void the_number_of_comments_for_recipe_should_be(String recipeTitle, String expectedNumberStr) {
-        Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
-        long expectedNumber = Long.parseLong(expectedNumberStr);
-        long actualNumber = commentRepo.countByRecipe(recipe);
-        assertEquals(expectedNumber, actualNumber, "The number of comments for the recipe is incorrect");
-    }
-
-
-
-
-
-
-
-    @Then("an error should be returned with message {string}")
-    public void error_should_be_returned(String expectedMessage) {
-        assertNotNull(error);
-        assertEquals(expectedMessage, error);
-    }
-
-    @When("the user {string} updates the comment of {string} with new content {string} and rating {string}")
-    public void update_comment(String username, String commentContent, String recipeTitle, String rating) {
-        NomNomUser user = userRepo.findByUsername(username).get();
-        try {
-            error = null;
-            for (Comment c : user.getComments()) {
-                if (c.getRecipe().getTitle().equals(recipeTitle)) {
-                    c.setCommentContent(commentContent);
-                    c.setRating(Double.parseDouble(rating));
-                    commentRepo.save(c);
-                    break;
-                }
-            }
-
-        } catch (Exception e) {
-            error = e.getMessage();
-        }
-    }
-
-    @Then("the comment should be updated successfully")
-    public void verify_comment_update() {
-        Comment updatedComment = commentRepo.findCommentByCommentId(createdComment.getCommentId());
-        assertNotNull(updatedComment);
-        assertEquals(createdComment.getCommentContent(), updatedComment.getCommentContent());
-        assertEquals(createdComment.getRating(), updatedComment.getRating(), 0.01);
-    }
-
-    @Then("the recipe's average rating should be updated")
-    public void verify_recipe_rating_update() {
-        Recipe recipe = recipeRepo.findByRecipeId(createdComment.getRecipe().getRecipeID());
-        assertNotNull(recipe);
-        assertEquals(recipe.calculateAverageRating(), recipe.getAverageRating(), 0.01);
-    }
-
-    @When("the user deletes the comment")
-    public void delete_comment() {
-        try {
-            error = null;
-            commentService.deleteComment(createdComment.getCommentId());
-        } catch (Exception e) {
-            error = e.getMessage();
-        }
-    }
-
-    @Then("the comment should be removed from the system")
-    public void verify_comment_deleted() {
-        assertNull(commentRepo.findCommentByCommentId(createdComment.getCommentId()));
-    }*/
 }
  

@@ -112,7 +112,8 @@ public class RecipeService {
             // mapToDouble generated an empty list
             recipe.setAverageRating(0);
         }
-        return recipe;
+        return recipeRepository.save(recipe);
+              //  recipe;
     }
     public void deleteAllRecipes() {
         recipeRepository.deleteAll();

@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d0e1355-cc9a-4b2d-aa03-7ccdcd972252" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ModifyComment.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/RecipeList.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/RecipeList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RecipeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RecipeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/CommentServiceStepDefinitions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/CucumberSpringConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/Deleteuser.feature" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/Deleteuser.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/RunCucumberTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CommentStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CommentStepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/AddComment.feature" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/AddComment.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/target/cucumber.json" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/target/cucumber.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -302,6 +295,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ECSE428_Project$CucumberTestRunner.ic" NAME="CucumberTestRunner Coverage Results" MODIFIED="1740671427908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

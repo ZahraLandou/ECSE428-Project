@@ -1,4 +1,3 @@
-   # Then the number of comments for recipe "<recipeTitle>" in the system shall be "<numberOfComments>"
 
    Feature: Add Comment
   As a NomNom user, I want to comment on a recipe, so that I can give feedback to the poster
@@ -20,9 +19,9 @@
     Then the comment created by user "<username>" for recipe "<recipeTitle>", content "<commentContent>", and rating "<rating>" shall exist in the system
 
     Examples:
-       | commentContent             | rating | username | recipeTitle | expectedRating| numberOfComments|
-       | This is a great recipe     | 4.0    | Coco     | Steak       | 4.0           |1|
-       | Love it!                   | 3.0    | Jim      | Steak       |3.             |2|
+       | commentContent             | rating | username | recipeTitle | expectedRating|
+       | This is a great recipe     | 4.0    | Coco     | Steak       | 4.0           |
+       | Love it!                   | 3.0    | Jim      | Steak       |3.             |
 
   Scenario Outline: Fail to add a comment with invalid input
     When user with username "<username>" attempts to add a new comment with rating "<rating>" and content "<commentContent>" to an existing recipe "<recipeTitle>"
