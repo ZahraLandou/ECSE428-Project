@@ -13,16 +13,18 @@ import java.util.*;
 @SpringBootTest
 public class RecipeListStepDefinitions {
     private RecipeList recipeList;
+    private NomNomUser mch;
     private final Map<String, RecipeList> recipeLists = new HashMap<>();
     private final Map<String, Recipe> recipes = new HashMap<>();
 
     @Given("a user exists")
     public void aUserExists() {
+        mch = new NomNomUser("mch64", "mch64@gmail.com", "nonnom");
     }
 
     @When("the user creates a recipe list with name {string} and category {string}")
     public void theUserCreatesARecipeListWithNameAndCategory(String name, String category) {
-        recipeList = new RecipeList(1, name, RecipeList.ListCategory.valueOf(category), new NomNomUser());
+        recipeList = new RecipeList(1, name, RecipeList.ListCategory.valueOf(category), mch);
         recipeLists.put(name, recipeList);
     }
 
@@ -33,7 +35,7 @@ public class RecipeListStepDefinitions {
 
     @Given("a user has a recipe list named {string}")
     public void aUserHasARecipeListNamed(String name) {
-        recipeList = new RecipeList(1, name, RecipeList.ListCategory.Favorites, new NomNomUser());
+        recipeList = new RecipeList(1, name, RecipeList.ListCategory.Favorites, mch);
         recipeLists.put(name, recipeList);
     }
 
