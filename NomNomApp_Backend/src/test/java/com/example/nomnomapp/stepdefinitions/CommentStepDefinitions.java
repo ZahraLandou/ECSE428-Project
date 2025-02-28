@@ -129,12 +129,13 @@ public class CommentStepDefinitions {
 
     @When("user with username {string} attempts to add a new comment with content {string} and rating {string} to an existing recipe {string}")
     public void user_adds_comment(String username, String commentContent, String rating, String recipeId ) {
+        NomNomUser usr =  userService.getUserByUsername(username).orElse(null);
         try {
             createdComment = commentService.createComment(
-                                                userService.getUserByUsername(username).orElse(null), 
+                                                username ,
                                                 commentContent, 
                                                 Double.parseDouble(rating), 
-                                                recipeRepo.findByRecipeId(Integer.parseInt(recipeId)));
+                                                Integer.parseInt(recipeId));
             commentRepo.save(createdComment);
         } catch (Exception e) {
             error = e.getMessage();

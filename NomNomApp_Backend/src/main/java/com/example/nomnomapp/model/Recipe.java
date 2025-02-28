@@ -85,12 +85,11 @@ public class Recipe
     this.recipeIngredients = new ArrayList<>();
   }
 
-  public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
+  public Recipe(String aTitle, String aDescription, String aInstructions, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
     title = aTitle;
     description = aDescription;
     instructions = aInstructions;
-    creationDate = aCreationDate;
     category = aCategory;
     likes = aLikes;
     picture = aPicture;
@@ -538,9 +537,9 @@ public class Recipe
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Comment addComment(int aCommentId, String aCommentContent, Date aCreationDate, double aRating, NomNomUser aNomNomUser)
+  public Comment addComment(String aCommentContent, double aRating, NomNomUser aNomNomUser)
   {
-    return new Comment(aCommentId, aCommentContent, aCreationDate, aRating, aNomNomUser, this);
+    return new Comment(aCommentContent, aRating, aNomNomUser, this);
   }
 
   public boolean addComment(Comment aComment)

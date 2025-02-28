@@ -3,6 +3,8 @@
 
 package com.example.nomnomapp.model;
 import java.sql.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -25,11 +27,18 @@ public class Comment
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int commentId;
 
+  @Column(nullable = false)
   private String commentContent;
+
+  @CreationTimestamp
+  @Column(nullable = false, updatable = false)
   private Date creationDate;
+
   private double rating;
+
   @ManyToOne
   private NomNomUser nomNomUser;
+
   //Comment Associations
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false) 
@@ -40,11 +49,9 @@ public class Comment
   //------------------------
   public Comment(){}
 
-  public Comment(int aCommentId, String aCommentContent, Date aCreationDate, double aRating, NomNomUser aNomNomUser, Recipe aRecipe)
+  public Comment(String aCommentContent, double aRating, NomNomUser aNomNomUser, Recipe aRecipe)
   {
-    commentId = aCommentId;
     commentContent = aCommentContent;
-    creationDate = aCreationDate;
     rating = aRating;
     boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
     if (!didAddNomNomUser)
