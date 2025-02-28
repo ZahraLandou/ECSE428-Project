@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+
 import java.util.Optional;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Service
 public class CommentService {
@@ -22,6 +25,9 @@ public class CommentService {
     private RecipeRepository recipeRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RecipeService recipeService;
 
     /**
      * creates comment
@@ -94,7 +100,9 @@ public class CommentService {
         Comment c = commentRepository.findCommentByCommentId(aCommentId);
         c.setCommentContent(aCommentContent);
         c.setRating(rating);
+        recipeService.updateAverageRating(c.getRecipe().getRecipeID());
         return commentRepository.save(c);
+
     }
 
     public Comment getCommentById(int aCommentId) {
@@ -124,6 +132,11 @@ public class CommentService {
     }
     public Iterable<Comment> getAllComments() {
         return commentRepository.findAll();
+    }
+
+    public void deleteAllComments() {
+
+        commentRepository.deleteAll();
     }
     
 
