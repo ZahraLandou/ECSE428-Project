@@ -1,4 +1,4 @@
-Feature: US020 Modify collections of recipes
+Feature: US021 Modify collections of recipes
     As a NomNom user, I want to create collections of recipes
     that I can name in order to more easily access certain types
     of recipes I enjoy. For example, I can create a "deserts" collection
