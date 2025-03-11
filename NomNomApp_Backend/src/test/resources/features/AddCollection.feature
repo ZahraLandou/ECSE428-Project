@@ -7,8 +7,8 @@ Feature: US020 Add collections of recipes
 
     # normal flow
     Scenario Outline: Successfully create a collection with a collection name, two recipes
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
         When I create a collection with name "<collectionName>" that contains "<recipeName1>" and "<recipeName2>"
         Then the collection with name "<collectionName>" should exist in the system with recipes "<recipeName1>" and "<recipeName2>"
         Examples:
@@ -17,12 +17,12 @@ Feature: US020 Add collections of recipes
             | New-York pizza       | Fried chicken | Junk food collection |
 
     # error flow
-    Scenario Outline: Attempt to create a collection no collection name
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
+    Scenario Outline: Attempt to create a collection with no collection name
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
         When I create a collection with name "<collectionName>" that contains "<recipeName1>" and "<recipeName2>"
-        Then the collection with name "<collectionNameOld>" should not exist in the system
-        And I should see an error message "<message>" (not common)
+        Then the collection with name "<collectionName>" should not exist in the system
+        And I should see an error message "<message>" (collection add error)
         Examples:
             | recipeName1          | recipeName2   | collectionName | message                                        |
             | Papa's Crème brûlée  | Custard bread |                | Error, cannot create a collection with no name |

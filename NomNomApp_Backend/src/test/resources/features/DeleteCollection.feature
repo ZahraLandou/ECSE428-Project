@@ -7,8 +7,8 @@ Feature: US020 Delete collections of recipes
     
     # normal flow
     Scenario Outline: Successfully delete an existing recipe collection
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
         When I create a collection with name "<collectionName>" that contains "<recipeName1>" and "<recipeName2>"
         And I delete a collection with name "<collectionName>"
         Then the collection with name "<collectionName>" should not exist in the system
@@ -20,7 +20,7 @@ Feature: US020 Delete collections of recipes
     # error flow
     Scenario Outline: Attempt to delete a non existent recipe collection
         When I delete a collection with name "<collectionName>"
-        Then I should see an error message "<message>" (not common)
+        Then I should see an error message "<message>" (collection delete error)
         Examples:
             | collectionName       | message                     |
             | Best deserts         | Error, collection not found |

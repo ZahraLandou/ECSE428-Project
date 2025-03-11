@@ -7,12 +7,12 @@ Feature: US020 Modify collections of recipes
 
     # normal flow
     Scenario Outline: Successfully add a recipe to an existing collection
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
-        And a recipe with title "<recipeName3>" exists
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
+        And a recipe with title "<recipeName3>" exists (for collections)
         When I create a collection with name "<collectionName>" that contains "<recipeName1>" and "<recipeName2>"
         And I add "<recipeName3>" to collection "<collectionName>"
-        Then the collection with name "<collectionName>" should exist in the system with recipes "<recipeName1>" and "<recipeName3>"
+        Then the collection with name "<collectionName>" should exist in the system with recipes "<recipeName1>", "<recipeName2>", and "<recipeName3>"
         Examples:
             | recipeName1          | recipeName2   | recipeName3          | collectionName       |
             | Papa's Crème brûlée  | Custard bread | Lemon pie            | Best deserts         |
@@ -20,9 +20,9 @@ Feature: US020 Modify collections of recipes
 
     # normal flow
     Scenario Outline: Successfully remove a recipe from an existing collection
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
-        And a recipe with title "<recipeName3>" exists
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
+        And a recipe with title "<recipeName3>" exists (for collections)
         When I create a collection with name "<collectionName>" that contains "<recipeName1>", "<recipeName2>", and "<recipeName3>"
         And I delete recipe "<recipeName3>" from the collection "<collectionName>"
         Then the collection with name "<collectionName>" should exist in the system with recipes "<recipeName1>" and "<recipeName2>"
@@ -34,8 +34,8 @@ Feature: US020 Modify collections of recipes
 
     # normal flow
     Scenario Outline: Successfully change a collection name
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
         When I create a collection with name "<collectionNameOld>" that contains "<recipeName1>" and "<recipeName2>"
         And I modify the name of the collection with name "<collectionNameOld>" to "<collectionNameNew>"
         Then the collection with name "<collectionNameNew>" should exist in the system with recipes "<recipeName1>" and "<recipeName2>"
@@ -47,11 +47,11 @@ Feature: US020 Modify collections of recipes
 
     # error flow
     Scenario Outline: Attempt to remove a recipe that does not exist from an existing collection
-        Given a recipe with title "<recipeName1>" exists
-        And a recipe with title "<recipeName2>" exists
+        Given a recipe with title "<recipeName1>" exists (for collections)
+        And a recipe with title "<recipeName2>" exists (for collections)
         When I create a collection with name "<collectionName>" that contains "<recipeName1>" and "<recipeName2>"
         And I delete recipe "French Flan" from the collection "<collectionName>"
-        Then I should see an error message "<message>" (not common)
+        Then I should see an error message "<message>" (collection modify error)
         Examples:
             | recipeName1          | recipeName2   | collectionName       | message                                              |
             | Papa's Crème brûlée  | Custard bread | Best deserts         | Error, this recipe does not exist in this collection |
