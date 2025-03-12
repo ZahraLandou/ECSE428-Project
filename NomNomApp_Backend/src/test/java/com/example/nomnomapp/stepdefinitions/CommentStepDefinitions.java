@@ -100,14 +100,14 @@ public class CommentStepDefinitions {
     public void user_adds_comment(String username, String rating, String commentContent, String recipeTitle) {
         try {
             error = null; // Reset error before execution
-            NomNomUser user = userService.getNomNomUserByName(username);
+            // NomNomUser user = userService.getNomNomUserByName(username);
             Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
 
             createdComment = commentService.createComment(
+                    username,
                     commentContent,
                     Double.parseDouble(rating),
-                    user,
-                    recipe);
+                    recipe.getRecipeID());
         } catch (Exception e) {
             error = e.getMessage();
         }
@@ -123,10 +123,10 @@ public class CommentStepDefinitions {
 
     @Given("a user with username {string} has a comment on recipe {string}")
     public void a_user_has_a_comment_on_recipe(String username, String recipeTitle) {
-        NomNomUser user = userService.getNomNomUserByName(username);
+        // NomNomUser user = userService.getNomNomUserByName(username);
         Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
 
-        createdComment = commentService.createComment("Great recipe!", 4.0, user, recipe);
+        createdComment = commentService.createComment(username, "Great recipe!", 4.0, recipe.getRecipeID());
         assertNotNull(createdComment, "Comment creation failed");
     }
 
@@ -182,7 +182,7 @@ public class CommentStepDefinitions {
               NomNomUser user = userService.getNomNomUserByName(username);
               Recipe recipe = recipeRepo.findRecipeByTitle(recipeTitle).get(0);
 
-              createdComment = commentService.createComment(commentContent, rating, user, recipe);
+              createdComment = commentService.createComment(username, commentContent, rating, recipe.getRecipeID());
           } catch (Exception e) {
               error = e.getMessage();
           }

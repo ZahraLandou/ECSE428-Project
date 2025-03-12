@@ -35,6 +35,11 @@ public class CommentService {
      */
     public Comment createComment(String aUsername, String aCommentContent, double aRating, int aRecipeId) {
 
+        Optional<NomNomUser> optionalUser = userRepository.findByUsername(aUsername);
+        if(!optionalUser.isPresent()){
+            throw new NomNomException(HttpStatus.NOT_FOUND, "User does not exist.");
+        }
+        
         if (aCommentContent.isEmpty()){
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Comment cannot be empty.");
         }
@@ -45,10 +50,7 @@ public class CommentService {
         if(recipe==null){
             throw new NomNomException(HttpStatus.NOT_FOUND, "Recipe does not exist.");
         }
-        Optional<NomNomUser> optionalUser = userRepository.findByUsername(aUsername);
-        if(!optionalUser.isPresent()){
-            throw new NomNomException(HttpStatus.NOT_FOUND, "User does not exist.");
-        }
+
 
         NomNomUser user = optionalUser.get();
         Comment c = new Comment(

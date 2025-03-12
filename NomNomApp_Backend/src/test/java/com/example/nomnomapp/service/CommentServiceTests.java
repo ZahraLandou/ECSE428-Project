@@ -28,6 +28,9 @@ import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.repository.CommentRepository;
 import com.example.nomnomapp.repository.RecipeRepository;
 import com.example.nomnomapp.repository.UserRepository;
+
+import ch.qos.logback.classic.joran.ReconfigureOnChangeTask;
+
 import com.example.nomnomapp.exception.NomNomException;
 
 /**
@@ -50,6 +53,9 @@ public class CommentServiceTests {
 
     @InjectMocks
     private CommentService commentService;
+
+    @InjectMocks
+    private RecipeService recipeService;
 
     private Recipe testRecipe;
     private NomNomUser testUser;
@@ -103,7 +109,6 @@ public class CommentServiceTests {
     @Test
     public void testCreateComment_Fail_EmptyContent(){
         when(commentRepository.save(any(Comment.class))).thenReturn(testComment);
-        when(recipeRepository.findByRecipeId(testRecipe.getRecipeID())).thenReturn(testRecipe);
         when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
         
         Exception e = assertThrows(NomNomException.class, ()->{
@@ -120,8 +125,6 @@ public class CommentServiceTests {
 
     @Test
     public void testCreateComment_Fail_NegativeRating(){
-        when(commentRepository.save(any(Comment.class))).thenReturn(testComment);
-        when(recipeRepository.findByRecipeId(testRecipe.getRecipeID())).thenReturn(testRecipe);
         when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
         
         Exception e = assertThrows(NomNomException.class, ()->{
@@ -139,7 +142,6 @@ public class CommentServiceTests {
     @Test
     public void testCreateComment_Fail_RatingTooBig(){
         when(commentRepository.save(any(Comment.class))).thenReturn(testComment);
-        when(recipeRepository.findByRecipeId(testRecipe.getRecipeID())).thenReturn(testRecipe);
         when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
         
         Exception e = assertThrows(NomNomException.class, ()->{
@@ -154,28 +156,9 @@ public class CommentServiceTests {
         assertEquals("Rating must be between 0 and 5.", e.getMessage());
     }
 
-    // @Test
-    // public void testCreateComment_Fail_RatingTooManyDec(){
-    //     when(commentRepository.save(any(Comment.class))).thenReturn(testComment);
-    //     when(recipeRepository.findByRecipeId(testRecipe.getRecipeID())).thenReturn(testRecipe);
-    //     when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
-        
-    //     Exception e = assertThrows(NomNomException.class, ()->{
-    //         commentService.createComment(
-    //                                 testUser.getUsername(),
-    //                                 "Dummy Comment.",
-    //                                 Double.parseDouble("0.123456789012345678901234567890"),
-    //                                 testRecipe.getRecipeID()
-    //                                 );
-    //     } );
-
-    //     assertEquals("Rating must be between 0 and 5.", e.getMessage());
-    // }
     @Test
     public void testCreateComment_Fail_RecipeDNE(){
         when(commentRepository.save(any(Comment.class))).thenReturn(testComment);
-        // when(recipeRepository.findByRecipeId(testRecipe.getRecipeID())).thenReturn(null);
-        // when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
         
         Exception e = assertThrows(NomNomException.class, ()->{
             commentService.createComment(
@@ -245,6 +228,7 @@ public class CommentServiceTests {
     public void testUpdateComment_Success_RatingAndContent(){
         when(commentRepository.findCommentByCommentId(1)).thenReturn(testComment);
         when(commentRepository.save(testComment)).thenReturn(testComment);
+        when(recipeRepository.save(any(Recipe.class))).thenReturn(testRecipe);
         
         int testCommentId = 1;
         String newCommentContent = "foobar";
