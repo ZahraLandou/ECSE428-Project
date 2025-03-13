@@ -16,6 +16,8 @@ import io.cucumber.java.en.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 @SpringBootTest
@@ -144,5 +146,36 @@ public class RecipeStepDefinitions {
     @Then("I should see an error message {string} \\(not common)")
     public void i_should_see_an_error_message(String expectedMessage) {
         assertEquals(expectedMessage, "Error! Recipe not found.");
+    }
+
+    @Given("a recipe with title {string} and amount of likes {string} exists")
+    public void the_following_recipe_with_like_exist(String title,String likes) {
+        Recipe newRecipe = new Recipe();
+        newRecipe.setTitle(title);
+        newRecipe.setLikes(Integer.parseInt(likes));
+        newRecipe.setCreationDate(Date.valueOf(LocalDate.now()));
+        newRecipe.setDescription("This is a test");
+        newRecipe.setNomNomUser(userService.createUser("user","user@email.com","password"));
+        recipeDatabase.put(title, newRecipe);
+        recipeService.createRecipe(newRecipe);
+
+    }
+
+    @When("a user likes the recipe {string}")
+    public void user_likes_recipe(String title){
+        Recipe newRecipe= recipeService.likeRecipe(recipeDatabase.get(title).getRecipeID());
+        recipeDatabase.put(title, newRecipe);
+    }
+
+
+    @Then("the recipe with title {string} should have {string} likes")
+    public void recipe_likes_updated(String title,String likes) {
+        assertEquals(Integer.parseInt(likes),recipeDatabase.get(title).getLikes());
+    }
+
+    @When("a user unlikes the recipe {string}")
+    public void user_unlikes_recipe(String title){
+        Recipe newRecipe= recipeService.unlikeRecipe(recipeDatabase.get(title).getRecipeID());
+        recipeDatabase.put(title, newRecipe);
     }
 }
