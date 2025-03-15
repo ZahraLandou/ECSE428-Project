@@ -403,7 +403,7 @@ private List<NomNomUser> following;
   /* Code from template association_AddManyToOne */
   public Recipe addRecipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, Recipe.RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating)
   {
-    return new Recipe(aRecipeID, aTitle, aDescription, aInstructions, aCreationDate, aCategory, aLikes, aPicture, aAverageRating, this);
+    return new Recipe(aTitle, aDescription, aInstructions, aCreationDate, aCategory, aLikes, aPicture, aAverageRating, this);
   }
 
   public boolean addRecipe(Recipe aRecipe)

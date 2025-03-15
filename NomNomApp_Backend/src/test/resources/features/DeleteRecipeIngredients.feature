@@ -1,4 +1,4 @@
-Feature: Delete a recipe ingredient
+Feature: US006 Delete a recipe ingredient
   As a NomNom user,
   I want to remove an ingredient from a recipe,
   So that my recipe remains accurate and up to date

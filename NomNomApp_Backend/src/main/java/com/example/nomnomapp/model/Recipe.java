@@ -70,11 +70,12 @@ public class Recipe
   @JoinColumn(name = "user_id", nullable = false) 
   private NomNomUser nomNomUser;
 
-  @OneToMany(mappedBy = "recipe")
-  private List<Comment> comments;
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comment> comments = new ArrayList<>();
 
-  @ManyToOne
-  private NomNomUser creator;
+  
+/*   @ManyToOne
+  private NomNomUser creator; */
 
   //------------------------
   // CONSTRUCTOR
@@ -85,9 +86,8 @@ public class Recipe
     this.recipeIngredients = new ArrayList<>();
   }
 
-  public Recipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
+  public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
-    recipeId = aRecipeID;
     title = aTitle;
     description = aDescription;
     instructions = aInstructions;
@@ -233,6 +233,15 @@ public class Recipe
     return shortFormVideo;
   }
 
+  public double calculateAverageRating(){
+    double average =0.0;
+    if(!comments.isEmpty()){
+    for(Comment c: comments){
+      average += c.getRating();
+    }
+  }
+    return average/comments.size();
+  }
   public boolean hasShortFormVideo()
   {
     boolean has = shortFormVideo != null;

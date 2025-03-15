@@ -1,4 +1,4 @@
-Feature: Add a new ingredient
+Feature: US024 Add a new ingredient
   As a NomNom user,
   I want to add a new ingredient,
   So that I can use it in my recipes.

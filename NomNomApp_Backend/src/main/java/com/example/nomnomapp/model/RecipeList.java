@@ -5,11 +5,14 @@ package com.example.nomnomapp.model;
 import java.util.*;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 // line 69 "model.ump"
 // line 116 "model.ump"
@@ -17,9 +20,7 @@ import jakarta.persistence.ManyToMany;
 @Entity
 public class RecipeList
 {
-  public RecipeList() {
 
-  }
 
   //------------------------
   // ENUMERATIONS
@@ -35,16 +36,19 @@ public class RecipeList
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int recipeListID;
+
   private String name;
 
 
+  @Enumerated(EnumType.STRING)
   private ListCategory category;
 
-  @JoinColumn(name = "user_id", nullable = false)
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = false)
   private NomNomUser nomNomUser;
 
   @ManyToMany(mappedBy = "recipeLists")
-  private List<Recipe> recipes;
+  private List<Recipe> recipes = new ArrayList<>();;
 
   //------------------------
   // CONSTRUCTOR
@@ -67,6 +71,9 @@ public class RecipeList
   // INTERFACE
   //------------------------
 
+  public RecipeList() {
+
+  }
   public boolean setRecipeListID(int aRecipeListID)
   {
     boolean wasSet = false;

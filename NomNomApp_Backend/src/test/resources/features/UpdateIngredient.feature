@@ -1,4 +1,4 @@
-Feature: Update an ingredient
+Feature: US025 Update an ingredient
   As a NomNom user,
   I want to modify an ingredient,
   So that it can have the right information.
