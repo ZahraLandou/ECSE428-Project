@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d0e1355-cc9a-4b2d-aa03-7ccdcd972252" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Rating.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/RatingRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RatingStepDefinitions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/RateRecipe.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/NomNomUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/NomNomUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +61,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Marine" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -88,59 +91,61 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Cucumber Java.Feature: AddIngredient.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: AddRecipe.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: AddRecipeIngredient.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: DeleteNotifications.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: DeleteRecipe.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: DeleteRecipeIngredients.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: Deleteuser.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: ManageRecipeIngredients.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: SearchIngredient.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: UpdateIngredient.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Feature: ViewNotifications.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Successfully add a recipe ingredient.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build NomNomApp_Backend.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CucumberTestRunner (1).executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CucumberTestRunner.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.NomNomAppApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.NomNomApp_Backend [:io.cucumber.core.cli.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.NomNomApp_Backend [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.NomNomAppApplication.executor&quot;: &quot;Run&quot;,
-    &quot;com.google.cloudcode.ide_session_index&quot;: &quot;20250225_0000&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.jsOptions&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Cucumber Java.Feature: AddIngredient.executor": "Run",
+    "Cucumber Java.Feature: AddRecipe.executor": "Run",
+    "Cucumber Java.Feature: AddRecipeIngredient.executor": "Run",
+    "Cucumber Java.Feature: DeleteNotifications.executor": "Run",
+    "Cucumber Java.Feature: DeleteRecipe.executor": "Run",
+    "Cucumber Java.Feature: DeleteRecipeIngredients.executor": "Run",
+    "Cucumber Java.Feature: Deleteuser.executor": "Run",
+    "Cucumber Java.Feature: ManageRecipeIngredients.executor": "Run",
+    "Cucumber Java.Feature: SearchIngredient.executor": "Run",
+    "Cucumber Java.Feature: UpdateIngredient.executor": "Run",
+    "Cucumber Java.Feature: ViewNotifications.executor": "Run",
+    "Cucumber Java.Scenario: Successfully add a recipe ingredient.executor": "Run",
+    "Gradle.Build NomNomApp_Backend.executor": "Run",
+    "Gradle.CucumberTestRunner (1).executor": "Run",
+    "Gradle.CucumberTestRunner.executor": "Run",
+    "Gradle.NomNomAppApplicationTests.executor": "Run",
+    "Gradle.NomNomApp_Backend [:io.cucumber.core.cli.Main.main()].executor": "Run",
+    "Gradle.NomNomApp_Backend [dependencies].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.NomNomAppApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "com.google.cloudcode.ide_session_index": "20250225_0000",
+    "git-widget-placeholder": "Nara",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "editor.preferences.jsOptions",
+    "spring.configuration.checksum": "04a30ea852945c55bb642e42b73ce3cb",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Cucumber Java.Feature: Deleteuser">
-    <configuration name="Feature: AddRecipeIngredient" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+}]]></component>
+  <component name="RunManager" selected="Cucumber Java.Feature: RateRecipe">
+    <configuration name="Feature: DeleteCollection" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/AddRecipeIngredient.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteCollection.feature" />
       <option name="GLUE" value="com.example.nomnomapp.stepdefinitions" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="NomNomApp_Backend.test" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: AddRecipeIngredient" />
+      <option name="SUGGESTED_NAME" value="Feature: DeleteCollection" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -152,14 +157,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: DeleteNotifications" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+    <configuration name="Feature: DeleteRecipeIngredients" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteNotifications.feature" />
-      <option name="GLUE" value="com.example.nomnomapp.stepdefinitions" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteRecipeIngredients.feature" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="NomNomApp_Backend.test" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: DeleteNotifications" />
+      <option name="SUGGESTED_NAME" value="Feature: DeleteRecipeIngredients" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -171,14 +175,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: Deleteuser" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+    <configuration name="Feature: RateRecipe" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/Deleteuser.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/RateRecipe.feature" />
       <option name="GLUE" value="com.example.nomnomapp.stepdefinitions" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="NomNomApp_Backend.test" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: Deleteuser" />
+      <option name="SUGGESTED_NAME" value="Feature: RateRecipe" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -242,11 +246,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: RateRecipe" />
+        <item itemvalue="Cucumber Java.Feature: DeleteCollection" />
+        <item itemvalue="Cucumber Java.Feature: DeleteRecipeIngredients" />
         <item itemvalue="Gradle.CucumberTestRunner" />
         <item itemvalue="Cucumber Java.Feature: UpdateRecipeIngredients" />
-        <item itemvalue="Cucumber Java.Feature: Deleteuser" />
-        <item itemvalue="Cucumber Java.Feature: DeleteNotifications" />
-        <item itemvalue="Cucumber Java.Feature: AddRecipeIngredient" />
       </list>
     </recent_temporary>
   </component>
@@ -268,6 +272,9 @@
       <updated>1739921933848</updated>
       <workItem from="1740496300731" duration="4199000" />
       <workItem from="1740555270850" duration="10188000" />
+      <workItem from="1741812763541" duration="763000" />
+      <workItem from="1741908677199" duration="613000" />
+      <workItem from="1742012776784" duration="10971000" />
     </task>
     <servers />
   </component>
@@ -284,6 +291,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ECSE428_Project$CucumberTestRunner.ic" NAME="CucumberTestRunner Coverage Results" MODIFIED="1740671427908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

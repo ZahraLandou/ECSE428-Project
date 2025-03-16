@@ -115,6 +115,9 @@ private List<NomNomUser> following;
     wasSet = true;
     return wasSet;
   }
+  public int getUserId() {
+      return userId;
+  }
 
   public String getEmailAddress()
   {
