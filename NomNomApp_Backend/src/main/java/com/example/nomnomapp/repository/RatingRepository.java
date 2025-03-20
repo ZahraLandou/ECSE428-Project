@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Integer> {
 
+
+
     Optional<Rating> findByNomNomUser_UserIdAndRecipe_RecipeId(int userId, int recipeId);
 
     @Query("SELECT AVG(r.ratingValue) FROM Rating r WHERE r.recipe.recipeId = :recipeId")

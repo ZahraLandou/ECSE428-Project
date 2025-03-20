@@ -86,6 +86,8 @@ public class Recipe
   public Recipe() {
     // initialize the list to avoid null pointer issues
     this.recipeIngredients = new ArrayList<>();
+    this.recipeLists = new ArrayList<>();
+    this.comments = new ArrayList<>();
   }
 
   public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
@@ -100,6 +102,7 @@ public class Recipe
     averageRating = aAverageRating;
     recipeIngredients = new ArrayList<RecipeIngredients>();
     recipeLists = new ArrayList<RecipeList>();
+    this.comments = new ArrayList<>();
     boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
     if (!didAddNomNomUser)
     {
