@@ -1,12 +1,16 @@
 package com.example.nomnomapp.controller;
 
 import com.example.nomnomapp.model.NomNomUser;
+import com.example.nomnomapp.model.RecipeList;
 import com.example.nomnomapp.service.UserService;
-import java.util.Optional;
+
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.example.nomnomapp.model.Recipe;
 
 @RestController
 @RequestMapping("/users")
@@ -224,6 +228,8 @@ public class UserController {
         }
     }
 
+
+
     /**
      * Deletes a user profile by userId.
      *
@@ -239,4 +245,101 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Gets a complete user profile including basic information, biography, and profile picture.
+     * Example: GET /api/users/username/{username}/profile
+     *
+     * @param username the username of the user whose profile to retrieve
+     * @return user profile and 200 OK if successful, 404 Not Found if unsuccessful
+     */
+    @GetMapping("/username/{username}/profile")
+    public ResponseEntity<?> getUserProfile(@PathVariable String username) {
+        try {
+            Optional<NomNomUser> userOptional = userService.getUserByUsername(username);
+
+            if (!userOptional.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            NomNomUser user = userOptional.get();
+
+            // Create a map with all the profile information
+            Map<String, Object> profileData = new HashMap<>();
+            profileData.put("username", user.getUsername());
+            profileData.put("biography", user.getBiography());
+            profileData.put("profilePicture", user.getProfilePicture());
+            profileData.put("recipesCount", user.numberOfRecipes());
+            profileData.put("followersCount", user.numberOfFollowers());
+            profileData.put("followingCount", user.numberOfFollowing());
+
+            return ResponseEntity.ok(profileData);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+    /**
+     * Gets all recipes posted by a user.
+     * Example: GET /api/users/username/{username}/recipes
+     *
+     * @param username the username of the user whose recipes to retrieve
+     * @return list of recipes and 200 OK if successful, 404 Not Found if user not found
+     */
+    @GetMapping("/username/{username}/recipes")
+    public ResponseEntity<?> getUserRecipes(@PathVariable String username) {
+        try {
+            Optional<NomNomUser> userOptional = userService.getUserByUsername(username);
+            if (!userOptional.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Get the recipes directly from the user object
+            List<Recipe> recipes = new ArrayList<>(userOptional.get().getRecipes());
+            return ResponseEntity.ok(recipes);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving recipes: " + e.getMessage());
+        }
+    }
+
+
+    /**
+     * Gets the favorite recipes of a user.
+     * Example: GET /api/users/username/{username}/favorite-recipes
+     *
+     * @param username the username of the user whose favorite recipes to retrieve
+     * @return list of favorite recipes and 200 OK if successful, 404 Not Found if user not found
+     */
+    @GetMapping("/username/{username}/favorite-recipes")
+    public ResponseEntity<?> getUserFavoriteRecipes(@PathVariable String username) {
+        try {
+            Optional<NomNomUser> userOptional = userService.getUserByUsername(username);
+            if (!userOptional.isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            NomNomUser user = userOptional.get();
+
+            // Find the favorite recipes list
+            List<Recipe> favoriteRecipes = new ArrayList<>();
+            for (RecipeList list : user.getRecipeLists()) {
+                // Using the proper enum value from RecipeList.ListCategory
+                if (list.getCategory() == RecipeList.ListCategory.Favorites) {
+                    favoriteRecipes.addAll(list.getRecipes());
+                    break;
+                }
+            }
+
+            return ResponseEntity.ok(favoriteRecipes);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving favorite recipes: " + e.getMessage());
+        }
+    }
+
+
 }
