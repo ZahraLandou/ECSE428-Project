@@ -115,6 +115,11 @@ private List<NomNomUser> following;
     wasSet = true;
     return wasSet;
   }
+  
+  public int getUserId()
+  {
+    return userId;
+  }
 
   public String getEmailAddress()
   {
@@ -403,7 +408,7 @@ private List<NomNomUser> following;
   /* Code from template association_AddManyToOne */
   public Recipe addRecipe(int aRecipeID, String aTitle, String aDescription, String aInstructions, Date aCreationDate, Recipe.RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating)
   {
-    return new Recipe(aTitle, aDescription, aInstructions, aCreationDate, aCategory, aLikes, aPicture, aAverageRating, this);
+    return new Recipe(aTitle, aDescription, aInstructions, /*aCreationDate,*/ aCategory, aLikes, aPicture, aAverageRating, this);
   }
 
   public boolean addRecipe(Recipe aRecipe)

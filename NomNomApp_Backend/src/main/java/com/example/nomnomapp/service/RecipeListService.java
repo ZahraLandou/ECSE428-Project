@@ -1,6 +1,5 @@
 package com.example.nomnomapp.service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -54,6 +53,12 @@ public class RecipeListService {
         if(recipeList.addRecipe(recipe)){
             wasAdded = true;
         }
+        
+        try {recipeListRepository.save(recipeList);}
+        catch(IllegalArgumentException e){
+            return false;
+        }
+
         return wasAdded;
     }
 
@@ -78,11 +83,17 @@ public class RecipeListService {
         if(recipeList.removeRecipe(recipe)){
             wasRemoved = true;
         }
+        
+        try {recipeListRepository.save(recipeList);}
+        catch(IllegalArgumentException e){
+            return false;
+        }
+        
         return wasRemoved;
     }
 
-    // @Transactional
-    // public void deleteAllRecipeIngredients() {
-    //     recipeListRepository.deleteAll();
-    // }
+    @Transactional
+    public void deleteAllRecipeLists() {
+        recipeListRepository.deleteAll();
+    }
 }

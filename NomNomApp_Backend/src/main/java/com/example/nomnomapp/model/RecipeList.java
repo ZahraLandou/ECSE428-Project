@@ -54,6 +54,18 @@ public class RecipeList
   // CONSTRUCTOR
   //------------------------
 
+  public RecipeList(String aName, ListCategory aCategory, NomNomUser aNomNomUser)
+  {
+    name = aName;
+    category = aCategory;
+    boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
+    if (!didAddNomNomUser)
+    {
+      throw new RuntimeException("Unable to create recipeList due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
+    recipes = new ArrayList<Recipe>();
+  }
+
   public RecipeList(int aRecipeListID, String aName, ListCategory aCategory, NomNomUser aNomNomUser)
   {
     recipeListID = aRecipeListID;
