@@ -16,6 +16,7 @@ public class CommonStepDefinitions {
     public void i_should_see_an_error_message(String expectedMessage) {
         assertNotNull(this.exception, "Expected an error but none occurred.");
         assertEquals(expectedMessage, this.exception.getMessage());
+
     }
 
     public void setException(Exception e) {

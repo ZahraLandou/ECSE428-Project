@@ -1,9 +1,15 @@
 package com.example.nomnomapp.service;
 
 import com.example.nomnomapp.model.NomNomUser;
+import com.example.nomnomapp.model.RecipeList;
 import com.example.nomnomapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.nomnomapp.model.Recipe;
+import com.example.nomnomapp.repository.RecipeRepository;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.Optional;
 
@@ -12,6 +18,10 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RecipeRepository recipeRepository;
+
 
     /**
      * Creates a new user, given a username, email address, and password
@@ -356,5 +366,77 @@ public class UserService {
             throw new IllegalArgumentException("Invalid email format.");
         }
     }
+
+    /**
+     * Gets all recipes posted by a user.
+     *
+     * @param username the username of the user whose recipes to retrieve
+     * @return list of recipes created by the user
+     * @throws IllegalArgumentException if username is null, empty, or user not found
+     */
+    public List<Recipe> getUserRecipes(String username) {
+        // Check if username is empty
+        if (username == null || username.trim().length() == 0) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
+
+        // Get the NomNomUser object with the given username
+        NomNomUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User with username '" + username + "' not found."));
+
+        // Get all recipes created by this user
+        return recipeRepository.findByNomNomUser(user);
+    }
+
+    /**
+     * Gets all recipes posted by a user by their ID.
+     *
+     * @param userId the ID of the user whose recipes to retrieve
+     * @return list of recipes created by the user
+     * @throws IllegalArgumentException if user not found
+     */
+    public List<Recipe> getUserRecipesById(int userId) {
+        // Check if user exists
+        if (!userRepository.existsById(userId)) {
+            throw new IllegalArgumentException("User with ID '" + userId + "' not found.");
+        }
+
+        // Get all recipes created by this user by their ID
+        return recipeRepository.findByUserId(userId);
+    }
+
+    /**
+     * Gets favorite recipes of a user.
+     * This implementation depends on how favorites are stored in your application.
+     *
+     * @param username the username of the user whose favorite recipes to retrieve
+     * @return list of favorite recipes of the user
+     * @throws IllegalArgumentException if username is null, empty, or user not found
+     */
+    public List<Recipe> getUserFavoriteRecipes(String username) {
+        // Check if username is empty
+        if (username == null || username.trim().length() == 0) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
+
+        // Get the NomNomUser object with the given username
+        NomNomUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User with username '" + username + "' not found."));
+
+        // Implementation depends on how favorites are stored
+        // Option 1: If favorites are stored in RecipeLists
+        List<Recipe> favoriteRecipes = new ArrayList<>();
+        for (RecipeList list : user.getRecipeLists()) {
+            // Check if this is the favorites list (depends on your implementation)
+            if (list.getName().equalsIgnoreCase("Favorites")) {
+                return list.getRecipes();
+            }
+        }
+
+        // If no favorites found, return empty list
+        return favoriteRecipes;
+    }
+
+
 
 }
