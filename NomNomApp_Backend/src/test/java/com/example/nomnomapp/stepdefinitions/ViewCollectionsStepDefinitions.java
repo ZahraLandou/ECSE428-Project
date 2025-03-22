@@ -1,6 +1,7 @@
 package com.example.nomnomapp.stepdefinitions;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Mockito.when;
 
 import com.example.nomnomapp.model.RecipeList;
@@ -33,6 +34,8 @@ public class ViewCollectionsStepDefinitions {
     private UserService userService;
 
     private NomNomUser testUser;
+    private RecipeList currentlyViewedRecipeList;
+    private String viewListResponse;
     private final Map<String, Recipe> recipeDatabase = new HashMap<>(); // Simulated recipe storage
     private final Map<String, RecipeList> recipeListDatabase = new HashMap<>(); // Simulated recipe storage
     private Exception exception;
@@ -87,9 +90,9 @@ public class ViewCollectionsStepDefinitions {
             the_user_has_created_the_list_of_category_regular(name);
         }
 
-        List<Map<String, String>> recipeData = dataTable.asMaps(String.class, String.class);
+        List<Map<String, String>> recipeListData = dataTable.asMaps(String.class, String.class);
 
-        for (Map<String, String> recipeRow : recipeData) {
+        for (Map<String, String> recipeRow : recipeListData) {
             // get table data
             String title = recipeRow.get("name");
             String description = recipeRow.get("description");
@@ -127,5 +130,70 @@ public class ViewCollectionsStepDefinitions {
 
         // create new recipe list with no recipes in it
         the_user_has_created_the_list_of_category_regular(name);
+    }
+
+    // ----------------------------------------------------------------------
+    // WHEN
+    // ----------------------------------------------------------------------
+
+    @When("the user navigates to the {name} list")
+    public void the_user_navigates_to_the_list(String name) {
+
+        if (testUser != null)
+            currentlyViewedRecipeList = recipeListDatabase.get(name);
+        else
+            currentlyViewedRecipeList = null;
+    }
+
+    // ----------------------------------------------------------------------
+    // THEN
+    // ----------------------------------------------------------------------
+
+    @Then("the NomNom application should display the following recipes, their description, and their other attributes")
+    public void the_NomNom_application_should_display_the_following_recipes(DataTable dataTable) {
+
+        // assert currently viewed recipe list exists
+        assertNotNull(currentlyViewedRecipeList);
+
+        // expected list and actual list
+        List<Map<String, String>> recipeListExpected = dataTable.asMaps(String.class, String.class);
+        List<Recipe> recipeListActual = currentlyViewedRecipeList.getRecipes();
+
+        // assert expected and actual lists are same size
+        assertEquals(recipeListExpected.size(), recipeListActual.size(),
+                String.format("Expected recipe list size: %d; Actual recipe list size: %d",
+                        recipeListExpected.size(), recipeListActual.size()));
+
+        // count is num of matching recipe records (rows)
+        int count = 0;
+        int expectedCount = recipeListExpected.size();
+
+        for (Map<String, String> recipeRow : recipeListExpected) {
+
+            boolean isInRecipeListActual = false;
+
+            // get table data
+            String title = recipeRow.get("name");
+            String description = recipeRow.get("description");
+
+            // check if exists in actual currently viewed recipe list
+            for (Recipe recipe : recipeListActual) {
+                if (recipe.getTitle().equals(title) && recipe.getDescription().equals(description)) {
+                    count++;
+                    isInRecipeListActual = true;
+                }
+            }
+
+            // assert expected recipe is in the actual list
+            assertTrue(isInRecipeListActual, String.format("Expected recipe %s not in actual recipe list", title));
+        }
+
+        // assert all expected recipes are in the actual list
+        assertEquals(expectedCount, count,
+                String.format("Expected %d recipes matching but got %d recipes matching", expectedCount, count));
+    }
+
+    @Then("the NomNom application should display {message}")
+    public void the_NomNom_application_should_display_message(String message) {
     }
 }
