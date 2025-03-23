@@ -1,13 +1,25 @@
 package com.example.nomnomapp.stepdefinitions;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.example.nomnomapp.model.NomNomUser;
+import com.example.nomnomapp.repository.UserRepository;
+import com.example.nomnomapp.service.UserService;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.cucumber.java.en.Then;
+
+import java.util.List;
+import java.util.Map;
 
 //@Component
 public class CommonStepDefinitions {
 
     private Exception exception;
+    private UserService userService;
+    private UserRepository userRepo;
 
     public CommonStepDefinitions() {}
 
