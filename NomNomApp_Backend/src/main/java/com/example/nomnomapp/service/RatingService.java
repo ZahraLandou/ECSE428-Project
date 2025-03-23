@@ -74,6 +74,7 @@ public class RatingService {
      */
     public Double getAverageRating(int recipeId) {
         Double avgRating = ratingRepository.findAverageRatingByRecipeId(recipeId);
+        System.out.println("Backend calculated average: " + avgRating);
         return (avgRating != null) ? avgRating : 0.0;
     }
 
@@ -122,8 +123,6 @@ public class RatingService {
         if (newRatingValue < 0 || newRatingValue > 5) {
             throw new IllegalArgumentException("Rating must be between 0 and 5.");
         }
-
-        // Find existing rating
         Rating rating = ratingRepository.findByNomNomUser_UserIdAndRecipe_RecipeId(userId, recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("Rating not found for user and recipe"));
 
