@@ -51,13 +51,15 @@ public class Recipe
   @OneToOne
   @JoinColumn(name = "videoId")
   private ShortFormVideo shortFormVideo;
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Rating> ratings = new ArrayList<>();
+
 
   @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<RecipeIngredients> recipeIngredients;
 
   /*@OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<RecipeIngredients> recipeIngredients = new ArrayList<>(); */
-
 
   @ManyToMany
   @JoinTable(
@@ -73,7 +75,7 @@ public class Recipe
   @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments = new ArrayList<>();
 
-  
+
 /*   @ManyToOne
   private NomNomUser creator; */
 
@@ -84,6 +86,8 @@ public class Recipe
   public Recipe() {
     // initialize the list to avoid null pointer issues
     this.recipeIngredients = new ArrayList<>();
+    this.recipeLists = new ArrayList<>();
+    this.comments = new ArrayList<>();
   }
 
   public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
@@ -98,6 +102,7 @@ public class Recipe
     averageRating = aAverageRating;
     recipeIngredients = new ArrayList<RecipeIngredients>();
     recipeLists = new ArrayList<RecipeList>();
+    this.comments = new ArrayList<>();
     boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
     if (!didAddNomNomUser)
     {
@@ -242,6 +247,32 @@ public class Recipe
   }
     return average/comments.size();
   }
+
+  public double calculateAverageRatingForRating() {
+    if (ratings == null || ratings.isEmpty()) {
+      System.out.println("No ratings found. Returning 0.0");
+      return 0.0;
+    }
+
+    double total = 0.0;
+    for (Rating r : ratings) {
+      System.out.println("Rating found: " + r.getRatingValue());
+      total += r.getRatingValue();
+    }
+
+    double average = total / ratings.size();
+    System.out.println("Calculated average rating: " + average);
+    return average;
+  }
+
+  public void setRatings(List<Rating> ratings) {
+    this.ratings = ratings;
+  }
+
+  public List<Rating> getRatings() {
+    return ratings;
+  }
+
   public boolean hasShortFormVideo()
   {
     boolean has = shortFormVideo != null;
@@ -647,7 +678,7 @@ public class Recipe
       aComment.delete();
       comments.remove(aComment);
     }
-    
+
   }
 
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -96,7 +97,8 @@ public class CommentService {
         c.delete();
         repo.deleteById(aCommentId);
     }
-    public Iterable<Comment> getAllComments() {
+
+    public List<Comment> getAllComments() {
         return repo.findAll();
     }
 
