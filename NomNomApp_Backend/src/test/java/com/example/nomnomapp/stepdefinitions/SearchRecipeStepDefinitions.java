@@ -99,7 +99,7 @@ public class SearchRecipeStepDefinitions {
                 throw new Exception("Recipe does not exist");
             }
         } catch (Exception e) {
-            error = e.getMessage();
+            commonStepDefinitions.setException(e);
         }
     }
 
@@ -112,7 +112,7 @@ public class SearchRecipeStepDefinitions {
             }
             searchResults = recipeService.getRecipesByTitle(recipeName);
         } catch (Exception e) {
-            error = e.getMessage();
+            commonStepDefinitions.setException(e);
         }
     }
 

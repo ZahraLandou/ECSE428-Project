@@ -28,7 +28,7 @@ Feature: US013 Search for recipe by name
 
   # alternate flow
   Scenario Outline: User filters recipes by a valid name with no matching recipes
-    When When I enter a valid recipe with title "<recipeName>" into the search bar that does not match any existing recipes
+    When I enter a valid recipe with title "<recipeName>" into the search bar that does not match any existing recipes
     Then I should see an error message "<error_message>"
     Examples:
       | recipeName     | error_message            |

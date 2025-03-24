@@ -23,6 +23,7 @@ public class CommonStepDefinitions {
 
     public CommonStepDefinitions() {}
 
+
     // This method will be shared for all step definitions that use error messages
     @Then("I should see an error message {string}")
     public void i_should_see_an_error_message(String expectedMessage) {
