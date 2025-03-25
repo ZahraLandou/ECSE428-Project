@@ -95,9 +95,6 @@ public class SearchRecipeStepDefinitions {
     public void i_enter_a_valid_recipe_with_title_into_the_search_bar_that_does_not_match_any_existing_recipes(String recipeName) {
         try {
             searchResults = recipeService.getRecipesByTitle(recipeName);
-            if (searchResults.isEmpty()) {
-                throw new Exception("Recipe does not exist");
-            }
         } catch (Exception e) {
             commonStepDefinitions.setException(e);
         }

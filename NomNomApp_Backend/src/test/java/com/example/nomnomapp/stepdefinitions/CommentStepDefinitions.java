@@ -79,18 +79,6 @@ public class CommentStepDefinitions {
 
             recipeService.createRecipe(recipe);
 
-
-   /*         Recipe recipe = new Recipe(row.get("title"),
-                    row.get("description"),
-                    row.get("instructions"),
-                    Date.valueOf(row.get("creationDate")),
-                    Recipe.RecipeCategory.valueOf(row.get("category")),
-                    Integer.parseInt(row.get("likes")),
-                    row.get("picture"),
-                    Double.parseDouble(row.get("averageRating")),
-                    userRepo.findByUsername(row.get("recipeNomNomUser")).get());
-            recipeService.createRecipe(recipe);
-            recipeRepo.save(recipe); // Ensure persistence*/
         }
     }
 
