@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.Recipe.RecipeCategory;
 import com.example.nomnomapp.repository.RecipeRepository;
-import com.example.nomnomapp.repository.CollectionRepository;
+// import com.example.nomnomapp.repository.CollectionRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +25,16 @@ public class RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
-    private CollectionRepository collectionRepository;
+    // private CollectionRepository collectionRepository;
 
     public Recipe createRecipe(Recipe recipe){
         return recipeRepository.save(recipe);
 
     }
 
-    public List<Recipe> createRecipeCollection(List<Recipe> collection){
-        return collectionRepository.save(collection);
-    }
+    // public List<Recipe> createRecipeCollection(List<Recipe> collection){
+    //     return collectionRepository.save(collection);
+    // }
 
     /**
      * Deletes a recipe by id.
@@ -51,25 +51,25 @@ public class RecipeService {
         }
     }
 
-    public void deleteCollectionByCollectionId(Integer collectionId) {
-        Optional<List<Recipe>> collection = collectionRepository.findById(collectionId);
-        if (collection.isPresent()) {
-            collectionRepository.delete(collection.get());
-        } else {
-            throw new IllegalArgumentException("Collection with ID '" + collectionId + "' not found.");
-        }
-    }
+    // public void deleteCollectionByCollectionId(Integer collectionId) {
+    //     Optional<List<Recipe>> collection = collectionRepository.findById(collectionId);
+    //     if (collection.isPresent()) {
+    //         collectionRepository.delete(collection.get());
+    //     } else {
+    //         throw new IllegalArgumentException("Collection with ID '" + collectionId + "' not found.");
+    //     }
+    // }
 
     public Recipe getRecipeByID(int recipeID) {
         return recipeRepository.findByRecipeId(recipeID);
     }
-    public List<Recipe> getCollectionById(int collectionID) {
-        return collectionRepository.findByCollectionId(collectionID);
-    }
+    // public List<Recipe> getCollectionById(int collectionID) {
+    //     return collectionRepository.findByCollectionId(collectionID);
+    // }
     
-    public List<Recipe> getCollectionByName(String collectionName) {
-        return collectionRepository.findCollectionByTitle(collectionName);
-    }
+    // public List<Recipe> getCollectionByName(String collectionName) {
+    //     return collectionRepository.findCollectionByTitle(collectionName);
+    // }
 
     public List<Recipe> getAllRecipes() {
         return (List<Recipe>) recipeRepository.findAll();
