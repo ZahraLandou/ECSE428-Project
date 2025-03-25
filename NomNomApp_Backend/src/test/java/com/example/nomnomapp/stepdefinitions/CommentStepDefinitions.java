@@ -60,8 +60,6 @@ public class CommentStepDefinitions {
         for (Map<String, String> row : users) {
             NomNomUser user = userService.createUser(row.get("username"), row.get("emailAddress"), row.get("password"));
             userRepo.save(user);
-            //userRepo.save(user);
-
         }
     }
 

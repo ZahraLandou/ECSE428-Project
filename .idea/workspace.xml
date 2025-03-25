@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d0e1355-cc9a-4b2d-aa03-7ccdcd972252" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RatingStepDefinitions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/RateRecipe.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/NomNomUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/NomNomUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RecipeStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RecipeStepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/target/cucumber.json" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/target/cucumber.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,22 +117,22 @@
     "Spring Boot.NomNomAppApplication.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
     "com.google.cloudcode.ide_session_index": "20250225_0000",
-    "git-widget-placeholder": "Nara",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "editor.preferences.jsOptions",
     "spring.configuration.checksum": "04a30ea852945c55bb642e42b73ce3cb",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Cucumber Java.Feature: RateRecipe">
+  <component name="RunManager" selected="Gradle.CucumberTestRunner">
     <configuration name="Feature: DeleteCollection" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteCollection.feature" />
@@ -234,7 +229,6 @@
       <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="NomNomAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -246,10 +240,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CucumberTestRunner" />
         <item itemvalue="Cucumber Java.Feature: RateRecipe" />
         <item itemvalue="Cucumber Java.Feature: DeleteCollection" />
         <item itemvalue="Cucumber Java.Feature: DeleteRecipeIngredients" />
-        <item itemvalue="Gradle.CucumberTestRunner" />
         <item itemvalue="Cucumber Java.Feature: UpdateRecipeIngredients" />
       </list>
     </recent_temporary>
@@ -275,6 +269,8 @@
       <workItem from="1741812763541" duration="763000" />
       <workItem from="1741908677199" duration="613000" />
       <workItem from="1742012776784" duration="10971000" />
+      <workItem from="1742698759826" duration="6766000" />
+      <workItem from="1742705761766" duration="51000" />
     </task>
     <servers />
   </component>
