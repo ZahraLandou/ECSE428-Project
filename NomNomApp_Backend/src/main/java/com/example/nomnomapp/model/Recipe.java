@@ -35,7 +35,6 @@ public class Recipe
   @Column(nullable = false)
   private String description;
 
-  @Lob
   private String instructions;
 
   @Column(name= "created_date", nullable = false, updatable = false)

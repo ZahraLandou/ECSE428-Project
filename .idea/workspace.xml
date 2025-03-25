@@ -5,33 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef926358-fc54-4efb-a907-56340145d7fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/Integration/UserIntegrationTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RatingStepDefinitions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/SearchRecipeStepDefinitions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/RateRecipe.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/SearchRecipeByName.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ViewUserProfile.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NomNomApp_Frontend/src/components/RecipeRating.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/RatingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/NomNomUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/NomNomUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/model/Recipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/RatingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/RatingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/RecipeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/repository/RecipeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/RatingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/main/java/com/example/nomnomapp/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CommentStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CommentStepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CommonStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/CommonStepDefinitions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RecipeStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/RecipeStepDefinitions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/UserStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/UserStepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/SearchRecipeStepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/java/com/example/nomnomapp/stepdefinitions/SearchRecipeStepDefinitions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ViewRecipe.feature" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ViewRecipe.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NomNomApp_Frontend/src/pages/Recipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/NomNomApp_Frontend/src/pages/Recipe.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

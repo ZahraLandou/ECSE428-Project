@@ -205,6 +205,8 @@ public class RecipeStepDefinitions {
             newRecipe.setTitle(recipeData.get("title"));
             newRecipe.setDescription(recipeData.get("description"));
             newRecipe.setCategory(Recipe.RecipeCategory.valueOf(recipeData.get("category")));
+            newRecipe.setInstructions(recipeData.get("instructions"));
+
 
             // adding ingredients to the recipe
             String[] ingredientNames = recipeData.get("ingredients").split(", ");
@@ -274,4 +276,16 @@ public class RecipeStepDefinitions {
             commonSteps.setException(e);
         }
     }
+
+
+    @When("I request to view a recipe with the title {string}")
+    public void i_request_to_view_recipe_with_title(String title) {
+         matchingRecipes = recipeService.getRecipesByTitle(title);
+    }
+
+    @Then("the recipe instructions should be {string}")
+    public void the_recipe_instructions_should_be(String expectedInstructions) {
+        assertEquals(expectedInstructions, matchingRecipes.get(0).getInstructions(), "Recipe instructions do not match.");
+    }
+
 }
