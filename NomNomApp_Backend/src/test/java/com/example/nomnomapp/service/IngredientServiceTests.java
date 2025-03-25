@@ -130,7 +130,7 @@ public class IngredientServiceTests {
             ingredientService.getIngredientByName("onion");
         });
 
-        assertEquals("Ingredient with name onion not found", exception.getMessage());
+        assertEquals("Ingredient with name 'onion' not found", exception.getMessage());
     }
 
     /** Test retrieving all ingredients */
