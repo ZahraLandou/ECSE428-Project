@@ -495,7 +495,7 @@ public class UserStepDefinitions {
     public void the_user_should_be_deleted_successfully() {
         assertNull(commonStepDefinitions.getException(),
                 "Exception was thrown when deletion should have succeeded.");
-        verify(userRepository, times(1)).delete(any(NomNomUser.class));
+        verify(userRepository, times(1)).deleteById(any(Integer.class));
     }
 
     @Then("User with username {string} should exist in the system")

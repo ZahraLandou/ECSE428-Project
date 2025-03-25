@@ -35,7 +35,7 @@ Feature: US002 Delete a user account
   Scenario Outline: Attempt to delete a user with an invalid ID
     Given no user with ID <userId> exists
     When I delete the user with ID <userId>
-    And I should see an error message "User with ID '<userId>' not found."
+    And I should see an error message "Invalid user ID: <userId>"
 
 
     Examples:
