@@ -265,14 +265,6 @@ public class RecipeStepDefinitions {
         assertEquals(category, matchingRecipes.get(0).getCategory().toString(), "Recipe category does not match.");
     }
 
-    @When("I request to view a recipe with the title {string}")
-    public void i_request_to_view_recipe_with_invalid_title(String invalidTitle) {
-        try {
-            recipeService.getRecipesByTitle(invalidTitle);
-        } catch (IllegalArgumentException e) {
-            commonSteps.setException(e);
-        }
-    }
 
     @When("I attempt to view a recipe that contains {string}")
     public void i_attempt_to_view_a_recipe_that_contains(String ingredientName) {

@@ -35,18 +35,6 @@ Feature: US010 View a recipe
 
 
   # error flow
-  Scenario Outline: Failing to retrieve a non-existent recipe
-    When I request to view a recipe with the title "<invalidTitle>"
-    Then I should see an error message "<message>"
-
-    Examples:
-      | invalidTitle       | message                                     |
-      | Chocolate Cake     | No recipes found with title: Chocolate Cake |
-      | Banana Smoothie    | No recipes found with title: Banana Smoothie|
-      | Grilled Salmon     | No recipes found with title: Grilled Salmon |
-
-
-  # error flow
   Scenario Outline: Failing to retrieve recipes with invalid ingredients
     When I attempt to view a recipe that contains "<ingredient>"
     Then I should see an error message "<message>"
