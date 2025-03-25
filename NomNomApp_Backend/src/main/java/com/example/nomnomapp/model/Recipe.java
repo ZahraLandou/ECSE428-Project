@@ -70,7 +70,7 @@ public class Recipe
   @JoinColumn(name = "user_id", nullable = false) 
   private NomNomUser nomNomUser;
 
-  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<Comment> comments = new ArrayList<>();
 
   
