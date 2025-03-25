@@ -31,10 +31,10 @@ public class RecipeIngredientsService {
      */
     public RecipeIngredients createRecipeIngredient(RecipeIngredients recipeIngredient) {
         if (recipeIngredient.getQuantity() <= 0) {
-            throw new IllegalArgumentException("Recipe ingredient quantity cannot be empty");
+            throw new IllegalArgumentException("Quantity must be positive");
         }
         if (recipeIngredient.getUnit() == null || recipeIngredient.getUnit().trim().isEmpty()) {
-            throw new IllegalArgumentException("Recipe ingredient unit cannot be empty");
+            throw new IllegalArgumentException("Unit cannot be null or empty");
         }
         // Validate the associated Ingredient's name.
         if (recipeIngredient.getIngredient() == null ||

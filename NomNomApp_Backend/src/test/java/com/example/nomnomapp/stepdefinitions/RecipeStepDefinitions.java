@@ -74,7 +74,7 @@ public class RecipeStepDefinitions {
     // When: Modifying a recipe
     @When("I add ingredient {string} with quantity {string} to recipe {string}")
     public void i_add_ingredient(String ingredient, String quantity, String recipeName) {
-        double quantity_double = new Double(quantity);
+        double quantity_double = Double.parseDouble(quantity);
         Recipe recipe = recipeDatabase.get(recipeName);
         Ingredient newIngredient = new Ingredient(ingredient, "liquid");
         RecipeIngredients newRecipeIngredient = new RecipeIngredients(quantity_double, "mg", recipe, newIngredient);
@@ -137,7 +137,7 @@ public class RecipeStepDefinitions {
         Recipe recipe = recipeDatabase.get(recipeName);
         assertEquals(recipe.getTitle(), recipeName);
         assertEquals(recipe.getRecipeIngredients().getFirst().getIngredient().getName(), recipeIngredient);
-        double quantity_double = new Double(recipeIngredientQuantity);
+        double quantity_double = Double.parseDouble(recipeIngredientQuantity);
         assertEquals(recipe.getRecipeIngredients().getFirst().getQuantity(), quantity_double);
         assertNotNull(recipe, "Exception was thrown when creation should have succeeded.");
     }
