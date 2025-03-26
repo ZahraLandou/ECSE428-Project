@@ -3,7 +3,7 @@ package com.example.nomnomapp.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.AfterEach;
+// import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.example.nomnomapp.model.Ingredient;
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.RecipeIngredients;
+
+import jakarta.transaction.Transactional;
+
+import com.example.nomnomapp.model.NomNomUser;
 
 /**
  * Test class for RecipeRepository
@@ -25,18 +29,22 @@ public class RecipeRepositoryTests {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    @AfterEach
-    public void clearDatabase() {
-        recipeRepository.deleteAll();
-        ingredientRepository.deleteAll();
-    }
+    @Autowired
+    private UserRepository nomNomUserRepository;
+
+    // @AfterEach
+    // public void clearDatabase() {
+    //     ingredientRepository.deleteAll();
+    //     nomNomUserRepository.deleteAll();
+    //     recipeRepository.deleteAll();
+    // }
 
     @Test
+    @Transactional
     public void testPersistAndLoadRecipe() {
 
-        /*
-         * TODO: Create and save user
-         */
+        NomNomUser nomNomUser = new NomNomUser("testUser", "testEmail","testPassword");
+        nomNomUser = nomNomUserRepository.save(nomNomUser);
 
         // Create recipe and its attributes
 
@@ -68,6 +76,14 @@ public class RecipeRepositoryTests {
                 "5. Garnish with parsley and serve.";
         String description = "This is my old great-uncle's recipe.";
 
+        // set non-nullable recipe attributes
+        recipe.setTitle(recipeTitle);
+        recipe.setInstructions(instructions);
+        recipe.setDescription(description);
+        recipe.setNomNomUser(nomNomUser);
+
+        recipe = recipeRepository.save(recipe);
+
         // create recipe ingredient relationships
         RecipeIngredients shrimpRI = new RecipeIngredients(1.00, "lb", recipe, shrimp);
         RecipeIngredients garlicRI = new RecipeIngredients(4.00, "cloves", recipe, garlic);
@@ -88,11 +104,6 @@ public class RecipeRepositoryTests {
         recipe.addRecipeIngredient(lemonJuiceRI);
         recipe.addRecipeIngredient(butterRI);
         recipe.addRecipeIngredient(parsleyRI);
-
-        // set recipe attributes
-        recipe.setTitle(recipeTitle);
-        recipe.setInstructions(instructions);
-        recipe.setDescription(description);
 
         // save object to database (recipe ingredients automatically saved)
         recipe = recipeRepository.save(recipe);
