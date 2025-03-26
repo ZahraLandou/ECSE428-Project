@@ -35,11 +35,10 @@ public class Recipe
   @Column(nullable = false)
   private String description;
 
-  @Lob
+  // @Lob
   private String instructions;
 
   @Column(name= "created_date", nullable = false, updatable = false)
-  @CreatedDate
   private Date creationDate;
 
   private RecipeCategory category;
@@ -88,6 +87,7 @@ public class Recipe
     this.recipeIngredients = new ArrayList<>();
     this.recipeLists = new ArrayList<>();
     this.comments = new ArrayList<>();
+    this.creationDate = new Date(System.currentTimeMillis());
   }
 
   public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
