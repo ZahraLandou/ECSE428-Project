@@ -1,38 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import RecipeRating from '../components/RecipeRating';
+import { Link } from 'react-router-dom';
 
 const Recipe = () => {
-    const { recipeId } = useParams();
-    const userId = 1;
-
-    const [averageRating, setAverageRating] = useState(null);
-    const [ratingCount, setRatingCount] = useState(null);
+    const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const avgRes = await axios.get(`http://localhost:8081/api/ratings/${recipeId}/average`);
-                const countRes = await axios.get(`http://localhost:8081/api/ratings/${recipeId}/count`);
-                setAverageRating(avgRes.data);
-                setRatingCount(countRes.data);
-            } catch (err) {
-                console.error("Error fetching rating data:", err);
-            }
-        };
+        axios.get('http://localhost:8081/recipes')
+            .then(response => {
+                if (Array.isArray(response.data)) {
+                    setRecipes(response.data);
+                } else {
+                    console.error("Expected an array but got:", response.data);
+                    setRecipes([]);
+                }
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching recipes:", error);
+                setLoading(false);
+            });
+    }, []);
 
-        fetchData();
-    }, [recipeId]);
+    if (loading) return <p>Loading recipes...</p>;
 
     return (
-        <div className="p-8">
-            <h1 className="text-3xl font-bold mb-4"> Recipe #{recipeId}</h1>
-
-            {userId ? (
-                <RecipeRating recipeId={recipeId} userId={userId} />
+        <div className="p-6">
+            <h1 className="text-2xl font-bold mb-4">🍲 All Recipes</h1>
+            {recipes.length === 0 ? (
+                <p>No recipes found.</p>
             ) : (
-                <p className="text-red-500">You must be logged in to rate this recipe.</p>
+                <ul className="space-y-4">
+                    {recipes.map(recipe => (
+                        <li key={recipe.recipeId} className="border p-4 rounded shadow">
+                            <h2 className="text-xl font-semibold">{recipe.title}</h2>
+                            <p className="text-gray-700">{recipe.description}</p>
+                            <Link to={`/recipe/${recipe.recipeId}`} className="text-blue-600 hover:underline">
+                                View Recipe →
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
             )}
         </div>
     );

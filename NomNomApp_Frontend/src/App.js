@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import CommentForm from './components/CommentForm';
+import RecipeRating from './pages/RecipeRating';
+
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -30,7 +32,8 @@ function App() {
                 } />
 
                 {}
-                <Route path="/recipe/:recipeId" element={<Recipe />} />
+                <Route path="/recipe" element={<Recipe />} />
+                <Route path="/recipe/:recipeId/rate" element={<RecipeRating />} />
             </Routes>
         </Router>
     );
