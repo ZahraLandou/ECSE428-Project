@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Date;
 
-//@SpringBootTest
+@SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
 public class RecipeControllerIntegrationTests {
@@ -113,12 +113,12 @@ public class RecipeControllerIntegrationTests {
         testRecipe1 = recipeRepository.save(testRecipe1);
     }
 
-    @AfterEach
-    void tearDown() {
-        // Clean up database after each test
-        recipeRepository.deleteAll();
-        userRepository.deleteAll();
-    }
+    // @AfterEach
+    // void tearDown() {
+    //     // Clean up database after each test
+    //     recipeRepository.deleteAll();
+    //     userRepository.deleteAll();
+    // }
 
     // Test retrieving all recipes (GET /recipes)
     @Test
@@ -151,9 +151,10 @@ public class RecipeControllerIntegrationTests {
     // Test creating a new recipe (POST /recipes)
     @Test
     void testCreateRecipe() throws Exception {
+        NomNomUser testUser = userRepository.findByUsername("Manon").orElseThrow();
         Recipe newRecipe = new Recipe("Garlic Butter Shrimp", "Delicious seafood dish",
-                "Cook shrimp with garlic and butter", null,
-                RecipeCategory.Dinner, 0, null, 0.0, null);
+                "Cook shrimp with garlic and butter", new Date(System.currentTimeMillis()),
+                RecipeCategory.Dinner, 0, null, 0.0, testUser);
 
         mockMvc.perform(post("/recipes")
                         .contentType(MediaType.APPLICATION_JSON)
