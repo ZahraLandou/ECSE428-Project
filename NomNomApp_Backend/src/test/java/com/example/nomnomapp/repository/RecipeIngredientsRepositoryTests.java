@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.example.nomnomapp.model.Ingredient;
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.RecipeIngredients;
+import com.example.nomnomapp.model.NomNomUser;
 
 @SpringBootTest
 public class RecipeIngredientsRepositoryTests {
@@ -26,15 +27,23 @@ public class RecipeIngredientsRepositoryTests {
     @Autowired
     private IngredientRepository ingredientRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @AfterEach
     public void clearDatabase(){
         recipeIngredientsRepository.deleteAll();
         recipeRepository.deleteAll();
         ingredientRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     public void testPersistAndLoadRecipeIngredient(){
+        // Create and save a test User
+        NomNomUser testUser = new NomNomUser("testUser", "testEmail", "testPassword");
+        testUser = userRepository.save(testUser);
+
         // Create and save a test Ingredient
         Ingredient tomato = new Ingredient("tomato", "vegetable");
         tomato = ingredientRepository.save(tomato);
@@ -46,6 +55,7 @@ public class RecipeIngredientsRepositoryTests {
         recipe.setInstructions("Boil tomatoes, blend, and serve hot");
         recipe.setLikes(0);
         recipe.setAverageRating(0.0);
+        recipe.setNomNomUser(testUser);
         recipe = recipeRepository.save(recipe);
 
         // Create and save a RecipeIngredients record

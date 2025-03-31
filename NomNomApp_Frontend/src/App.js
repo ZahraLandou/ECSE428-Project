@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import CommentForm from './components/CommentForm';
+import RecipeRating from './pages/RecipeRating';
+import Recipe from './pages/Recipe';
+import ViewCollections from './pages/ViewCollections';
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Recipe from './pages/Recipe';
+import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 
 function App() {
     return (
@@ -13,24 +15,24 @@ function App() {
                 <Route path="/" element={
                     <div className="App">
                         <header className="App-header">
-                            <p>🍽️ YAY FRONTEND IS SETUP</p>
-                            <a
-                                className="App-link"
-                                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                hey group 1 click this for react help
-                            </a>
+                            <p>🍽️ NomNom 🍽️</p>
                         </header>
                         <div>
                             <CommentForm />
+                        {/*Collections button*/}
+                        <div>
+                            <Link to="/view-collections">
+                                <button>View Collections</button>
+                            </Link>
+                        </div>
                         </div>
                     </div>
                 } />
 
                 {}
-                <Route path="/recipe/:recipeId" element={<Recipe />} />
+                <Route path="/recipe" element={<Recipe />} />
+                <Route path="/recipe/:recipeId/rate" element={<RecipeRating />} />
+                <Route path="/view-collections" element={<ViewCollections />} />
             </Routes>
         </Router>
     );

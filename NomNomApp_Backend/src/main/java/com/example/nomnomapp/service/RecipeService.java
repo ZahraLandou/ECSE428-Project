@@ -1,9 +1,7 @@
 package com.example.nomnomapp.service;
 
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.Recipe.RecipeCategory;
 import com.example.nomnomapp.repository.RecipeRepository;
-import com.example.nomnomapp.repository.CollectionRepository;
+// import com.example.nomnomapp.repository.CollectionRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +23,16 @@ public class RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
-    private CollectionRepository collectionRepository;
+    // private CollectionRepository collectionRepository;
 
     public Recipe createRecipe(Recipe recipe){
         return recipeRepository.save(recipe);
 
     }
 
-    public List<Recipe> createRecipeCollection(List<Recipe> collection){
-        return collectionRepository.save(collection);
-    }
+    // public List<Recipe> createRecipeCollection(List<Recipe> collection){
+    //     return collectionRepository.save(collection);
+    // }
 
     /**
      * Deletes a recipe by id.
@@ -51,33 +49,36 @@ public class RecipeService {
         }
     }
 
-    public void deleteCollectionByCollectionId(Integer collectionId) {
-        Optional<List<Recipe>> collection = collectionRepository.findById(collectionId);
-        if (collection.isPresent()) {
-            collectionRepository.delete(collection.get());
-        } else {
-            throw new IllegalArgumentException("Collection with ID '" + collectionId + "' not found.");
-        }
-    }
+    // public void deleteCollectionByCollectionId(Integer collectionId) {
+    //     Optional<List<Recipe>> collection = collectionRepository.findById(collectionId);
+    //     if (collection.isPresent()) {
+    //         collectionRepository.delete(collection.get());
+    //     } else {
+    //         throw new IllegalArgumentException("Collection with ID '" + collectionId + "' not found.");
+    //     }
+    // }
 
     public Recipe getRecipeByID(int recipeID) {
         return recipeRepository.findByRecipeId(recipeID);
     }
-    public List<Recipe> getCollectionById(int collectionID) {
-        return collectionRepository.findByCollectionId(collectionID);
-    }
+    // public List<Recipe> getCollectionById(int collectionID) {
+    //     return collectionRepository.findByCollectionId(collectionID);
+    // }
     
-    public List<Recipe> getCollectionByName(String collectionName) {
-        return collectionRepository.findCollectionByTitle(collectionName);
-    }
+    // public List<Recipe> getCollectionByName(String collectionName) {
+    //     return collectionRepository.findCollectionByTitle(collectionName);
+    // }
 
     public List<Recipe> getAllRecipes() {
         return (List<Recipe>) recipeRepository.findAll();
     }
 
     public List<Recipe>  getRecipesByTitle(String title) {
-            return recipeRepository.findRecipeByTitle(title);
-
+        List<Recipe> recipes = recipeRepository.findRecipeByTitle(title);
+        if (recipes.isEmpty() ) {
+            throw new IllegalArgumentException("No recipes found with title: " + title);
+        }
+        return recipes;
     }
     
     public List<Recipe> getRecipesByCategory(RecipeCategory recipeCategory) {
@@ -139,6 +140,45 @@ public class RecipeService {
     public void deleteAllRecipes() {
         recipeRepository.deleteAll();
     }
-    
+
+
+    /**
+     * Method to get recipes containing specific list of ingredients
+     * Assuming that the ingredients names are provided as a string separated with coma
+     * If there's 2+ ingredients, make sure that the matching recipes contain at least 2 of them
+     * @param ingredientNames
+     * @return matchingRecipes
+     */
+    @Transactional
+    public List<Recipe> getRecipesByIngredients(String ingredientNames) {
+        if (ingredientNames == null || ingredientNames.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ingredient names cannot be empty");
+        }
+
+        String[] ingredientsArray = ingredientNames.toLowerCase().split(",");
+        List<String> ingredientList = Arrays.asList(ingredientsArray);
+
+        List<Recipe> allRecipes = (List<Recipe>) recipeRepository.findAll();
+        List<Recipe> matchingRecipes = new ArrayList<>();
+
+
+        for (Recipe recipe: allRecipes){
+
+            long matchingCount = recipe.getRecipeIngredients().stream()
+                    .map(recipeIngredient -> recipeIngredient.getIngredient().getName().toLowerCase()) //retrieve recipe's ingredients
+                    .filter(ingredientList::contains) // filter matching ingredients
+                    .count(); // count the number of match
+
+            if (matchingCount >= Math.min(2, ingredientList.size())) {
+                matchingRecipes.add(recipe);
+            }
+
+        }
+        if (matchingRecipes.isEmpty()) {
+            throw new IllegalArgumentException("No recipes found containing the specified ingredients: " + ingredientNames);
+        }
+        return  matchingRecipes;
+
+    }
     
 }
