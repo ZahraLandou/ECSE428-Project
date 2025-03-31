@@ -180,5 +180,9 @@ public class RecipeService {
         return  matchingRecipes;
 
     }
-    
+    public void saveRecipe(Recipe recipe) {
+            recipeRepository.save(recipe);
+    }
+
+
 }
