@@ -165,9 +165,10 @@ public class RecipeServiceTests {
     void testGetRecipesByTitle_NotFound() {
         when(recipeRepo.findRecipeByTitle("Strawberry Cake")).thenReturn(List.of());
 
-        List<Recipe> recipes = recipeServ.getRecipesByTitle("Strawberry Cake");
+        // List<Recipe> recipes = recipeServ.getRecipesByTitle("Strawberry Cake");
 
-        assertTrue(recipes.isEmpty());
+        // assertTrue(recipes.isEmpty());
+        assertThrows(IllegalArgumentException.class, ()->recipeServ.getRecipesByTitle("Strawberry Cake"));
     }
 
     //getRecipesByCategory (Success)
