@@ -59,7 +59,7 @@ public class Recipe
   /*@OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<RecipeIngredients> recipeIngredients = new ArrayList<>(); */
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "List_of_recipes",
     joinColumns = @JoinColumn(name = "recipe_id"),
