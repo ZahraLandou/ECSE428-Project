@@ -154,24 +154,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: DeleteRecipeIngredients" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/DeleteRecipeIngredients.feature" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="NomNomApp_Backend.test" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: DeleteRecipeIngredients" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Feature: RateRecipe" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/RateRecipe.feature" />
@@ -191,14 +173,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Feature: UpdateRecipeIngredients" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+    <configuration name="Feature: ViewUserProfile" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/UpdateRecipeIngredients.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/NomNomApp_Backend/src/test/resources/features/ViewUserProfile.feature" />
       <option name="GLUE" value="com.example.nomnomapp.stepdefinitions" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="NomNomApp_Backend.test" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: UpdateRecipeIngredients" />
+      <option name="SUGGESTED_NAME" value="Feature: ViewUserProfile" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -233,6 +215,29 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="UserIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/NomNomApp_Backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.nomnomapp.Integration.UserIntegrationTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="NomNomAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="NomNomApp_Backend.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.nomnomapp.NomNomAppApplication" />
@@ -243,10 +248,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.CucumberTestRunner" />
+        <item itemvalue="Gradle.UserIntegrationTest" />
+        <item itemvalue="Cucumber Java.Feature: ViewUserProfile" />
         <item itemvalue="Cucumber Java.Feature: RateRecipe" />
         <item itemvalue="Cucumber Java.Feature: DeleteCollection" />
-        <item itemvalue="Cucumber Java.Feature: DeleteRecipeIngredients" />
-        <item itemvalue="Cucumber Java.Feature: UpdateRecipeIngredients" />
       </list>
     </recent_temporary>
   </component>
@@ -271,8 +276,7 @@
       <workItem from="1741812763541" duration="763000" />
       <workItem from="1741908677199" duration="613000" />
       <workItem from="1742012776784" duration="10971000" />
-      <workItem from="1742698759826" duration="6766000" />
-      <workItem from="1742705761766" duration="51000" />
+      <workItem from="1743324829733" duration="2702000" />
     </task>
     <servers />
   </component>
