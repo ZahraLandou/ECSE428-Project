@@ -35,7 +35,6 @@ public class Recipe
   @Column(nullable = false)
   private String description;
 
-  // @Lob
   private String instructions;
 
   @Column(name= "created_date", nullable = false, updatable = false)
@@ -71,7 +70,7 @@ public class Recipe
   @JoinColumn(name = "user_id", nullable = false) 
   private NomNomUser nomNomUser;
 
-  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
   private List<Comment> comments = new ArrayList<>();
 
 
