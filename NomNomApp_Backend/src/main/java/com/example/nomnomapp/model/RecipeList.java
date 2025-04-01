@@ -4,23 +4,15 @@
 package com.example.nomnomapp.model;
 import java.util.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 // line 69 "model.ump"
 // line 116 "model.ump"
 
 @Entity
+@Table(name = "recipe_list")
 public class RecipeList
 {
-
 
   //------------------------
   // ENUMERATIONS
@@ -47,8 +39,8 @@ public class RecipeList
   @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = false)
   private NomNomUser nomNomUser;
 
-  @ManyToMany(mappedBy = "recipeLists")
-  private List<Recipe> recipes = new ArrayList<>();;
+  @ManyToMany(mappedBy = "recipeLists", fetch = FetchType.EAGER)
+  private List<Recipe> recipes = new ArrayList<>();
 
   //------------------------
   // CONSTRUCTOR
