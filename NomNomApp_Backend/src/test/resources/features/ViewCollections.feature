@@ -1,4 +1,4 @@
-Feature: View collection of recipes
+Feature: US022 View collection of recipes
     As a NomNom user,
     I want to view my lists of recipes in a separate "lists" view,
     so that I can revisit what recipes I saved in an organized manner.
