@@ -123,7 +123,7 @@ public class RecipeControllerIntegrationTests {
     // Test retrieving all recipes (GET /recipes)
     @Test
     void testGetAllRecipes() throws Exception {
-        mockMvc.perform(get("/recipes"))
+        mockMvc.perform(get("/api/recipes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(2))
                 .andExpect(jsonPath("$[0].title").value("Pasta Carbonara"));
@@ -132,7 +132,7 @@ public class RecipeControllerIntegrationTests {
     // Test retrieving a recipe by title (GET /recipes)
     @Test
     void testGetRecipeByTitle() throws Exception {
-        mockMvc.perform(get("/recipes")
+        mockMvc.perform(get("/api/recipes")
                         .param("title", "Pasta Carbonara"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
@@ -142,7 +142,7 @@ public class RecipeControllerIntegrationTests {
     // Test retrieving recipes by category (GET /recipes/category/{category})
     @Test
     void testGetRecipesByCategory() throws Exception {
-        mockMvc.perform(get("/recipes/category/Dinner"))
+        mockMvc.perform(get("/api/recipes/category/Dinner"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].category").value("Dinner"));
@@ -156,7 +156,7 @@ public class RecipeControllerIntegrationTests {
                 "Cook shrimp with garlic and butter", new Date(System.currentTimeMillis()),
                 RecipeCategory.Dinner, 0, null, 0.0, testUser);
 
-        mockMvc.perform(post("/recipes")
+        mockMvc.perform(post("/api/recipes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newRecipe)))
                 .andExpect(status().isOk())
@@ -166,10 +166,10 @@ public class RecipeControllerIntegrationTests {
     // Test getting a recipe by ingredients (GET /recipes/ingredients)
     @Test
     void testGetRecipesByIngredients() throws Exception {
-        mockMvc.perform(get("/recipes/ingredients")
+        mockMvc.perform(get("/api/recipes/ingredientNames/{ingredient}", "ingredient")
                         .param("ingredientNames", "garlic,shrimp"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
                 .andExpect(jsonPath("$[0].title").value("Pasta Carbonara"));
     }
-}
+}   

@@ -177,7 +177,7 @@ public class RecipeStepDefinitions {
 
     @When("a user likes the recipe {string}")
     public void user_likes_recipe(String title) {
-        Recipe newRecipe = recipeService.likeRecipe(recipeDatabase.get(title).getRecipeID());
+        Recipe newRecipe = recipeService.likeRecipe(recipeDatabase.get(title).getRecipeId());
         recipeDatabase.put(title, newRecipe);
     }
 
@@ -189,7 +189,7 @@ public class RecipeStepDefinitions {
 
     @When("a user unlikes the recipe {string}")
     public void user_unlikes_recipe(String title) {
-        Recipe newRecipe = recipeService.unlikeRecipe(recipeDatabase.get(title).getRecipeID());
+        Recipe newRecipe = recipeService.unlikeRecipe(recipeDatabase.get(title).getRecipeId());
         recipeDatabase.put(title, newRecipe);
     }
 

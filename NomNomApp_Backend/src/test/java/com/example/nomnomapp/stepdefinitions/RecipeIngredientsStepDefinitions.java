@@ -107,7 +107,7 @@ public class RecipeIngredientsStepDefinitions {
     @Given("the recipe {string} does not already include {string}")
     public void the_recipe_does_not_already_include(String recipeTitle, String ingredientName) {
         a_recipe_exists(recipeTitle);
-        List<RecipeIngredients> riList = recipeIngredientsService.getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+        List<RecipeIngredients> riList = recipeIngredientsService.getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
         boolean found = riList.stream()
                 .anyMatch(ri -> ri.getIngredient().getName().equalsIgnoreCase(ingredientName));
         assertFalse(found, "Recipe '" + recipeTitle + "' already includes '" + ingredientName + "'");
@@ -121,7 +121,7 @@ public class RecipeIngredientsStepDefinitions {
 
         // Check if the ingredient is already in the recipe
         List<RecipeIngredients> riList = recipeIngredientsService
-                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
         boolean found = riList.stream()
                 .anyMatch(ri -> ri.getIngredient().getName().equalsIgnoreCase(ingredientName));
 
@@ -141,7 +141,7 @@ public class RecipeIngredientsStepDefinitions {
 
         // Double-check it's in the recipe now
         List<RecipeIngredients> updatedRiList = recipeIngredientsService
-                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
         boolean updatedFound = updatedRiList.stream()
                 .anyMatch(ri -> ri.getIngredient().getName().equalsIgnoreCase(ingredientName));
         assertTrue(updatedFound,
@@ -331,7 +331,7 @@ public class RecipeIngredientsStepDefinitions {
 
         // Retrieve all RecipeIngredients for the current recipe
         List<RecipeIngredients> riList = recipeIngredientsService
-                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
 
         // Find the RecipeIngredients entry that matches the desired ingredient name
         Optional<RecipeIngredients> toRemoveOpt = riList.stream()
@@ -353,7 +353,7 @@ public class RecipeIngredientsStepDefinitions {
     public void the_recipe_should_not_include(String ingredientName) {
         // Retrieve all RecipeIngredients again to verify the ingredient is gone
         List<RecipeIngredients> riList = recipeIngredientsService
-                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
 
         // Check if any recipe ingredient still matches the one that was removed
         boolean stillPresent = riList.stream()
@@ -371,7 +371,7 @@ public class RecipeIngredientsStepDefinitions {
 
         // Retrieve the list of RecipeIngredients for this recipe
         List<RecipeIngredients> riList = recipeIngredientsService
-                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
 
         // Check if any entry matches the specified ingredient
         boolean found = riList.stream()
@@ -389,7 +389,7 @@ public class RecipeIngredientsStepDefinitions {
 
         // Get the relevant recipe-ingredient association if it exists
         List<RecipeIngredients> riList = recipeIngredientsService
-                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+                .getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
 
         Optional<RecipeIngredients> toRemoveOpt = riList.stream()
                 .filter(ri -> ri.getIngredient().getName().equalsIgnoreCase(ingredientName))
@@ -418,7 +418,7 @@ public class RecipeIngredientsStepDefinitions {
     public void the_recipe_should_include_with_quantity_and_unit(String ingredientName, String quantityStr, String unit) {
         // Re-fetch the recipe (if needed) to ensure it's up-to-date.
         a_recipe_exists(currentRecipe.getTitle());
-        List<RecipeIngredients> riList = recipeIngredientsService.getRecipeIngredientsByRecipeId(currentRecipe.getRecipeID());
+        List<RecipeIngredients> riList = recipeIngredientsService.getRecipeIngredientsByRecipeId(currentRecipe.getRecipeId());
         Optional<RecipeIngredients> optRi = riList.stream()
                 .filter(ri -> ri.getIngredient().getName().equalsIgnoreCase(ingredientName))
                 .findFirst();
@@ -499,7 +499,7 @@ public class RecipeIngredientsStepDefinitions {
 
             // 2) Look up the existing RecipeIngredients entry.
             Optional<RecipeIngredients> existingRi = recipeIngredientsService
-                    .getRecipeIngredientsByRecipeId(recipe.getRecipeID())
+                    .getRecipeIngredientsByRecipeId(recipe.getRecipeId())
                     .stream()
                     .filter(ri -> ri.getIngredient().getName().equalsIgnoreCase(ingredientName))
                     .findFirst();

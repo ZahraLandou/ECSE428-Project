@@ -4,6 +4,10 @@
 package com.example.nomnomapp.model;
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,6 +22,10 @@ import jakarta.persistence.ManyToOne;
 // line 116 "model.ump"
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "recipeListID"
+)
 public class RecipeList
 {
 
@@ -48,7 +56,7 @@ public class RecipeList
   private NomNomUser nomNomUser;
 
   @ManyToMany(mappedBy = "recipeLists")
-  private List<Recipe> recipes = new ArrayList<>();;
+  private List<Recipe> recipes = new ArrayList<>();
 
   //------------------------
   // CONSTRUCTOR

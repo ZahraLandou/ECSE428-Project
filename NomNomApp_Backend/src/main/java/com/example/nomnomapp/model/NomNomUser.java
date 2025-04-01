@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -14,6 +17,10 @@ import java.sql.Date;
 // line 2 "model.ump"
 // line 121 "model.ump"
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "userId"
+)
 @Table(name = "users")
 public class NomNomUser implements Serializable
 {
@@ -53,11 +60,9 @@ public class NomNomUser implements Serializable
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "follower_id")
   )
-  @JsonIgnore
 private List<NomNomUser> followers;
 
 @ManyToMany(mappedBy = "followers")
-@JsonIgnore
 private List<NomNomUser> following;
   //------------------------
   // CONSTRUCTOR

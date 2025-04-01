@@ -3,7 +3,15 @@ package com.example.nomnomapp.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "ratingId"
+)
 @Table(name = "ratings")
 public class Rating implements Serializable {
 

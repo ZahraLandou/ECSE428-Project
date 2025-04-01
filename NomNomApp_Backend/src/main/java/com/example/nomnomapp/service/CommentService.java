@@ -37,7 +37,7 @@ public class CommentService {
         if (rating < 0 || rating > 5) {
             throw new NomNomException(HttpStatus.BAD_REQUEST, "Rating must be between 0 and 5.");
         }
-        if (recipeRepo.findByRecipeId(aRecipe.getRecipeID()) == null) {
+        if (recipeRepo.findByRecipeId(aRecipe.getRecipeId()) == null) {
             throw new NomNomException(HttpStatus.NOT_FOUND, "Recipe does not exist.");
         }
 
@@ -45,7 +45,7 @@ public class CommentService {
         Comment c = new Comment(commentContent, today, rating, user, aRecipe);
        // aRecipe.getComments().add(c);
 
-        recipeService.updateAverageRating(aRecipe.getRecipeID());
+        recipeService.updateAverageRating(aRecipe.getRecipeId());
         recipeRepo.save(aRecipe);
 
         return repo.save(c);
@@ -67,7 +67,7 @@ public class CommentService {
         Comment c = repo.findCommentByCommentId(aCommentId);
         c.setCommentContent(aCommentContent);
         c.setRating(rating);
-        recipeService.updateAverageRating(c.getRecipe().getRecipeID());
+        recipeService.updateAverageRating(c.getRecipe().getRecipeId());
 
         return repo.save(c);
     }

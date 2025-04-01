@@ -68,11 +68,11 @@ public class RecipeIngredientsRepositoryTests {
         assertNotNull(saved);
         assertEquals(2.0, saved.getQuantity());
         assertEquals("cups", saved.getUnit());
-        assertEquals(recipe.getRecipeID(), saved.getRecipe().getRecipeID());
+        assertEquals(recipe.getRecipeId(), saved.getRecipe().getRecipeId());
         assertEquals(tomato.getName(), saved.getIngredient().getName());
 
         // Retrieve RecipeIngredients by Recipe ID using the custom finder method
-        List<RecipeIngredients> byRecipe = recipeIngredientsRepository.findIngredientsByRecipeRecipeId(recipe.getRecipeID());
+        List<RecipeIngredients> byRecipe = recipeIngredientsRepository.findIngredientsByRecipeRecipeId(recipe.getRecipeId());
         assertNotNull(byRecipe);
         assertEquals(1, byRecipe.size());
 

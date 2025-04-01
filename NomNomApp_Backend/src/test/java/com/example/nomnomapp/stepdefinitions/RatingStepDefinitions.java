@@ -46,10 +46,10 @@ public class RatingStepDefinitions {
     @When("I select a rating between {int} and {int} stars and I submit my rating")
     public void iSubmitRating(int min, int max) {
         int ratingValue = (min + max) / 2;
-        when(ratingService.rateRecipe(testUser.getUserId(), testRecipe.getRecipeID(), ratingValue))
+        when(ratingService.rateRecipe(testUser.getUserId(), testRecipe.getRecipeId(), ratingValue))
                 .thenReturn(new Rating(testUser, testRecipe, ratingValue));
 
-        response = ratingController.rateRecipe(testUser.getUserId(), testRecipe.getRecipeID(), ratingValue);
+        response = ratingController.rateRecipe(testUser.getUserId(), testRecipe.getRecipeId(), ratingValue);
     }
 
     @Then("the rating should be saved")
@@ -78,7 +78,7 @@ public class RatingStepDefinitions {
         testRecipe = new Recipe();
         testRecipe.setRecipeID(1);
         existingRating = new Rating(testUser, testRecipe, 3);
-        when(ratingService.findUserRating(testUser.getUserId(), testRecipe.getRecipeID()))
+        when(ratingService.findUserRating(testUser.getUserId(), testRecipe.getRecipeId()))
                 .thenReturn(Optional.of(existingRating));
         System.out.println("Existing rating setup complete.");
     }
@@ -86,10 +86,10 @@ public class RatingStepDefinitions {
     @When("I change my rating to a new value and submit my new rating")
     public void iChangeMyRatingAndSubmit() {
         int newRatingValue = 4;  // User updates rating to 4 stars
-        when(ratingService.updateRating(testUser.getUserId(), testRecipe.getRecipeID(), newRatingValue))
+        when(ratingService.updateRating(testUser.getUserId(), testRecipe.getRecipeId(), newRatingValue))
                 .thenReturn(new Rating(testUser, testRecipe, newRatingValue));
 
-        response = ratingController.updateRating(testUser.getUserId(), testRecipe.getRecipeID(), newRatingValue);
+        response = ratingController.updateRating(testUser.getUserId(), testRecipe.getRecipeId(), newRatingValue);
     }
 
     @Then("my previous rating should be replaced with the new one")
@@ -106,7 +106,7 @@ public class RatingStepDefinitions {
 
     @When("I select a rating and try to submit my rating for the recipe")
     public void iTryToSubmitRating() {
-        response = ratingController.rateRecipe(0, testRecipe.getRecipeID(), 5);
+        response = ratingController.rateRecipe(0, testRecipe.getRecipeId(), 5);
     }
 
     @Then("the rating should not be saved")

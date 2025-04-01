@@ -6,9 +6,16 @@ package com.example.nomnomapp.model;
 // line 47 "model.ump"
 // line 93 "model.ump"
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "videoId"
+)
 public class ShortFormVideo
 {
 

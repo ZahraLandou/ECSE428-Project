@@ -82,7 +82,7 @@ public class RecipeServiceTests {
         assertNotNull(savedRecipe);
         assertEquals("French Cheese cake", savedRecipe.getTitle());
         assertEquals(203, savedRecipe.getLikes());
-        assertEquals(0, savedRecipe.getRecipeID());
+        assertEquals(0, savedRecipe.getRecipeId());
         assertEquals("hi my name is Thierry and I want to share this family recipe from my father Pierre", savedRecipe.getDescription());
         verify(recipeRepo, times(1)).save(testRecipe);
     }

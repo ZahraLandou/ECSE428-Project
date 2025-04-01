@@ -9,8 +9,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "recipeId"
+)
 public class Recipe
 {
 
@@ -187,7 +194,7 @@ public class Recipe
     return wasSet;
   }
 
-  public int getRecipeID()
+  public int getRecipeId()
   {
     return recipeId;
   }
@@ -684,7 +691,7 @@ public class Recipe
   public String toString()
   {
     return super.toString() + "["+
-            "recipeID" + ":" + getRecipeID()+ "," +
+            "recipeID" + ":" + getRecipeId()+ "," +
             "title" + ":" + getTitle()+ "," +
             "description" + ":" + getDescription()+ "," +
             "instructions" + ":" + getInstructions()+ "," +

@@ -6,9 +6,16 @@ import jakarta.persistence.*;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 // line 32 "model.ump"
 // line 82 "model.ump"
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id"
+)
 @Table(name = "notifications")
 public class Notification
 {

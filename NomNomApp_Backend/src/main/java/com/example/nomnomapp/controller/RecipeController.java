@@ -23,10 +23,7 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe){
-
         return ResponseEntity.ok(recipeService.createRecipe(recipe));
-
-
     }
 
     @GetMapping
@@ -34,10 +31,17 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 
-    @GetMapping("/{recipeID}")
+    @GetMapping("/recipeid/{recipeID}")
     public ResponseEntity<Recipe> getRecipeById(@PathVariable int recipeID) {
 
         return ResponseEntity.ok(recipeService.getRecipeByID(recipeID));
+
+    }
+
+    @GetMapping("/{recipeTitle}")
+    public ResponseEntity<List<Recipe>> getRecipeByTitle(@PathVariable String recipeTitle) {
+
+        return ResponseEntity.ok(recipeService.getRecipesByTitle(recipeTitle));
 
     }
 
@@ -83,7 +87,7 @@ public class RecipeController {
      * Example request: GET /recipes/ingredients?ingredientNames=garlic,onion,shrimp
      * @return list of corresponding ingredient
      */
-    @GetMapping("/{ingredient}")
+    @GetMapping("/ingredientNames/{ingredient}")
     public ResponseEntity<List<Recipe>> getRecipesByIngredients(@RequestParam String ingredientNames){
         List<Recipe> recipes = recipeService.getRecipesByIngredients(ingredientNames);
         return ResponseEntity.ok(recipes);
