@@ -39,5 +39,5 @@ Feature: US006 Add a recipe ingredient
 
     Examples:
       | ingredientName | quantity | unit   | errorMessage                                |
-      | garlic         |          | cloves | Recipe ingredient quantity cannot be empty  |
-      | garlic         | 2        |        | Recipe ingredient unit cannot be empty      |
+      | garlic         |          | cloves | Quantity must be positive  |
+      | garlic         | 2        |        | Unit cannot be null or empty      |

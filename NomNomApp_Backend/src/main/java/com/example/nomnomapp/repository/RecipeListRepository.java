@@ -1,13 +1,15 @@
 package com.example.nomnomapp.repository;
-
+import com.example.nomnomapp.model.NomNomUser;
 import com.example.nomnomapp.model.RecipeList;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 
-import java.util.Optional;
+public interface RecipeListRepository extends CrudRepository<RecipeList,Integer> {
+    List<RecipeList> findByNomNomUser(NomNomUser nomNomUser);
+    List<RecipeList> findByCategory(RecipeList.ListCategory category);
 
-@Repository
-public interface RecipeListRepository extends JpaRepository<RecipeList, Integer> {
 
 }

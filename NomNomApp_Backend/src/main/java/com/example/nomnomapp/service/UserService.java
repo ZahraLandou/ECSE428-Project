@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.repository.RecipeRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -78,11 +80,13 @@ public class UserService {
         return userRepository.findByUsername(aUsername);
     }
 
+    @Transactional
     public NomNomUser getNomNomUserByName(String name) {
-
-            
-    return userRepository.findByUsername(name)
-    .orElseThrow(() -> new IllegalArgumentException("User with name "+ name+ " not found"));
+        NomNomUser user = userRepository.findByUsername(name)
+                .orElseThrow(() -> new IllegalArgumentException("User with name " + name + " not found"));
+        // ensure Hibernate initializes the collection
+        user.getRecipeLists().size();
+        return user;
     }
 
 
