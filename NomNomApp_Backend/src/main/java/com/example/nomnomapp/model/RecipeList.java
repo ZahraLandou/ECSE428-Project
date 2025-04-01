@@ -10,9 +10,9 @@ import jakarta.persistence.*;
 // line 116 "model.ump"
 
 @Entity
+@Table(name = "recipe_list")
 public class RecipeList
 {
-
 
   //------------------------
   // ENUMERATIONS

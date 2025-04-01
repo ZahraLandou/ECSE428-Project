@@ -6,7 +6,6 @@ import com.example.nomnomapp.service.RecipeListService;
 import com.example.nomnomapp.service.RecipeService;
 import com.example.nomnomapp.service.UserService;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -28,8 +27,7 @@ public class RecipeListStepDefinitions {
     private Exception exception;
     private NomNomUser currentUser;
 
-
-    private RecipeList myFavorites;
+    private RecipeList myFavourites;
 
     @Before
     public void setUp() {
@@ -74,17 +72,17 @@ public class RecipeListStepDefinitions {
         currentUser = userService.getNomNomUserByName(username);
     }
 
-    @When("I request to view my Favorites recipe list")
+    @When("I request to view my Favourites recipe list")
     public void view_favorites_recipe_list() {
-        myFavorites = recipeListService.getFavoriteRecipeListsByUser(currentUser).get(0); // we're testing with one favorite list by user
-        System.out.println("Favorite Recipe List Retrieved: " + myFavorites.getName());
-        System.out.println("Recipes in List: " + myFavorites.getRecipes());
+        myFavourites = recipeListService.getFavoriteRecipeListsByUser(currentUser).get(0); // we're testing with one favorite list by user
+        System.out.println("Favorite Recipe List Retrieved: " + myFavourites.getName());
+        System.out.println("Recipes in List: " + myFavourites.getRecipes());
     }
 
     @Then("I should see the recipes {string} in the list")
     public void see_recipes_in_the_list(String recipes) {
         String[] recipeNames = recipes.split(", ");
-        List<Recipe> favoriteRecipes = myFavorites.getRecipes();
+        List<Recipe> favoriteRecipes = myFavourites.getRecipes();
 
         assertEquals(recipeNames.length, favoriteRecipes.size(), "Mismatch in expected and actual recipe count");
 
@@ -97,10 +95,10 @@ public class RecipeListStepDefinitions {
     }
 
 
-    @When("I attempt to view my Favorites recipe list")
+    @When("I attempt to view my Favourites recipe list")
     public void attempt_view_favorites_recipe_list() {
         try{
-            myFavorites = recipeListService.getFavoriteRecipeListsByUser(currentUser).get(0); // we're testing with one favorite list by user
+            myFavourites = recipeListService.getFavoriteRecipeListsByUser(currentUser).get(0); // we're testing with one favorite list by user
         } catch (IllegalArgumentException e) {
             commonSteps.setException(e);
         }

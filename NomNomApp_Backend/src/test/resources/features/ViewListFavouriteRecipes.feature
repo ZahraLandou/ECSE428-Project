@@ -23,7 +23,7 @@ Feature: US018 Viewing Favourite Recipes
 
     Scenario Outline: User views their favourite recipes
         Given I am the user "<username>"
-        When I request to view my Favorites recipe list
+        When I request to view my Favourites recipe list
         Then I should see the recipes "<recipes>" in the list
 
         Examples:
@@ -33,7 +33,7 @@ Feature: US018 Viewing Favourite Recipes
 
     Scenario Outline: User with no favourite recipes sees an empty list
         Given I am the user "<username>"
-        When I attempt to view my Favorites recipe list
+        When I attempt to view my Favourites recipe list
         Then I should see an error message "<message>"
         Examples:
             | username| message                                       |
