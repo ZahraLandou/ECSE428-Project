@@ -31,9 +31,9 @@ Feature: US013 Search for recipe by name
     When I enter a valid recipe with title "<recipeName>" into the search bar that does not match any existing recipes
     Then I should see an error message "<error_message>"
     Examples:
-      | recipeName     | error_message            |
-      | Chocolate Cake | Recipe does not exist    |
-      | Tacos          | Recipe does not exist    |
+      | recipeName     | error_message                                  |
+      | Chocolate Cake | No recipes found with title: Chocolate Cake    |
+      | Tacos          | No recipes found with title: Tacos             |
 
   # error flow
   Scenario Outline: User attempts to filter recipes by an invalid name

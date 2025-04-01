@@ -3,13 +3,7 @@ package com.example.nomnomapp.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.example.nomnomapp.model.Recipe;
@@ -17,15 +11,15 @@ import com.example.nomnomapp.model.Recipe.RecipeCategory;
 import com.example.nomnomapp.service.RecipeService;
 
 @RestController
-@RequestMapping("/recipes")
+@RequestMapping("api/recipes")
 public class RecipeController {
     private RecipeService recipeService;
-    
+
 
     public RecipeController(RecipeService recipeService){
         this.recipeService = recipeService;
     }
-    
+
 
     @PostMapping
     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe){
@@ -42,8 +36,9 @@ public class RecipeController {
 
     @GetMapping("/{recipeID}")
     public ResponseEntity<Recipe> getRecipeById(@PathVariable int recipeID) {
-            return null;
-            //TODO Implement get by ID
+
+        return ResponseEntity.ok(recipeService.getRecipeByID(recipeID));
+
     }
 
     @GetMapping("/category/{category}")
@@ -81,5 +76,18 @@ public class RecipeController {
         int likes = recipeService.getLikes(recipeID);
         return ResponseEntity.ok(likes);
     }
+
+    /**
+     * Get recipes that contain a list of ingredients
+     * If multiple ingredients are provided, at least two of them should be present in the returned recipes.
+     * Example request: GET /recipes/ingredients?ingredientNames=garlic,onion,shrimp
+     * @return list of corresponding ingredient
+     */
+    @GetMapping("/{ingredient}")
+    public ResponseEntity<List<Recipe>> getRecipesByIngredients(@RequestParam String ingredientNames){
+        List<Recipe> recipes = recipeService.getRecipesByIngredients(ingredientNames);
+        return ResponseEntity.ok(recipes);
+    }
+
 
 }

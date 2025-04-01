@@ -6,6 +6,8 @@ import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.RecipeIngredients;
 import com.example.nomnomapp.model.Ingredient;
 import com.example.nomnomapp.model.NomNomUser;
+import com.example.nomnomapp.repository.UserRepository;
+import com.example.nomnomapp.service.IngredientService;
 import com.example.nomnomapp.service.RecipeService;
 import com.example.nomnomapp.service.UserService;
 
@@ -25,16 +27,27 @@ public class RecipeStepDefinitions {
 
     @Autowired
     private RecipeService recipeService;
-
+    @Autowired
+    private CommonStepDefinitions commonSteps;
     @Autowired
     private UserService userService;
 
+    private UserRepository userRepository;
+
+    @Autowired
+    private IngredientService ingredientService;
+
     private final Map<String, Recipe> recipeDatabase = new HashMap<>(); // Simulated recipe storage
     private Exception exception;
+    private NomNomUser testUser;
+
+    private List<Recipe> matchingRecipes;
 
     @Before
     public void setUp() {
         recipeDatabase.clear();
+        recipeService.deleteAllRecipes();
+        userService.deleteAllUsers();
         exception = null;
     }
 
@@ -121,6 +134,7 @@ public class RecipeStepDefinitions {
         Recipe recipe = recipeDatabase.get(recipeName);
         assertNotNull(recipe, "Exception was thrown when creation should have succeeded.");
     }
+
     // Then: Recipe with details should exist in the system
     @Then("the recipe with title {string}, ingredient {string}, and instruction {string} should exist in the system")
     public void recipe_with_details_should_exist(String recipeName, String recipeIngredient, String recipeInstruction) {
@@ -142,40 +156,136 @@ public class RecipeStepDefinitions {
         assertNotNull(recipe, "Exception was thrown when creation should have succeeded.");
     }
 
-        // This method will be shared for all step definitions that use error messages
+    // This method will be shared for all step definitions that use error messages
     @Then("I should see an error message {string} \\(not common)")
     public void i_should_see_an_error_message(String expectedMessage) {
         assertEquals(expectedMessage, "Error! Recipe not found.");
     }
 
     @Given("a recipe with title {string} and amount of likes {string} exists")
-    public void the_following_recipe_with_like_exist(String title,String likes) {
+    public void the_following_recipe_with_like_exist(String title, String likes) {
         Recipe newRecipe = new Recipe();
         newRecipe.setTitle(title);
         newRecipe.setLikes(Integer.parseInt(likes));
         newRecipe.setCreationDate(Date.valueOf(LocalDate.now()));
         newRecipe.setDescription("This is a test");
-        newRecipe.setNomNomUser(userService.createUser("user","user@email.com","password"));
+        newRecipe.setNomNomUser(userService.createUser("user", "user@email.com", "password"));
         recipeDatabase.put(title, newRecipe);
         recipeService.createRecipe(newRecipe);
 
     }
 
     @When("a user likes the recipe {string}")
-    public void user_likes_recipe(String title){
-        Recipe newRecipe= recipeService.likeRecipe(recipeDatabase.get(title).getRecipeID());
+    public void user_likes_recipe(String title) {
+        Recipe newRecipe = recipeService.likeRecipe(recipeDatabase.get(title).getRecipeID());
         recipeDatabase.put(title, newRecipe);
     }
 
 
     @Then("the recipe with title {string} should have {string} likes")
-    public void recipe_likes_updated(String title,String likes) {
-        assertEquals(Integer.parseInt(likes),recipeDatabase.get(title).getLikes());
+    public void recipe_likes_updated(String title, String likes) {
+        assertEquals(Integer.parseInt(likes), recipeDatabase.get(title).getLikes());
     }
 
     @When("a user unlikes the recipe {string}")
-    public void user_unlikes_recipe(String title){
-        Recipe newRecipe= recipeService.unlikeRecipe(recipeDatabase.get(title).getRecipeID());
+    public void user_unlikes_recipe(String title) {
+        Recipe newRecipe = recipeService.unlikeRecipe(recipeDatabase.get(title).getRecipeID());
         recipeDatabase.put(title, newRecipe);
     }
+
+    @Given("the following recipes exist in the system")
+    public void the_following_recipes_exist_in_the_system(DataTable dataTable) {
+        if (testUser == null) {
+            testUser = userService.createUser("testUser", "test@example.com", "password");
+        }
+        List<Map<String, String>> recipes = dataTable.asMaps(String.class, String.class);
+
+        for (Map<String, String> recipeData : recipes) {
+            Recipe newRecipe = new Recipe();
+            newRecipe.setTitle(recipeData.get("title"));
+            newRecipe.setDescription(recipeData.get("description"));
+            newRecipe.setCategory(Recipe.RecipeCategory.valueOf(recipeData.get("category")));
+            newRecipe.setInstructions(recipeData.get("instructions"));
+
+
+            // adding ingredients to the recipe
+            String[] ingredientNames = recipeData.get("ingredients").split(", ");
+            for (String ingredientName : ingredientNames) {
+                //creating ingredients
+                Ingredient ingredient = ingredient = ingredientService.createIngredient(ingredientName, "solid");
+                RecipeIngredients recipeIngredient = new RecipeIngredients(1.0, "unit", newRecipe, ingredient);
+                newRecipe.addRecipeIngredient(recipeIngredient);
+            }
+
+            newRecipe.setCreationDate(new Date(System.currentTimeMillis()));
+            newRecipe.setNomNomUser(testUser);
+            recipeDatabase.put(newRecipe.getTitle(), newRecipe);
+            recipeService.createRecipe(newRecipe);
+        }
+    }
+
+    @When("I request to view all recipes")
+    public void i_request_to_view_all_recipes() {
+        List<Recipe> allRecipes = recipeService.getAllRecipes();
+        assertNotNull(allRecipes, "The recipe list should not be null.");
+    }
+
+    @Then("I should get a list of {string} recipes")
+    public void i_should_get_list_of_recipes(String totalRecipes) {
+        List<Recipe> allRecipes = recipeService.getAllRecipes();
+        assertEquals(Integer.parseInt(totalRecipes), allRecipes.size(), "The total number of recipes does not match.");
+    }
+
+    @Then("the list should contain {string}, {string}, and {string}")
+    public void the_list_should_contain(String recipe1, String recipe2, String recipe3) {
+        List<Recipe> allRecipes = recipeService.getAllRecipes();
+        List<String> recipeTitles = allRecipes.stream().map(Recipe::getTitle).toList();
+
+        assertTrue(recipeTitles.contains(recipe1), "The recipe list should contain " + recipe1);
+        assertTrue(recipeTitles.contains(recipe2), "The recipe list should contain " + recipe2);
+        assertTrue(recipeTitles.contains(recipe3), "The recipe list should contain " + recipe3);
+    }
+
+    @When("I request to view a recipe that contains {string}")
+    public void i_request_to_view_recipe_containing_ingredient(String ingredient) {
+        matchingRecipes = recipeService.getRecipesByIngredients(ingredient);
+        assertFalse(matchingRecipes.isEmpty(), "No recipes found with ingredient: " + ingredient);
+    }
+
+    @Then("I should receive the recipe {string}")
+    public void i_should_receive_recipe(String title) {
+        assertEquals(title, matchingRecipes.get(0).getTitle(), "Recipe title does not match.");
+    }
+
+    @Then("the recipe description should be {string}")
+    public void the_recipe_description_should_be(String description) {
+        assertEquals(description, matchingRecipes.get(0).getDescription(), "Recipe description does not match.");
+    }
+
+    @Then("the category should be {string}")
+    public void the_category_should_be(String category) {
+        assertEquals(category, matchingRecipes.get(0).getCategory().toString(), "Recipe category does not match.");
+    }
+
+
+    @When("I attempt to view a recipe that contains {string}")
+    public void i_attempt_to_view_a_recipe_that_contains(String ingredientName) {
+        try {
+            recipeService.getRecipesByIngredients(ingredientName);
+        } catch (IllegalArgumentException e) {
+            commonSteps.setException(e);
+        }
+    }
+
+
+    @When("I request to view a recipe with the title {string}")
+    public void i_request_to_view_recipe_with_title(String title) {
+         matchingRecipes = recipeService.getRecipesByTitle(title);
+    }
+
+    @Then("the recipe instructions should be {string}")
+    public void the_recipe_instructions_should_be(String expectedInstructions) {
+        assertEquals(expectedInstructions, matchingRecipes.get(0).getInstructions(), "Recipe instructions do not match.");
+    }
+
 }

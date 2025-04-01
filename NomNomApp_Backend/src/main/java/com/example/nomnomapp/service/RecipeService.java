@@ -1,9 +1,7 @@
 package com.example.nomnomapp.service;
 
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,8 +74,11 @@ public class RecipeService {
     }
 
     public List<Recipe>  getRecipesByTitle(String title) {
-            return recipeRepository.findRecipeByTitle(title);
-
+        List<Recipe> recipes = recipeRepository.findRecipeByTitle(title);
+        if (recipes.isEmpty() ) {
+            throw new IllegalArgumentException("No recipes found with title: " + title);
+        }
+        return recipes;
     }
     
     public List<Recipe> getRecipesByCategory(RecipeCategory recipeCategory) {
@@ -139,6 +140,49 @@ public class RecipeService {
     public void deleteAllRecipes() {
         recipeRepository.deleteAll();
     }
-    
-    
+
+
+    /**
+     * Method to get recipes containing specific list of ingredients
+     * Assuming that the ingredients names are provided as a string separated with coma
+     * If there's 2+ ingredients, make sure that the matching recipes contain at least 2 of them
+     * @param ingredientNames
+     * @return matchingRecipes
+     */
+    @Transactional
+    public List<Recipe> getRecipesByIngredients(String ingredientNames) {
+        if (ingredientNames == null || ingredientNames.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ingredient names cannot be empty");
+        }
+
+        String[] ingredientsArray = ingredientNames.toLowerCase().split(",");
+        List<String> ingredientList = Arrays.asList(ingredientsArray);
+
+        List<Recipe> allRecipes = (List<Recipe>) recipeRepository.findAll();
+        List<Recipe> matchingRecipes = new ArrayList<>();
+
+
+        for (Recipe recipe: allRecipes){
+
+            long matchingCount = recipe.getRecipeIngredients().stream()
+                    .map(recipeIngredient -> recipeIngredient.getIngredient().getName().toLowerCase()) //retrieve recipe's ingredients
+                    .filter(ingredientList::contains) // filter matching ingredients
+                    .count(); // count the number of match
+
+            if (matchingCount >= Math.min(2, ingredientList.size())) {
+                matchingRecipes.add(recipe);
+            }
+
+        }
+        if (matchingRecipes.isEmpty()) {
+            throw new IllegalArgumentException("No recipes found containing the specified ingredients: " + ingredientNames);
+        }
+        return  matchingRecipes;
+
+    }
+    public void saveRecipe(Recipe recipe) {
+            recipeRepository.save(recipe);
+    }
+
+
 }
