@@ -27,17 +27,17 @@ Feature: View collection of recipes
         And the user has created the "<name>" list, of category "Regular"
         And the user has no recipes saved in their "<name>" list
         When the user navigates to the "<name>" list
-        Then the NomNom application should display "<message>"
+        Then the NomNom application should display the empty "<name>" list with no recipes
 
         Examples:
-            | name                      | message                                |
-            | Historical Cuisine To Try | You have no recipes in this collection |
+            | name                      |
+            | Historical Cuisine To Try |
 
     # error flow
     Scenario: Unsuccessfully view collection of recipes while logged out (error flow)
         Given the user is not logged into the NomNom application
         When the user navigates to the "<name>" list
-        Then the NomNom application should display "<message>"
+        Then the NomNom application should inform the user they are not logged in
         Examples:
-            | name                      | message               |
-            | Historical Cuisine To Try | You are not logged in |
+            | name                      |
+            | Historical Cuisine To Try |

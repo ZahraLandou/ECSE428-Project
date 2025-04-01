@@ -1,14 +1,10 @@
 package com.example.nomnomapp.stepdefinitions;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.booleanThat;
-import static org.mockito.Mockito.when;
 
 import com.example.nomnomapp.model.RecipeList;
-import com.example.nomnomapp.model.Recipe.RecipeCategory;
 import com.example.nomnomapp.model.Recipe;
 import com.example.nomnomapp.model.NomNomUser;
-import com.example.nomnomapp.model.Rating;
 import com.example.nomnomapp.service.RecipeListService;
 import com.example.nomnomapp.service.RecipeService;
 import com.example.nomnomapp.service.UserService;
@@ -16,6 +12,7 @@ import com.example.nomnomapp.service.UserService;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,16 +32,24 @@ public class ViewCollectionsStepDefinitions {
 
     private NomNomUser testUser;
     private RecipeList currentlyViewedRecipeList;
-    private String viewListResponse;
     private final Map<String, Recipe> recipeDatabase = new HashMap<>(); // Simulated recipe storage
     private final Map<String, RecipeList> recipeListDatabase = new HashMap<>(); // Simulated recipe storage
-    private Exception exception;
+
+    // parameter types
+    @ParameterType(".*")
+    public String name(String name) {
+        return name;
+    }
+
+    @ParameterType(".*")
+    public String description(String description) {
+        return description;
+    }
 
     @Before
     public void setUp() {
         recipeDatabase.clear();
         recipeListDatabase.clear();
-        exception = null;
     }
 
     @After
@@ -193,7 +198,29 @@ public class ViewCollectionsStepDefinitions {
                 String.format("Expected %d recipes matching but got %d recipes matching", expectedCount, count));
     }
 
-    @Then("the NomNom application should display {message}")
-    public void the_NomNom_application_should_display_message(String message) {
+    @Then("the NomNom application should display the empty {name} list with no recipes")
+    public void the_NomNom_application_should_display_the_empty_list_with_no_recipes(String name) {
+
+        // assert currently viewed recipe list exists
+        assertNotNull(currentlyViewedRecipeList);
+
+        // expected list and actual list
+        RecipeList recipeListExpected = recipeListDatabase.get(name);
+        RecipeList recipeListActual = currentlyViewedRecipeList;
+
+        // assert expected and actual lists are same list
+        assertEquals(recipeListExpected.getName(), recipeListActual.getName(),
+                String.format("Expected recipe list: %s; Actual recipe list: %s",
+                        recipeListExpected.getName(), recipeListActual.getName()));
+
+        // assert actual list is empty
+        assertEquals(0, recipeListActual.getRecipes().size(),
+                String.format("Expected recipe list size: 0; Actual recipe list size: %d",
+                        recipeListActual.getRecipes().size()));
+    }
+
+    @Then("the NomNom application should inform the user they are not logged in")
+    public void the_NomNom_application_should_inform_the_user_they_are_not_logged_in() {
+        assertNull(testUser);
     }
 }
