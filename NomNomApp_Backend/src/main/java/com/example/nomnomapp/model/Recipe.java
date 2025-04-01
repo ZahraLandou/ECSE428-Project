@@ -99,22 +99,24 @@ public class Recipe
   public Recipe(String aTitle, String aDescription, String aInstructions, Date aCreationDate, RecipeCategory aCategory, int aLikes, String aPicture, double aAverageRating, NomNomUser aNomNomUser)
   {
     title = aTitle;
-    description = aDescription;
-    instructions = aInstructions;
-    creationDate = aCreationDate;
-    category = aCategory;
-    likes = aLikes;
-    picture = aPicture;
-    averageRating = aAverageRating;
-    recipeIngredients = new ArrayList<RecipeIngredients>();
-    recipeLists = new ArrayList<RecipeList>();
-    this.comments = new ArrayList<>();
+    this.description = aDescription;
+    this.instructions = aInstructions;
+    this.creationDate = aCreationDate;
+    this.category = aCategory;
+    this.likes = aLikes;
+    this.picture = aPicture;
+    this.averageRating = aAverageRating;
+    this.shortFormVideo = null;
+    this.ratings = new ArrayList<Rating>();
+    this.recipeIngredients = new ArrayList<RecipeIngredients>();
+    this.recipeLists = new ArrayList<RecipeList>();
+    // this.comments = new ArrayList<>();
     boolean didAddNomNomUser = setNomNomUser(aNomNomUser);
     if (!didAddNomNomUser)
     {
       throw new RuntimeException("Unable to create recipe due to nomNomUser. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    comments = new ArrayList<Comment>();
+    this.comments = new ArrayList<Comment>();
   } 
 
   //------------------------

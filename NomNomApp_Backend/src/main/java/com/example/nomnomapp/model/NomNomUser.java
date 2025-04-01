@@ -68,7 +68,12 @@ private List<NomNomUser> following;
   // CONSTRUCTOR
   //------------------------
   public NomNomUser() {
-
+    notifications = new ArrayList<Notification>();
+    recipes = new ArrayList<Recipe>();
+    recipeLists = new ArrayList<RecipeList>();
+    following = new ArrayList<NomNomUser>();
+    followers = new ArrayList<NomNomUser>();
+    comments = new ArrayList<Comment>();
   }
   public NomNomUser(String aUsername,String aEmailAddress, String aPassword)
   {

@@ -27,7 +27,6 @@ public class RecipeService {
 
     public Recipe createRecipe(Recipe recipe){
         return recipeRepository.save(recipe);
-
     }
 
     // public List<Recipe> createRecipeCollection(List<Recipe> collection){

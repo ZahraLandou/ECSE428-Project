@@ -26,6 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Date;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
@@ -155,10 +157,12 @@ public class RecipeControllerIntegrationTests {
         Recipe newRecipe = new Recipe("Garlic Butter Shrimp", "Delicious seafood dish",
                 "Cook shrimp with garlic and butter", new Date(System.currentTimeMillis()),
                 RecipeCategory.Dinner, 0, null, 0.0, testUser);
-
+        String jsonContent = objectMapper.writeValueAsString(newRecipe);
+        System.out.println("Generated JSON: " + jsonContent); 
         mockMvc.perform(post("/api/recipes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newRecipe)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Garlic Butter Shrimp"));
     }
