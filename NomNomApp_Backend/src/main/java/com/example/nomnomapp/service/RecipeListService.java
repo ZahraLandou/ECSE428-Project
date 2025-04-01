@@ -28,7 +28,7 @@ public class RecipeListService {
     }
 
     public List<RecipeList> getAllRecipeLists() {
-        return (List <RecipeList>)recipeListRepository.findAll();
+        return (List<RecipeList>) recipeListRepository.findAll();
     }
 
     public Optional<RecipeList> getRecipeListById(int id) {
@@ -39,7 +39,6 @@ public class RecipeListService {
         return recipeListRepository.findByNomNomUser(user);
     }
 
-
     public List<RecipeList> getRecipeListsByCategory(ListCategory category) {
         return recipeListRepository.findByCategory(category);
     }
@@ -48,7 +47,7 @@ public class RecipeListService {
         recipeListRepository.deleteById(id);
     }
 
-    public void deleteAllRecipeLists(){
+    public void deleteAllRecipeLists() {
         recipeListRepository.deleteAll();
     }
 
@@ -75,8 +74,6 @@ public class RecipeListService {
         return false;
     }
 
-
-
     @Transactional
     public List<RecipeList> getFavoriteRecipeListsByUser(NomNomUser user) {
         List<RecipeList> favouriteRecipeLists = new ArrayList<>();
@@ -92,7 +89,6 @@ public class RecipeListService {
 
     }
 
-
     @Transactional
     public boolean removeRecipeFromList(int listId, Recipe recipe) {
         Optional<RecipeList> optionalRecipeList = recipeListRepository.findById(listId);
@@ -107,4 +103,3 @@ public class RecipeListService {
         return false;
     }
 }
-
